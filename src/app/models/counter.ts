@@ -13,3 +13,8 @@ export class Counter implements ICounter {
               public value?: number) {
   }
 }
+
+export interface ICounterRaw {
+  index: number;
+  value: number;
+}

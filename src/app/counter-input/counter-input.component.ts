@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { ICounter } from "../models/counter";
+import { CounterService } from "../services/counter.service";
 
 @Component({
   selector: "mk-counter-input",
@@ -8,13 +10,13 @@ import { Component, Input, OnInit } from "@angular/core";
 export class CounterInputComponent implements OnInit {
   @Input() counterIndex: number;
 
-  public counterValue: number;
+  public counter: ICounter;
 
-  constructor() {
+  constructor(private counterService: CounterService) {
   }
 
   ngOnInit() {
-    this.counterValue = 42;
+    this.counterService.counter(this.counterIndex).subscribe((res: ICounter) => this.counter = res);
   }
 
 }
