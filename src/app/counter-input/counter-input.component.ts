@@ -16,7 +16,20 @@ export class CounterInputComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.counterService.counter(this.counterIndex).subscribe((res: ICounter) => this.counter = res);
+    this.counterService
+      .counter(this.counterIndex)
+      .subscribe((res: ICounter) => this.counter = res);
   }
 
+  public decrement(): void {
+    this.counterService
+      .decrementCounter(this.counterIndex, 1)
+      .subscribe((res: ICounter) => this.counter = res);
+  }
+
+  public increment(): void {
+    this.counterService
+      .incrementCounter(this.counterIndex, 1)
+      .subscribe((res: ICounter) => this.counter = res);
+  }
 }

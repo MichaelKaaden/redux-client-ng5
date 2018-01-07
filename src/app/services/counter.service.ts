@@ -45,15 +45,55 @@ export class CounterService {
       .catch(this.errorHandler);
   }
 
+  /**
+   * Decrements a counter's value on the API server.
+   *
+   * @param index The counter's index
+   * @param by The value by which the counter is decremented
+   * @returns {Observable<ICounter>}
+   */
+  public decrementCounter(index: number, by: number): Observable<ICounter> {
+    return this.http
+      .put<IEnvelope>(`${this.BASE_URL}/counters/${index}/decrement`, {by})
+      .map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value))
+      .catch(this.errorHandler);
+  }
+
+  /**
+   * Increments a counter's value on the API server.
+   *
+   * @param index The counter's index
+   * @param by The value by which the counter is incremented
+   * @returns {Observable<ICounter>}
+   */
+  public incrementCounter(index: number, by: number): Observable<ICounter> {
+    return this.http
+      .put<IEnvelope>(`${this.BASE_URL}/counters/${index}/increment`, {by})
+      .map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value))
+      .catch(this.errorHandler);
+  }
+
+  /**
+   * Handle HTTP errors.
+   *
+   * @param {Error | any} error
+   * @returns {Observable<any>}
+   */
+  private errorHandler(error: Error | any): Observable<any> {
+    return Observable.throw(error);
+  }
+
+  /**
+   * Convert conters as returned by the API into Counter instances.
+   *
+   * @param {ICounterRaw[]} rawCounters
+   * @returns {ICounter[]}
+   */
   private rawCountersToCounters(rawCounters: ICounterRaw[]): ICounter[] {
     const counters: ICounter[] = [];
     for (const rc of rawCounters) {
       counters.push(new Counter(rc.index, rc.value));
     }
     return counters;
-  }
-
-  private errorHandler(error: Error | any): Observable<any> {
-    return Observable.throw(error);
   }
 }
