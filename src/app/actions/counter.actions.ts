@@ -11,6 +11,7 @@ export enum TypeKeys {
   INCREMENTED = "INCREMENTED",
   LOADED = "LOADED",
   LOADING = "LOADING",
+  SAVED = "SAVED",
   SAVING = "SAVING",
   OTHER_ACTION = "__any_other_action_type__",
 }
@@ -63,6 +64,17 @@ export interface ILoadingAction {
 }
 
 /**
+ * Interface for the saved action.
+ */
+export interface ISavedAction {
+  type: TypeKeys.SAVED;
+  payload: {
+    index: number;
+    counter: ICounter;
+  };
+}
+
+/**
  * Interface for the saving action.
  */
 export interface ISavingAction {
@@ -81,11 +93,15 @@ export interface IOtherAction {
   type: TypeKeys.OTHER_ACTION;
 }
 
+/**
+ * Type for all the actions above
+ */
 export type ActionTypes =
   | IDecrementedCounterAction
   | IIncrementedCounterAction
   | ILoadedAction
   | ILoadingAction
+  | ISavedAction
   | ISavingAction
   | IOtherAction;
 
