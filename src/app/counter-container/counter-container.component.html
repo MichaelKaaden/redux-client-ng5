@@ -1,7 +1,7 @@
 <section class="mat-typography">
   <h2>Counter #{{ counterIndex }}</h2>
 
-  <mk-counter-heading [counterIndex]="counterIndex"></mk-counter-heading>
+  <mk-counter-heading [counterIndex]="counterIndex" [counter]="counter$ | async"></mk-counter-heading>
 
-  <mk-counter-input [counterIndex]="counterIndex"></mk-counter-input>
+  <mk-counter-input [counterIndex]="counterIndex" [counter]="counter$ | async"></mk-counter-input>
 </section>
