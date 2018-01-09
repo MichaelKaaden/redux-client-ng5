@@ -1,16 +1,16 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
 import { ICounter } from "../models/counter";
 import { CounterService } from "../services/counter.service";
 
 @Component({
   selector: "mk-counter-input",
   templateUrl: "./counter-input.component.html",
-  styleUrls: ["./counter-input.component.css"]
+  styleUrls: ["./counter-input.component.css"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CounterInputComponent implements OnInit {
+  @Input() counter: ICounter;
   @Input() counterIndex: number;
-
-  public counter: ICounter;
 
   constructor(private counterService: CounterService) {
   }
