@@ -3,5 +3,6 @@
 
   <mk-counter-heading [counterIndex]="counterIndex" [counter]="counter$ | async"></mk-counter-heading>
 
-  <mk-counter-input [counterIndex]="counterIndex" [counter]="counter$ | async"></mk-counter-input>
+  <mk-counter-input [counterIndex]="counterIndex" [counter]="counter$ | async"
+                    [decrementFunc]="decrement" [incrementFunc]="increment" [loadFunc]="load"></mk-counter-input>
 </section>

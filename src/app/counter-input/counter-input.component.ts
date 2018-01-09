@@ -11,25 +11,22 @@ import { CounterService } from "../services/counter.service";
 export class CounterInputComponent implements OnInit {
   @Input() counter: ICounter;
   @Input() counterIndex: number;
+  @Input() decrementFunc: (by: number) => void;
+  @Input() incrementFunc: (by: number) => void;
+  @Input() loadFunc: () => void;
 
   constructor(private counterService: CounterService) {
   }
 
   ngOnInit() {
-    this.counterService
-      .counter(this.counterIndex)
-      .subscribe((res: ICounter) => this.counter = res);
+    this.loadFunc();
   }
 
   public decrement(): void {
-    this.counterService
-      .decrementCounter(this.counterIndex, 1)
-      .subscribe((res: ICounter) => this.counter = res);
+    this.decrementFunc(1);
   }
 
   public increment(): void {
-    this.counterService
-      .incrementCounter(this.counterIndex, 1)
-      .subscribe((res: ICounter) => this.counter = res);
+    this.incrementFunc(1);
   }
 }
