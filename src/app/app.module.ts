@@ -3,6 +3,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { createLogger } from "redux-logger";
+import thunk from "redux-thunk";
+import { CounterActionCreatorService } from "./actions/counter.action-creator.service";
 
 import { AppComponent } from "./app.component";
 import { CounterContainerComponent } from "./counter-container/counter-container.component";
@@ -27,7 +29,10 @@ import { CounterService } from "./services/counter.service";
     NgReduxModule,
     MaterialModule,
   ],
-  providers: [CounterService],
+  providers: [
+    CounterService,
+    CounterActionCreatorService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
@@ -41,7 +46,11 @@ export class AppModule {
     ngRedux.configureStore(
       rootReducer,
       INITIAL_STATE,
-      [createLogger()],
+      // [createLogger()],
+      [
+        thunk,
+        createLogger(),
+      ],
       storeEnhancers);
   }
 }
