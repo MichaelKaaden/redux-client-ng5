@@ -22,6 +22,8 @@ export class CounterContainerComponent implements OnInit {
 
   ngOnInit() {
     this.load();
+
+    // select counter with matching index
     this.counter$ = this.redux.select((state: IAppState) =>
       state.counters.all.find((item: ICounter) =>
         item.index === this.counterIndex));
