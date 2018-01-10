@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import "rxjs/add/operator/catch";
+import "rxjs/add/operator/delay";
 import "rxjs/add/operator/map";
 import { Observable } from "rxjs/Observable";
 import { environment } from "../../environments/environment";
@@ -16,6 +17,7 @@ interface IEnvelope {
 export class CounterService {
   private readonly API_HOME = ""; // one would use /restApi/v3 here, for example
   private readonly BASE_URL: string = environment.apiServer + this.API_HOME;
+  private readonly DELAY = 0; // delay before the HTTP call is done
 
   constructor(private http: HttpClient) {
   }
@@ -29,6 +31,7 @@ export class CounterService {
   public counter(index: number): Observable<ICounter> {
     return this.http
       .get<IEnvelope>(`${this.BASE_URL}/counters/${index}`)
+      .delay(this.DELAY)
       .map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value))
       .catch(this.errorHandler);
   }
@@ -41,6 +44,7 @@ export class CounterService {
   public counters(): Observable<ICounter[]> {
     return this.http
       .get<IEnvelope>(`${this.BASE_URL}/counters`)
+      .delay(this.DELAY)
       .map((result: IEnvelope) => this.rawCountersToCounters(result.data.counters))
       .catch(this.errorHandler);
   }
@@ -55,6 +59,7 @@ export class CounterService {
   public decrementCounter(index: number, by: number): Observable<ICounter> {
     return this.http
       .put<IEnvelope>(`${this.BASE_URL}/counters/${index}/decrement`, {by})
+      .delay(this.DELAY)
       .map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value))
       .catch(this.errorHandler);
   }
@@ -69,6 +74,7 @@ export class CounterService {
   public incrementCounter(index: number, by: number): Observable<ICounter> {
     return this.http
       .put<IEnvelope>(`${this.BASE_URL}/counters/${index}/increment`, {by})
+      .delay(this.DELAY)
       .map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value))
       .catch(this.errorHandler);
   }
