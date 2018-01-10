@@ -84,6 +84,12 @@ export class CounterActionCreatorService {
       return;
     }
 
+    // don't load the counter if it's already loaded
+    const cachedCounter: ICounter = getState().counters.all.find((item: ICounter) => item.index === index);
+    if (cachedCounter) {
+      return;
+    }
+
     // set "loading" for this counter
     dispatch(this.buildLoadingAction(index));
 
