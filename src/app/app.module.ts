@@ -14,6 +14,7 @@ import { MaterialModule } from "./material-module";
 import { IAppState, INITIAL_STATE } from "./models/app-state";
 import { rootReducer } from "./reducers/reducers";
 import { CounterService } from "./services/counter.service";
+import { ProgressComponent } from "./progress/progress.component";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { CounterService } from "./services/counter.service";
     AppComponent,
     CounterContainerComponent,
     CounterHeadingComponent,
-    CounterInputComponent
+    CounterInputComponent,
+    ProgressComponent
   ],
   imports: [
     BrowserModule,
