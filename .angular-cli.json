@@ -19,7 +19,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "mk",
       "styles": [
-        "styles.css"
+        "styles.css",
+        "material-custom.scss"
       ],
       "scripts": [
         "../node_modules/hammerjs/hammer.min.js"
