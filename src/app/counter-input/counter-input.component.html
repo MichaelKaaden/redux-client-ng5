@@ -1,11 +1,12 @@
 <mk-progress [isLoading]="counter?.isLoading || counter?.isSaving">
-  <button mat-fab color="primary" (click)="decrement()">
+  <button mat-raised-button color="primary" (click)="decrement()">
     <mat-icon>arrow_back</mat-icon>
   </button>
 
-  <span style="font-size: 36px">&nbsp;{{ counter?.value }}&nbsp;</span>
+  <span style="font-size: 24px">&nbsp;{{ counter?.value }}&nbsp;</span>
+  <span style="font-size: 24px">&nbsp;{{ counter?.value }}&nbsp;</span>
 
-  <button mat-fab color="primary" (click)="increment()">
+  <button mat-raised-button color="primary" (click)="increment()">
     <mat-icon>arrow_forward</mat-icon>
   </button>
 </mk-progress>
