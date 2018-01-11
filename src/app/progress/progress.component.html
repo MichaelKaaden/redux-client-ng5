@@ -1,4 +1,4 @@
-<span *ngIf="isLoading; else transcludedContent">
+<span *ngIf="showProgress; else transcludedContent">
   <mat-progress-spinner mode="indeterminate"
                         diameter="{{ diameter }}"></mat-progress-spinner>
 </span>
