@@ -1,3 +1,4 @@
+import { NgReduxRouter, NgReduxRouterModule } from "@angular-redux/router";
 import { DevToolsExtension, NgRedux, NgReduxModule } from "@angular-redux/store";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
@@ -37,6 +38,7 @@ import { CounterService } from "./services/counter.service";
     AppRoutingModule,
     HttpClientModule,
     NgReduxModule,
+    NgReduxRouterModule.forRoot(),
     MaterialModule,
   ],
   providers: [
@@ -46,8 +48,9 @@ import { CounterService } from "./services/counter.service";
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(ngRedux: NgRedux<IAppState>,
-              devTools: DevToolsExtension) {
+  constructor(devTools: DevToolsExtension,
+              ngRedux: NgRedux<IAppState>,
+              ngReduxRouter: NgReduxRouter) {
     const storeEnhancers = devTools.isEnabled() ? [devTools.enhancer()] : [];
 
     // Tell @angular-redux/store about our rootReducer and our
@@ -62,5 +65,6 @@ export class AppModule {
         createLogger(),
       ],
       storeEnhancers);
+    ngReduxRouter.initialize();
   }
 }
