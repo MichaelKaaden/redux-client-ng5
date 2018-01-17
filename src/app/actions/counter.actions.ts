@@ -10,7 +10,9 @@ export enum TypeKeys {
   DECREMENTED = "DECREMENTED",
   INCREMENTED = "INCREMENTED",
   LOADED = "LOADED",
+  LOADED_ALL = "LOADED_ALL",
   LOADING = "LOADING",
+  LOADING_ALL = "LOADING_ALL",
   SAVED = "SAVED",
   SAVING = "SAVING",
   OTHER_ACTION = "__any_other_action_type__",
@@ -54,6 +56,16 @@ export interface ILoadedAction {
 }
 
 /**
+ * Interface for the loaded all counters action.
+ */
+export interface ILoadedAllAction {
+  type: TypeKeys.LOADED_ALL;
+  payload: {
+    counters: ICounter[];
+  };
+}
+
+/**
  * Interface for the loading action.
  */
 export interface ILoadingAction {
@@ -61,6 +73,13 @@ export interface ILoadingAction {
   payload: {
     index: number;
   };
+}
+
+/**
+ * Interface for the loading all counters action.
+ */
+export interface ILoadingAllAction {
+  type: TypeKeys.LOADING_ALL;
 }
 
 /**
@@ -100,7 +119,9 @@ export type ActionTypes =
   | IDecrementedCounterAction
   | IIncrementedCounterAction
   | ILoadedAction
+  | ILoadedAllAction
   | ILoadingAction
+  | ILoadingAllAction
   | ISavedAction
   | ISavingAction
   | IOtherAction;

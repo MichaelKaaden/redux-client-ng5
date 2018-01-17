@@ -6,8 +6,8 @@ import { IAppState } from "../models/app-state";
 import { Counter, ICounter } from "../models/counter";
 import { CounterService } from "../services/counter.service";
 import {
-  IDecrementedCounterAction, IIncrementedCounterAction, ILoadedAction, ILoadingAction, ISavingAction,
-  TypeKeys
+  IDecrementedCounterAction, IIncrementedCounterAction, ILoadedAction, ILoadedAllAction, ILoadingAction, ILoadingAllAction,
+  ISavingAction, TypeKeys
 } from "./counter.actions";
 
 // own type to make typing easier
@@ -102,6 +102,27 @@ export class CounterActionCreatorService {
         `retrieving the counter failed with ${error.error instanceof Error ? error.error.message : error.error}`));
   };
 
+  /**
+   * Thunk: Load all counters from the RESTful Web Service.
+   *
+   * @returns {Thunk}
+   */
+  public loadAll = (): Thunk => (dispatch: Dispatch<IAppState>, getState: () => IAppState) => {
+    // set "loading" for this counter
+    dispatch(this.buildLoadingAllAction());
+
+    this.counterService.counters()
+      .subscribe((cs: ICounter[]) => {
+        const counters = [];
+        for (let c of cs) {
+          counters.push(new Counter(c.index, c.value));
+        }
+        dispatch(this.buildLoadedAllAction(counters));
+      }, (error: HttpErrorResponse) => this.logError(
+        "loadAll",
+        `retrieving all counters failed with ${error.error instanceof Error ? error.error.message : error.error}`));
+  };
+
   /*
    * Helper functions
    */
@@ -136,12 +157,27 @@ export class CounterActionCreatorService {
     };
   }
 
+  private buildLoadedAllAction(counters: ICounter[]): ILoadedAllAction {
+    return {
+      type: TypeKeys.LOADED_ALL,
+      payload: {
+        counters,
+      }
+    };
+  }
+
   private buildLoadingAction(index: number): ILoadingAction {
     return {
       type: TypeKeys.LOADING,
       payload: {
         index,
       },
+    };
+  }
+
+  private buildLoadingAllAction(): ILoadingAllAction {
+    return {
+      type: TypeKeys.LOADING_ALL,
     };
   }
 

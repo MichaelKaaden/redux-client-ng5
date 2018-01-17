@@ -48,6 +48,27 @@ export function counterReducer(state: ICounterState = INITIAL_COUNTERS_STATE, ac
         }),
       };
 
+    case TypeKeys.LOADED_ALL:
+      const countersToAdd: ICounter[] = [];
+      for (const c of action.payload.counters) {
+        if (!state.all.find((item) => item.index === c.index)) {
+          countersToAdd.push(c);
+        }
+      }
+
+      // copy the state and add the recently loaded counters
+      newCounters = state.all.map((item) => item).concat(countersToAdd);
+
+      // sort the state by counter index
+      newCounters = newCounters.sort((a: ICounter, b: ICounter) => {
+        return a.index - b.index;
+      });
+
+      // return the resulting state
+      return {
+        all: newCounters,
+      };
+
     case TypeKeys.LOADING:
       /*
        * This is the only case where the counter does probably not yet exist.
@@ -76,6 +97,9 @@ export function counterReducer(state: ICounterState = INITIAL_COUNTERS_STATE, ac
       return {
         all: newCounters,
       };
+
+    case TypeKeys.LOADING_ALL:
+      return state;
 
     case TypeKeys.SAVING:
       /*
