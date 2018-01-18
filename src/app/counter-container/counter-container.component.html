@@ -1,12 +1,13 @@
-<section class="counter-container">
-  <h2>Counter #{{ counterIndex }}</h2>
+<mat-card>
+  <mat-card-title>Counter #{{ counterIndex }}</mat-card-title>
+  <mat-card-content>
+    <mk-counter-heading [counterIndex]="counterIndex"
+                        [counter]="counter$ | async"></mk-counter-heading>
 
-  <mk-counter-heading [counterIndex]="counterIndex"
-                      [counter]="counter$ | async"></mk-counter-heading>
-
-  <mk-counter-input [counterIndex]="counterIndex"
-                    [counter]="counter$ | async"
-                    [decrementFunc]="decrement"
-                    [incrementFunc]="increment"
-                    [loadFunc]="load"></mk-counter-input>
-</section>
+    <mk-counter-input [counterIndex]="counterIndex"
+                      [counter]="counter$ | async"
+                      [decrementFunc]="decrement"
+                      [incrementFunc]="increment"
+                      [loadFunc]="load"></mk-counter-input>
+  </mat-card-content>
+</mat-card>
