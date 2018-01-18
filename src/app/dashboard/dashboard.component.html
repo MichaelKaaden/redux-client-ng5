@@ -1,3 +1,5 @@
-<p>
-  dashboard works!
-</p>
+<section class="dashboard">
+  <p>Counter sum: {{ counterValueSum$ | async }}</p>
+  <p>Counter length: {{ numOfCounters | async }}</p>
+  <p>Average counter value: {{ averageCounterValue$ | async }}</p>
+</section>
