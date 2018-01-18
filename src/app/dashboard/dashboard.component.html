@@ -1,5 +1,22 @@
-<section class="dashboard">
-  <p>Sum of all counters: {{ counterValueSum$ | async }}</p>
-  <p>Number of counters: {{ numOfCounters | async }}</p>
-  <p>Average counter value: {{ averageCounterValue$ | async }}</p>
-</section>
+<mat-grid-list cols="3">
+  <mat-grid-tile>
+    <mat-card>
+      <mat-card-title>Sum of all counters</mat-card-title>
+      <mat-card-content>{{ counterValueSum$ | async }}</mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <mat-card>
+      <mat-card-title>Number of counters</mat-card-title>
+      <mat-card-content>{{ numOfCounters | async }}</mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <mat-card>
+      <mat-card-title>Average counter value</mat-card-title>
+      <mat-card-content>{{ averageCounterValue$ | async }}</mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

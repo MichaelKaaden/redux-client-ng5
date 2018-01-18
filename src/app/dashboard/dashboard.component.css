@@ -1,4 +1,9 @@
-.dashboard {
-  padding-top: 2em;
-  padding-bottom: 2em;
+mat-card-title {
+  font-weight: bold;
+}
+
+mat-card-content {
+  padding-top: 20px;
+  text-align: center;
+  font-size: 400%;
 }
