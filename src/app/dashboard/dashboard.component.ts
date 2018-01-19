@@ -31,12 +31,9 @@ export class DashboardComponent implements OnInit {
     this.numOfCounters = this.redux.select((state: IAppState) => state.counters.all.length);
     this.counterValueSum$ = this.redux.select((state: IAppState) =>
       state.counters.all.reduce((accumulator: number, current: ICounter) => accumulator + current.value, 0));
-    this.averageCounterValue$ = Observable.combineLatest(
-      this.counterValueSum$,
-      this.numOfCounters,
-      (sum, len) => {
-        return (len && len !== 0) ? (sum / len).toFixed(2) : 0;
-      });
+    this.averageCounterValue$ = Observable.combineLatest(this.counterValueSum$, this.numOfCounters, (sum, len) => {
+      return (len && len !== 0) ? Number.parseFloat((sum / len).toFixed(2)) : 0;
+    });
   }
 
   // needed to capture "this" properly
