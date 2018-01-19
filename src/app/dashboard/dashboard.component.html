@@ -2,21 +2,27 @@
   <mat-grid-tile>
     <mat-card>
       <mat-card-title>Sum of all counters</mat-card-title>
+      <br>
       <mat-card-content>{{ counterValueSum$ | async }}</mat-card-content>
+      <br>
     </mat-card>
   </mat-grid-tile>
 
   <mat-grid-tile>
     <mat-card>
       <mat-card-title>Number of counters</mat-card-title>
+      <br>
       <mat-card-content>{{ numOfCounters | async }}</mat-card-content>
+      <br>
     </mat-card>
   </mat-grid-tile>
 
   <mat-grid-tile>
     <mat-card>
       <mat-card-title>Average counter value</mat-card-title>
+      <br>
       <mat-card-content>{{ averageCounterValue$ | async }}</mat-card-content>
+      <br>
     </mat-card>
   </mat-grid-tile>
 </mat-grid-list>
