@@ -15,7 +15,7 @@ import { ICounter } from "../models/counter";
 })
 export class DashboardComponent implements OnInit {
   public averageCounterValue$: Observable<number>;
-  public counter$: Observable<ICounter[]>;
+  public counters$: Observable<ICounter[]>;
   public counterValueSum$: Observable<number>;
   public numOfCounters: Observable<number>;
 
@@ -27,14 +27,16 @@ export class DashboardComponent implements OnInit {
     this.loadAll();
 
     // select counter with matching index
-    this.counter$ = this.redux.select((state: IAppState) => state.counters.all);
+    this.counters$ = this.redux.select((state: IAppState) => state.counters.all);
     this.numOfCounters = this.redux.select((state: IAppState) => state.counters.all.length);
     this.counterValueSum$ = this.redux.select((state: IAppState) =>
       state.counters.all.reduce((accumulator: number, current: ICounter) => accumulator + current.value, 0));
     this.averageCounterValue$ = Observable.combineLatest(
       this.counterValueSum$,
       this.numOfCounters,
-      (sum, len) => (len && len !== 0) ? sum / len : 0);
+      (sum, len) => {
+        return (len && len !== 0) ? (sum / len).toFixed(2) : 0;
+      });
   }
 
   // needed to capture "this" properly
