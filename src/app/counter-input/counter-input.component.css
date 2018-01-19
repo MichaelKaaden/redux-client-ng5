@@ -2,3 +2,7 @@ div {
   text-align: center;
   width: 320px;
 }
+
+mk-progress > span {
+  font-size: 800%;
+}
