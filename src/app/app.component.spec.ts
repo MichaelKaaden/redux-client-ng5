@@ -41,4 +41,11 @@ describe("AppComponent", () => {
   it("should contain a navigation bar", async(() => {
     expect(compiled.querySelector("nav")).not.toBe(null);
   }));
+
+  it("should have links in the navigation bar", async(() => {
+    const links = compiled.querySelectorAll("nav a");
+    expect(links.length).toBe(2);
+    expect(links[0].href).toMatch(/\/counters/);
+    expect(links[1].href).toMatch(/\/dashboard/);
+  }));
 });
