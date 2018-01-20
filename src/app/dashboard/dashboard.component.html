@@ -1,18 +1,18 @@
 <mat-grid-list cols="3">
   <mat-grid-tile>
     <mat-card>
-      <mat-card-title>Sum of all counters</mat-card-title>
+      <mat-card-title>Number of counters</mat-card-title>
       <br>
-      <mat-card-content>{{ counterValueSum$ | async }}</mat-card-content>
+      <mat-card-content>{{ numOfCounters | async }}</mat-card-content>
       <br>
     </mat-card>
   </mat-grid-tile>
 
   <mat-grid-tile>
     <mat-card>
-      <mat-card-title>Number of counters</mat-card-title>
+      <mat-card-title>Counters sum up to</mat-card-title>
       <br>
-      <mat-card-content>{{ numOfCounters | async }}</mat-card-content>
+      <mat-card-content>{{ counterValueSum$ | async }}</mat-card-content>
       <br>
     </mat-card>
   </mat-grid-tile>
