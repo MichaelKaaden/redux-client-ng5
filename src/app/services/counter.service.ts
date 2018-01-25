@@ -7,7 +7,7 @@ import { Observable } from "rxjs/Observable";
 import { environment } from "../../environments/environment";
 import { Counter, ICounter, ICounterRaw } from "../models/counter";
 
-interface IEnvelope {
+export interface IEnvelope {
   data: any;
   message: string;
   status: number;
