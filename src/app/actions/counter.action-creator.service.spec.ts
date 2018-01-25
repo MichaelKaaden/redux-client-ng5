@@ -1,8 +1,8 @@
-import { TestBed, inject } from "@angular/core/testing";
+import { inject, TestBed } from "@angular/core/testing";
 
 import { CounterActionCreatorService } from "./counter.action-creator.service";
 
-describe("CounterActionCreatorService", () => {
+xdescribe("CounterActionCreatorService", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [CounterActionCreatorService]
