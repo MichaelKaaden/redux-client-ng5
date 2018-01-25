@@ -1,5 +1,5 @@
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
-import { getTestBed, TestBed } from "@angular/core/testing";
+import { async, getTestBed, TestBed } from "@angular/core/testing";
 import { environment } from "../../environments/environment";
 import { Counter, ICounter } from "../models/counter";
 
@@ -30,18 +30,20 @@ describe("CounterService", () => {
     expect(service).toBeTruthy();
   });
 
-  it("should retrieve counter 0", () => {
+  it("should retrieve counter 0", async(() => {
     const index = 0;
     const result: IEnvelope = {
       message: "Okay",
       status: 200,
-      data: new Counter(index, 42),
+      data: {
+        counter: new Counter(index, 42),
+      },
     };
 
     // make the HTTP request via the service
     service.counter(index).subscribe((counter: ICounter) => {
       console.log(`counter is ${JSON.stringify(counter)}`);
-      expect(counter.value).toBe(41);
+      expect(counter.value).toBe(42);
     });
 
     // the request is pending, therefor expect that it sometimes happens
@@ -50,5 +52,5 @@ describe("CounterService", () => {
 
     // fulfill the request by transmitting a response
     req.flush(result);
-  });
+  }));
 });
