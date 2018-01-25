@@ -30,27 +30,46 @@ describe("CounterService", () => {
     expect(service).toBeTruthy();
   });
 
-  it("should retrieve counter 0", async(() => {
+  it("should correctly retrieve counter 0", async(() => {
     const index = 0;
-    const result: IEnvelope = {
+    const value = 42;
+    const dummyEnvelope: IEnvelope = {
       message: "Okay",
       status: 200,
       data: {
-        counter: new Counter(index, 42),
+        counter: new Counter(index, value),
       },
     };
 
     // make the HTTP request via the service
     service.counter(index).subscribe((counter: ICounter) => {
-      console.log(`counter is ${JSON.stringify(counter)}`);
-      expect(counter.value).toBe(42);
+      expect(counter.index).toBe(index, "index doesn't match");
+      expect(counter.value).toBe(value, "value doesn't match");
     });
 
     // the request is pending, therefor expect that it sometimes happens
     const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}`);
-    expect(req.request.method).toBe("GET");
+    expect(req.request.method).toBe("GET", "expect a GET request");
 
     // fulfill the request by transmitting a response
-    req.flush(result);
+    req.flush(dummyEnvelope);
+  }));
+
+  it("should deal with errors retrieving counter 0", async(() => {
+    const index = 0;
+
+    // make the HTTP request via the service
+    service.counter(index).subscribe((counter: ICounter) => {
+      expect(counter).toBeUndefined("shouldn't run into this succes case");
+    }, (error => {
+      expect(error).toBeDefined("should receive an error");
+    }));
+
+    // the request is pending, therefor expect that it sometimes happens
+    const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}`);
+    expect(req.request.method).toBe("GET", "expect a GET request");
+
+    // fulfill the request by transmitting an error
+    req.error(new ErrorEvent("some error"));
   }));
 });
