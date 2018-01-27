@@ -83,17 +83,6 @@ export interface ILoadingAllAction {
 }
 
 /**
- * Interface for the saved action.
- */
-export interface ISavedAction {
-  type: TypeKeys.SAVED;
-  payload: {
-    index: number;
-    counter: ICounter;
-  };
-}
-
-/**
  * Interface for the saving action.
  */
 export interface ISavingAction {
@@ -122,7 +111,6 @@ export type ActionTypes =
   | ILoadedAllAction
   | ILoadingAction
   | ILoadingAllAction
-  | ISavedAction
   | ISavingAction
   | IOtherAction;
 
