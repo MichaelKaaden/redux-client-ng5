@@ -1,4 +1,11 @@
-import { IDecrementedCounterAction, IIncrementedCounterAction, ILoadedAction, ILoadingAction, TypeKeys } from "../actions/counter.actions";
+import {
+  IDecrementedCounterAction,
+  IIncrementedCounterAction,
+  ILoadedAction,
+  ILoadedAllAction,
+  ILoadingAction,
+  TypeKeys
+} from "../actions/counter.actions";
 import { ICounterState, INITIAL_COUNTERS_STATE } from "../models/app-state";
 import { Counter, ICounter } from "../models/counter";
 import { counterReducer } from "./counter.reducer";
@@ -14,6 +21,7 @@ describe("Counter Reducer function", () => {
   let incrementedCounterAction: IIncrementedCounterAction;
   let loadingAction: ILoadingAction;
   let loadedAction: ILoadedAction;
+  let loadedAllAction: ILoadedAllAction;
 
   beforeEach(() => {
     state = INITIAL_COUNTERS_STATE;
@@ -24,7 +32,6 @@ describe("Counter Reducer function", () => {
     anotherCounter = new Counter(index - 1, value - 1);
     yetAnotherCounter = new Counter(index + 1, value + 1);
 
-    // result of the decrement action
     decrementedCounterAction = {
       type: TypeKeys.DECREMENTED,
       payload: {
@@ -32,8 +39,6 @@ describe("Counter Reducer function", () => {
         counter: new Counter(index, value - 1),
       },
     };
-
-    // result of the increment action
     incrementedCounterAction = {
       type: TypeKeys.INCREMENTED,
       payload: {
@@ -41,14 +46,12 @@ describe("Counter Reducer function", () => {
         counter: new Counter(index, value + 1),
       },
     };
-
     loadingAction = {
       type: TypeKeys.LOADING,
       payload: {
         index,
       }
     };
-
     loadedAction = {
       type: TypeKeys.LOADED,
       payload: {
@@ -56,9 +59,15 @@ describe("Counter Reducer function", () => {
         counter,
       }
     };
+    loadedAllAction = {
+      type: TypeKeys.LOADED_ALL,
+      payload: {
+        counters: [anotherCounter, counter, yetAnotherCounter],
+      },
+    };
   });
 
-  describe("for the decremented action", () => {
+  describe("decremented action", () => {
     it("should not decrement a counter not in the app state", () => {
       const result = counterReducer(state, decrementedCounterAction);
 
@@ -107,7 +116,7 @@ describe("Counter Reducer function", () => {
     });
   });
 
-  describe("for the incremented action", () => {
+  describe("incremented action", () => {
     it("should not increment a counter not in the app state", () => {
       const result = counterReducer(state, incrementedCounterAction);
 
@@ -157,7 +166,7 @@ describe("Counter Reducer function", () => {
 
   });
 
-  describe("for the loading action", () => {
+  describe("loading action", () => {
     it("should add a counter if the app state is empty", () => {
       const result = counterReducer(state, loadingAction);
 
@@ -227,7 +236,7 @@ describe("Counter Reducer function", () => {
     });
   });
 
-  describe("for the loaded action", () => {
+  describe("loaded action", () => {
     it("should set the properties for the placeholder counter as single counter in the array", () => {
       const oldCounter = new Counter(index);
       oldCounter.isLoading = true;
@@ -268,6 +277,45 @@ describe("Counter Reducer function", () => {
       expect(result.all.length).toBe(state.all.length);
       const newCounter = getItemForIndex(result, index);
       expect(newCounter).toBeUndefined();
+    });
+  });
+
+  describe("loaded all action", () => {
+    it("should add all counters to the state", () => {
+      expect(state.all.length).toBe(0);
+
+      const result = counterReducer(state, loadedAllAction);
+
+      expect(result).not.toBe(state);
+      expect(state.all.length).toBe(0);
+      expect(result.all.length).toBe(3);
+      expect(getItemForIndex(result, anotherCounter.index)).toBe(anotherCounter);
+      expect(getItemForIndex(result, counter.index)).toBe(counter);
+      expect(getItemForIndex(result, yetAnotherCounter.index)).toBe(yetAnotherCounter);
+    });
+
+    it("should ignore doubles", () => {
+      state = {
+        all: [anotherCounter, counter, yetAnotherCounter],
+      };
+
+      const doubleCounter = new Counter(index, value);
+
+      loadedAllAction.payload = {
+        counters: [doubleCounter]
+      };
+
+      const result = counterReducer(state, loadedAllAction);
+
+      expect(result.all.length).toBe(state.all.length);
+      expect(getItemForIndex(result, counter.index)).toBe(counter);
+      expect(getItemForIndex(result, doubleCounter.index)).toBe(counter);
+    });
+
+    xit("should add counters to existing ones in the state", () => {
+    });
+
+    xit("should sort the counters", () => {
     });
   });
 
