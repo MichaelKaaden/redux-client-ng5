@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { ICounter } from "../models/counter";
-import { CounterService } from "../services/counter.service";
 
 @Component({
   selector: "mk-counter-heading",
@@ -8,14 +7,10 @@ import { CounterService } from "../services/counter.service";
   styleUrls: ["./counter-heading.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CounterHeadingComponent implements OnInit {
+export class CounterHeadingComponent {
   @Input() counter: ICounter;
   @Input() counterIndex: number;
 
-  constructor(private counterService: CounterService) {
-  }
-
-  ngOnInit() {
-    this.counterService.counter(this.counterIndex).subscribe((res: ICounter) => this.counter = res);
+  constructor() {
   }
 }

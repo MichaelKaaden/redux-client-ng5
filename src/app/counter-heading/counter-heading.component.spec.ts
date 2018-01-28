@@ -1,20 +1,11 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import "rxjs/add/observable/of";
-import { Observable } from "rxjs/Observable";
-import { Counter, ICounter } from "../models/counter";
-import { CounterService } from "../services/counter.service";
+import { Counter } from "../models/counter";
 
 import { CounterHeadingComponent } from "./counter-heading.component";
 
 const BASE_VALUE = 30;
-
-const counterServiceStub = {
-  counter: (index: number): Observable<ICounter> => {
-    console.log(`returning counter for index ${index}`);
-    return Observable.of(new Counter(index, index + BASE_VALUE));
-  }
-};
 
 describe("CounterHeadingComponent", () => {
   let component: CounterHeadingComponent;
@@ -26,10 +17,6 @@ describe("CounterHeadingComponent", () => {
     TestBed.configureTestingModule({
       declarations: [CounterHeadingComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      providers: [{
-        provide: CounterService,
-        useValue: counterServiceStub,
-      }],
     })
       .compileComponents();
   }));
@@ -63,15 +50,9 @@ describe("CounterHeadingComponent", () => {
     expect(heading).toContain(`#${index}`);
   });
 
-  it("should read the counter from the Counter service", () => {
-    component.counterIndex = index;
-    fixture.detectChanges();
-    expect(component.counter).toBeDefined();
-    expect(component.counter.index).toBe(index);
-  });
-
   it("should display the counter value", () => {
     component.counterIndex = index;
+    component.counter = new Counter(index, BASE_VALUE + index);
     fixture.detectChanges();
     compiled = fixture.debugElement.nativeElement;
     const heading = compiled.querySelector("h3").textContent;
