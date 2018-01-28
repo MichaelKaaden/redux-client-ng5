@@ -1,25 +1,80 @@
+import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import "rxjs/add/observable/of";
+import { Observable } from "rxjs/Observable";
+import { Counter, ICounter } from "../models/counter";
+import { CounterService } from "../services/counter.service";
 
 import { CounterHeadingComponent } from "./counter-heading.component";
 
-xdescribe("CounterHeadingComponent", () => {
+const BASE_VALUE = 30;
+
+const counterServiceStub = {
+  counter: (index: number): Observable<ICounter> => {
+    console.log(`returning counter for index ${index}`);
+    return Observable.of(new Counter(index, index + BASE_VALUE));
+  }
+};
+
+fdescribe("CounterHeadingComponent", () => {
   let component: CounterHeadingComponent;
   let fixture: ComponentFixture<CounterHeadingComponent>;
+  let compiled: any;
+  let index;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CounterHeadingComponent]
+      declarations: [CounterHeadingComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [{
+        provide: CounterService,
+        useValue: counterServiceStub,
+      }],
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
+    index = 12;
+
     fixture = TestBed.createComponent(CounterHeadingComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it("should create", () => {
     expect(component).toBeTruthy();
+  });
+
+  it("initially, no index is set", () => {
+    expect(component.counterIndex).toBeUndefined();
+  });
+
+  it("should use the correct index", () => {
+    component.counterIndex = index;
+    fixture.detectChanges();
+    expect(component.counterIndex).toBe(index);
+  });
+
+  it("should display the index", () => {
+    component.counterIndex = index;
+    fixture.detectChanges();
+    compiled = fixture.debugElement.nativeElement;
+    const heading = compiled.querySelector("h3").textContent;
+    expect(heading).toContain(`#${index}`);
+  });
+
+  it("should read the counter from the Counter service", () => {
+    component.counterIndex = index;
+    fixture.detectChanges();
+    expect(component.counter).toBeDefined();
+    expect(component.counter.index).toBe(index);
+  });
+
+  it("should display the counter value", () => {
+    component.counterIndex = index;
+    fixture.detectChanges();
+    compiled = fixture.debugElement.nativeElement;
+    const heading = compiled.querySelector("h3").textContent;
+    expect(heading).toContain(`${BASE_VALUE + index}`);
   });
 });
