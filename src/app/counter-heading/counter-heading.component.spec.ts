@@ -16,7 +16,7 @@ const counterServiceStub = {
   }
 };
 
-fdescribe("CounterHeadingComponent", () => {
+describe("CounterHeadingComponent", () => {
   let component: CounterHeadingComponent;
   let fixture: ComponentFixture<CounterHeadingComponent>;
   let compiled: any;
