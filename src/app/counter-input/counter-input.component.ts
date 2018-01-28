@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
 import { ICounter } from "../models/counter";
-import { CounterService } from "../services/counter.service";
 
 @Component({
   selector: "mk-counter-input",
@@ -15,10 +14,13 @@ export class CounterInputComponent implements OnInit {
   @Input() incrementFunc: (by: number) => void;
   @Input() loadFunc: () => void;
 
-  constructor(private counterService: CounterService) {
+  constructor() {
   }
 
   ngOnInit() {
+    if (!this.loadFunc) {
+      throw new Error("no loadFunc specified");
+    }
     this.loadFunc();
   }
 
