@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { ICounter } from "../models/counter";
 
 @Component({
@@ -7,21 +7,13 @@ import { ICounter } from "../models/counter";
   styleUrls: ["./counter-input.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CounterInputComponent implements OnInit {
+export class CounterInputComponent {
   @Input() counter: ICounter;
   @Input() counterIndex: number;
   @Input() decrementFunc: (by: number) => void;
   @Input() incrementFunc: (by: number) => void;
-  @Input() loadFunc: () => void;
 
   constructor() {
-  }
-
-  ngOnInit() {
-    if (!this.loadFunc) {
-      throw new Error("no loadFunc specified");
-    }
-    this.loadFunc();
   }
 
   public decrement(): void {
