@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 
+export const DEFAULT_DELAY = 250;
+
 @Component({
   selector: "mk-progress",
   templateUrl: "./progress.component.html",
@@ -7,7 +9,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class ProgressComponent implements OnInit, OnChanges {
-  @Input() delay = 250;
+  @Input() delay = DEFAULT_DELAY;
   @Input() diameter = 40;
   @Input() isLoading: boolean;
 
