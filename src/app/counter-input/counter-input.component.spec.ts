@@ -57,8 +57,6 @@ describe("CounterInputComponent", () => {
 
   it("should use the correct index", () => {
     component.counterIndex = index;
-    component.loadFunc = () => {
-    };
     fixture.detectChanges();
     expect(component.counterIndex).toBe(index);
   });
@@ -66,8 +64,6 @@ describe("CounterInputComponent", () => {
   it("should display the counter's value", () => {
     component.counterIndex = index;
     component.counter = counter;
-    component.loadFunc = () => {
-    };
     fixture.detectChanges();
     compiled = fixture.debugElement.nativeElement;
     const span = compiled.querySelector("span").textContent;
