@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
 import { Observable } from "rxjs/Observable";
 import { Counter, ICounter } from "../models/counter";
 import { CounterService } from "../services/counter.service";
@@ -69,4 +69,42 @@ describe("CounterInputComponent", () => {
     const span = compiled.querySelector("span").textContent;
     expect(span).toContain(`${BASE_VALUE + index}`);
   });
+
+  it("should use the bound decrement function", fakeAsync(() => {
+    const foo = {
+      decrement: (by: number): void => {
+      }
+    };
+
+    spyOn(foo, "decrement").and.callThrough();
+    component.decrementFunc = foo.decrement;
+    fixture.detectChanges();
+
+    compiled = fixture.debugElement.nativeElement;
+    const button = compiled.querySelector(".decrementButton");
+    button.click();
+    tick();
+    fixture.detectChanges();
+
+    expect(foo.decrement).toHaveBeenCalledWith(1);
+  }));
+
+  it("should use the bound increment function", fakeAsync(() => {
+    const foo = {
+      increment: (by: number): void => {
+      }
+    };
+
+    spyOn(foo, "increment").and.callThrough();
+    component.incrementFunc = foo.increment;
+    fixture.detectChanges();
+
+    compiled = fixture.debugElement.nativeElement;
+    const button = compiled.querySelector(".incrementButton");
+    button.click();
+    tick();
+    fixture.detectChanges();
+
+    expect(foo.increment).toHaveBeenCalledWith(1);
+  }));
 });
