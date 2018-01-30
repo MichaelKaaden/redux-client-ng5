@@ -21,7 +21,7 @@ export class ProgressComponent implements OnInit, OnChanges {
   ngOnInit() {
     setTimeout(() => {
       if (this.isLoading) {
-        console.log(`${this.delay}ms passed, showing progress...`);
+        // console.log(`${this.delay}ms passed, showing progress...`);
         this.showProgress = true;
         this.ref.detectChanges();
       }
@@ -30,7 +30,7 @@ export class ProgressComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.isLoading.previousValue === true) {
-      console.log(`disabling progress.`);
+      // console.log(`disabling progress.`);
       this.showProgress = false;
     }
   }
