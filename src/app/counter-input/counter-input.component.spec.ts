@@ -1,19 +1,10 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
-import { Observable } from "rxjs/Observable";
 import { Counter, ICounter } from "../models/counter";
-import { CounterService } from "../services/counter.service";
 
 import { CounterInputComponent } from "./counter-input.component";
 
 const BASE_VALUE = 60;
-
-const counterServiceStub = {
-  counter: (index: number): Observable<ICounter> => {
-    console.log(`returning counter for index ${index}`);
-    return Observable.of(new Counter(index, index + BASE_VALUE));
-  }
-};
 
 describe("CounterInputComponent", () => {
   let component: CounterInputComponent;
@@ -26,10 +17,6 @@ describe("CounterInputComponent", () => {
     TestBed.configureTestingModule({
       declarations: [CounterInputComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      providers: [{
-        provide: CounterService,
-        useValue: counterServiceStub,
-      }],
     })
       .compileComponents();
   }));
