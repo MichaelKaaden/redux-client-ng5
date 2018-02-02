@@ -1,13 +1,19 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Dispatch } from "redux";
+import { ActionCreator, Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { IAppState } from "../models/app-state";
 import { Counter, ICounter } from "../models/counter";
 import { CounterService } from "../services/counter.service";
 import {
-  IDecrementedCounterAction, IIncrementedCounterAction, ILoadedAction, ILoadedAllAction, ILoadingAction, ILoadingAllAction,
-  ISavingAction, TypeKeys
+  IDecrementedCounterAction,
+  IIncrementedCounterAction,
+  ILoadedAction,
+  ILoadedAllAction,
+  ILoadingAction,
+  ILoadingAllAction,
+  ISavingAction,
+  TypeKeys
 } from "./counter.actions";
 
 // own type to make typing easier
@@ -19,9 +25,6 @@ export class CounterActionCreatorService {
   constructor(private counterService: CounterService) {
   }
 
-  // public decrement(index: number, by = 1) {
-  // }
-
   /**
    * Thunk: Decrement a counter by saving it to the RESTful Web Service.
    *
@@ -31,6 +34,8 @@ export class CounterActionCreatorService {
    */
   public decrement = (index: number, by = 1): Thunk => (dispatch: Dispatch<IAppState>, getState: () => IAppState) => {
     if (index < 0) {
+      // TODO handle errors correctly, see Dan's answer in
+      // https://stackoverflow.com/questions/34403269/what-is-the-best-way-to-deal-with-a-fetch-error-in-react-redux
       this.logError("decrement", `index "${index}" < 0`);
       return;
     }
@@ -40,6 +45,7 @@ export class CounterActionCreatorService {
 
     this.counterService.decrementCounter(index, by)
       .subscribe((c: ICounter) => {
+        console.log("got counter");
         const counter = new Counter(c.index, c.value);
         dispatch(this.buildDecrementedAction(index, counter));
       }, (error: HttpErrorResponse) => this.logError(
@@ -127,7 +133,7 @@ export class CounterActionCreatorService {
    * Helper functions
    */
 
-  private buildDecrementedAction(index: number, counter: ICounter): IDecrementedCounterAction {
+  private buildDecrementedAction: ActionCreator<IDecrementedCounterAction> = (index: number, counter: ICounter) => {
     return {
       type: TypeKeys.DECREMENTED,
       payload: {
@@ -135,9 +141,9 @@ export class CounterActionCreatorService {
         counter,
       },
     };
-  }
+  };
 
-  private buildIncrementedAction(index: number, counter: ICounter): IIncrementedCounterAction {
+  private buildIncrementedAction: ActionCreator<IIncrementedCounterAction> = (index: number, counter: ICounter) => {
     return {
       type: TypeKeys.INCREMENTED,
       payload: {
@@ -145,9 +151,9 @@ export class CounterActionCreatorService {
         counter,
       },
     };
-  }
+  };
 
-  private buildLoadedAction(index: number, counter: ICounter): ILoadedAction {
+  private buildLoadedAction: ActionCreator<ILoadedAction> = (index: number, counter: ICounter) => {
     return {
       type: TypeKeys.LOADED,
       payload: {
@@ -155,40 +161,40 @@ export class CounterActionCreatorService {
         counter,
       },
     };
-  }
+  };
 
-  private buildLoadedAllAction(counters: ICounter[]): ILoadedAllAction {
+  private buildLoadedAllAction: ActionCreator<ILoadedAllAction> = (counters: ICounter[]) => {
     return {
       type: TypeKeys.LOADED_ALL,
       payload: {
         counters,
       }
     };
-  }
+  };
 
-  private buildLoadingAction(index: number): ILoadingAction {
+  private buildLoadingAction: ActionCreator<ILoadingAction> = (index: number) => {
     return {
       type: TypeKeys.LOADING,
       payload: {
         index,
       },
     };
-  }
+  };
 
-  private buildLoadingAllAction(): ILoadingAllAction {
+  private buildLoadingAllAction: ActionCreator<ILoadingAllAction> = () => {
     return {
       type: TypeKeys.LOADING_ALL,
     };
-  }
+  };
 
-  private buildSavingAction(index: number): ISavingAction {
+  private buildSavingAction: ActionCreator<ISavingAction> = (index: number) => {
     return {
       type: TypeKeys.SAVING,
       payload: {
         index,
       },
     };
-  }
+  };
 
   private logError(methodName: string, message: string) {
     console.error(`error in the "${methodName}" action creator: ${message}`);
