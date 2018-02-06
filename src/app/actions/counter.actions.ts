@@ -1,3 +1,4 @@
+import { Action } from "redux";
 import { ICounter } from "../models/counter";
 
 // see https://spin.atomicobject.com/2017/07/24/redux-action-pattern-typescript/
@@ -25,7 +26,7 @@ export enum TypeKeys {
 /**
  * Interface for the decrement action.
  */
-export interface IDecrementedCounterAction {
+export interface IDecrementedCounterAction extends Action {
   type: TypeKeys.DECREMENTED;
   payload: {
     index: number;
@@ -36,7 +37,7 @@ export interface IDecrementedCounterAction {
 /**
  * Interface for the increment action.
  */
-export interface IIncrementedCounterAction {
+export interface IIncrementedCounterAction extends Action {
   type: TypeKeys.INCREMENTED;
   payload: {
     index: number;
@@ -47,7 +48,7 @@ export interface IIncrementedCounterAction {
 /**
  * Interface for the loaded action.
  */
-export interface ILoadedAction {
+export interface ILoadedAction extends Action {
   type: TypeKeys.LOADED;
   payload: {
     index: number;
@@ -58,7 +59,7 @@ export interface ILoadedAction {
 /**
  * Interface for the loaded all counters action.
  */
-export interface ILoadedAllAction {
+export interface ILoadedAllAction extends Action {
   type: TypeKeys.LOADED_ALL;
   payload: {
     counters: ICounter[];
@@ -68,7 +69,7 @@ export interface ILoadedAllAction {
 /**
  * Interface for the loading action.
  */
-export interface ILoadingAction {
+export interface ILoadingAction extends Action {
   type: TypeKeys.LOADING;
   payload: {
     index: number;
@@ -78,14 +79,14 @@ export interface ILoadingAction {
 /**
  * Interface for the loading all counters action.
  */
-export interface ILoadingAllAction {
+export interface ILoadingAllAction extends Action {
   type: TypeKeys.LOADING_ALL;
 }
 
 /**
  * Interface for the saving action.
  */
-export interface ISavingAction {
+export interface ISavingAction extends Action {
   type: TypeKeys.SAVING;
   payload: {
     index: number;
@@ -97,7 +98,7 @@ export interface ISavingAction {
  * this app. TypeScript will warn us if we
  * forget to handle this special action type.
  */
-export interface IOtherAction {
+export interface IOtherAction extends Action {
   type: TypeKeys.OTHER_ACTION;
 }
 
