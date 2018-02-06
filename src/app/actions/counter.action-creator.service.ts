@@ -45,7 +45,6 @@ export class CounterActionCreatorService {
 
     this.counterService.decrementCounter(index, by)
       .subscribe((c: ICounter) => {
-        console.log("got counter");
         const counter = new Counter(c.index, c.value);
         dispatch(this.buildDecrementedAction(index, counter));
       }, (error: HttpErrorResponse) => this.logError(
@@ -120,7 +119,7 @@ export class CounterActionCreatorService {
     this.counterService.counters()
       .subscribe((cs: ICounter[]) => {
         const counters = [];
-        for (let c of cs) {
+        for (const c of cs) {
           counters.push(new Counter(c.index, c.value));
         }
         dispatch(this.buildLoadedAllAction(counters));
