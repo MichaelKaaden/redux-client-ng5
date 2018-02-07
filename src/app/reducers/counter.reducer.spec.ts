@@ -27,6 +27,13 @@ describe("Counter Reducer function", () => {
   let loadingAllAction: ILoadingAllAction;
   let savingAction: ISavingAction;
 
+  /*
+   * Helper function to get a specific counter out of an app state object
+   */
+  const getItemForIndex = (theState: ICounterState, theIndex: number): ICounter => {
+    return theState.all.find((theCounter: ICounter) => theCounter.index === theIndex);
+  };
+
   beforeEach(() => {
     state = INITIAL_COUNTERS_STATE;
     index = 1;
@@ -390,11 +397,4 @@ describe("Counter Reducer function", () => {
       expect(newCounter.isSaving).toBeTruthy();
     });
   });
-
-  /*
-   * Helper function to get a specific counter out of an app state object
-   */
-  const getItemForIndex = (theState: ICounterState, theIndex: number): ICounter => {
-    return theState.all.find((theCounter: ICounter) => theCounter.index === theIndex);
-  };
 });
