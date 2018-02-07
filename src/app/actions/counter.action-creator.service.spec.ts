@@ -62,8 +62,17 @@ describe("CounterActionCreatorService", () => {
   describe("decrement", () => {
 
     it("should not decrement for wrong indices", () => {
-      service.decrement(-1);
-      expect(dispatchSpy).not.toHaveBeenCalled();
+      // call the service under test
+      service.decrement(-1)(dispatchSpy, () => {
+        return {} as IAppState;
+      }, null);
+
+      // check
+      expect(dispatchSpy).toHaveBeenCalledTimes(1);
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: TypeKeys.ERROR,
+        error: `error in the "decrement" action creator: index -1 < 0`
+      });
     });
 
     it("should dispatch a saving and decremented action", () => {
@@ -91,10 +100,11 @@ describe("CounterActionCreatorService", () => {
       });
     });
 
-    it("should handle errors", () => {
+    it("should dispatch errors that occured retrieving data from the REST service", () => {
       // prepare
+      const errorMessage = "some error";
       const decrementCounterSpy = spyOn(counterService, "decrementCounter")
-        .and.returnValue(Observable.throw(new Error("an error")));
+        .and.returnValue(Observable.throw(new Error(errorMessage)));
 
       // call the service under test
       service.decrement(index, by)(dispatchSpy, () => {
@@ -105,8 +115,12 @@ describe("CounterActionCreatorService", () => {
       expect(decrementCounterSpy).toHaveBeenCalledTimes(1);
       expect(decrementCounterSpy).toHaveBeenCalledWith(index, by);
 
-      expect(dispatchSpy).toHaveBeenCalledTimes(1);
+      expect(dispatchSpy).toHaveBeenCalledTimes(2);
       expect(dispatchSpy).toHaveBeenCalledWith(savingAction);
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: TypeKeys.ERROR,
+        error: `error in the "decrement" action creator: decrementing the counter failed with ${errorMessage}`
+      });
     });
   });
 });
