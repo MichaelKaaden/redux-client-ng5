@@ -16,6 +16,8 @@ export enum TypeKeys {
   LOADING_ALL = "LOADING_ALL",
   SAVED = "SAVED",
   SAVING = "SAVING",
+  ERROR = "ERROR",
+  RESET_ERRORS = "RESET_ERRORS",
   OTHER_ACTION = "__any_other_action_type__",
 }
 
@@ -94,6 +96,18 @@ export interface ISavingAction extends Action {
 }
 
 /**
+ * Interface for the error action.
+ */
+export interface IErrorAction extends Action {
+  type: TypeKeys.ERROR;
+  error: string;
+}
+
+export interface IResetErrorsAction extends Action {
+  type: TypeKeys.RESET_ERRORS;
+}
+
+/**
  * Interface for all actions living outside
  * this app. TypeScript will warn us if we
  * forget to handle this special action type.
@@ -113,5 +127,7 @@ export type ActionTypes =
   | ILoadingAction
   | ILoadingAllAction
   | ISavingAction
+  | IErrorAction
+  | IResetErrorsAction
   | IOtherAction;
 
