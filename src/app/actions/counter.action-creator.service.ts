@@ -7,7 +7,6 @@ import { Counter, ICounter } from "../models/counter";
 import { CounterService } from "../services/counter.service";
 import {
   IDecrementedCounterAction,
-  IErrorAction,
   IIncrementedCounterAction,
   ILoadedAction,
   ILoadedAllAction,
@@ -16,6 +15,7 @@ import {
   ISavingAction,
   TypeKeys
 } from "./counter.actions";
+import { ErrorsActionCreatorService } from "./errors.action-creator.service";
 
 // own type to make typing easier
 type Thunk = ThunkAction<void, IAppState, void>;
@@ -23,7 +23,8 @@ type Thunk = ThunkAction<void, IAppState, void>;
 @Injectable()
 export class CounterActionCreatorService {
 
-  constructor(private counterService: CounterService) {
+  constructor(private counterService: CounterService,
+              private errorActionCreatorService: ErrorsActionCreatorService) {
   }
 
   /**
@@ -36,7 +37,7 @@ export class CounterActionCreatorService {
   public decrement = (index: number, by = 1): Thunk =>
     (dispatch: Dispatch<IAppState>, getState: () => IAppState) => {
       if (index < 0) {
-        return dispatch(this.buildErrorAction("decrement", `index ${index} < 0`));
+        return dispatch(this.errorActionCreatorService.buildErrorAction("decrement", `index ${index} < 0`));
       }
 
       // set "saving" for this counter
@@ -47,7 +48,7 @@ export class CounterActionCreatorService {
             const counter = new Counter(c.index, c.value);
             return dispatch(this.buildDecrementedAction(index, counter));
           }, (error: HttpErrorResponse) =>
-            dispatch(this.buildErrorAction("decrement",
+            dispatch(this.errorActionCreatorService.buildErrorAction("decrement",
               `decrementing the counter failed with ${error instanceof Error ? error.message : error}`))
         );
     };
@@ -62,7 +63,7 @@ export class CounterActionCreatorService {
   public increment = (index: number, by = 1): Thunk =>
     (dispatch: Dispatch<IAppState>, getState: () => IAppState) => {
       if (index < 0) {
-        return dispatch(this.buildErrorAction("increment", `index ${index} < 0`));
+        return dispatch(this.errorActionCreatorService.buildErrorAction("increment", `index ${index} < 0`));
       }
 
       // set "saving" for this counter
@@ -73,7 +74,7 @@ export class CounterActionCreatorService {
             const counter = new Counter(c.index, c.value);
             return dispatch(this.buildIncrementedAction(index, counter));
           }, (error: HttpErrorResponse) =>
-            dispatch(this.buildErrorAction("increment",
+            dispatch(this.errorActionCreatorService.buildErrorAction("increment",
               `incrementing the counter failed with ${error instanceof Error ? error.message : error}`))
         );
     };
@@ -87,7 +88,7 @@ export class CounterActionCreatorService {
   public load = (index: number): Thunk =>
     (dispatch: Dispatch<IAppState>, getState: () => IAppState) => {
       if (index < 0) {
-        return dispatch(this.buildErrorAction("load", `index ${index} < 0`));
+        return dispatch(this.errorActionCreatorService.buildErrorAction("load", `index ${index} < 0`));
       }
 
       // don't load the counter if it's already loaded
@@ -104,7 +105,7 @@ export class CounterActionCreatorService {
             const counter = new Counter(c.index, c.value);
             return dispatch(this.buildLoadedAction(index, counter));
           }, (error: HttpErrorResponse) =>
-            dispatch(this.buildErrorAction("load",
+            dispatch(this.errorActionCreatorService.buildErrorAction("load",
               `retrieving the counter failed with ${error instanceof Error ? error.message : error}`))
         );
     };
@@ -127,7 +128,7 @@ export class CounterActionCreatorService {
             }
             return dispatch(this.buildLoadedAllAction(counters));
           }, (error: HttpErrorResponse) =>
-            dispatch(this.buildErrorAction("loadAll",
+            dispatch(this.errorActionCreatorService.buildErrorAction("loadAll",
               `retrieving all counters failed with ${error instanceof Error ? error.message : error}`))
         );
     };
@@ -196,13 +197,6 @@ export class CounterActionCreatorService {
       payload: {
         index,
       },
-    };
-  };
-
-  private buildErrorAction: ActionCreator<IErrorAction> = (methodName: string, message: string) => {
-    return {
-      type: TypeKeys.ERROR,
-      error: `error in the "${methodName}" action creator: ${message}`,
     };
   };
 }

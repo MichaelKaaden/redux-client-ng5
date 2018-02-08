@@ -6,6 +6,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { createLogger } from "redux-logger";
 import thunk from "redux-thunk";
 import { CounterActionCreatorService } from "./actions/counter.action-creator.service";
+import { ErrorsActionCreatorService } from "./actions/errors.action-creator.service";
 import { AppRoutingModule } from "./app-routing.module";
 
 import { AppComponent } from "./app.component";
@@ -14,6 +15,7 @@ import { CounterHeadingComponent } from "./counter-heading/counter-heading.compo
 import { CounterInputComponent } from "./counter-input/counter-input.component";
 import { CounterListComponent } from "./counter-list/counter-list.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
+import { ErrorsComponent } from "./errors/errors.component";
 import { MaterialModule } from "./material-module";
 import { IAppState, INITIAL_STATE } from "./models/app-state";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
@@ -31,7 +33,8 @@ import { CounterService } from "./services/counter.service";
     ProgressComponent,
     CounterListComponent,
     DashboardComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ErrorsComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +47,7 @@ import { CounterService } from "./services/counter.service";
   providers: [
     CounterService,
     CounterActionCreatorService,
+    ErrorsActionCreatorService,
   ],
   bootstrap: [AppComponent]
 })

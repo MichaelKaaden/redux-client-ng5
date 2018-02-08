@@ -8,6 +8,7 @@ import { CounterService } from "../services/counter.service";
 
 import { CounterActionCreatorService } from "./counter.action-creator.service";
 import { TypeKeys } from "./counter.actions";
+import { ErrorsActionCreatorService } from "./errors.action-creator.service";
 
 const BASE_VALUE = 60;
 
@@ -29,6 +30,7 @@ describe("CounterActionCreatorService", () => {
         // dependencies of CounterActionCreatorService, needed for instantiation
         // need to be mocked with spyOn() to test the service under test above
         CounterService,
+        ErrorsActionCreatorService,
         // dependencies of CounterService, needed for instantiation
         // never used because of the spies, therefore may be an empty object
         {

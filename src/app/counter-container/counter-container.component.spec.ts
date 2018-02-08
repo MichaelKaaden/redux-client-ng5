@@ -1,3 +1,4 @@
+import { NgReduxTestingModule } from "@angular-redux/store/lib/testing";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { CounterContainerComponent } from "./counter-container.component";
@@ -8,7 +9,8 @@ xdescribe("CounterContainerComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CounterContainerComponent]
+      declarations: [CounterContainerComponent],
+      imports: [NgReduxTestingModule],
     })
       .compileComponents();
   }));
