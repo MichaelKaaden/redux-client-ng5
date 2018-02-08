@@ -51,7 +51,6 @@ describe("Error reducer function", () => {
 
     const state = errorsReducer(initialState, resetErrorsAction);
 
-    console.log(`state is now ${JSON.stringify(state)}`);
     expect(state.length).toBe(0);
   });
 });
