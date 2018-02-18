@@ -1,4 +1,8 @@
-<h3>Counter #{{ counterIndex }}: Current value is
+<h3>
+  <ng-container
+    i18n="Tell the user the current value|The heading of a counter component@@CounterHeadingComponent:heading">
+    Counter #{{ counterIndex }}: Current value is
+  </ng-container>
   <mk-progress [isLoading]="counter?.isLoading || counter?.isSaving" [diameter]="15">
     {{ counter?.value }}
   </mk-progress>
