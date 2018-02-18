@@ -38,6 +38,36 @@
         <note priority="1" from="description">The heading of a counter component</note>
         <note priority="1" from="meaning">Tell the user the current value</note>
       </trans-unit>
+      <trans-unit id="DashboardComponent:NumOfCounters" datatype="html">
+        <source>
+        Number of counters
+      </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/dashboard/dashboard.component.ts</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">Heading for the card containing the number of counters</note>
+      </trans-unit>
+      <trans-unit id="DashboardComponent:SumOfCounters" datatype="html">
+        <source>Counters sum
+        up to
+      </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/dashboard/dashboard.component.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <note priority="1" from="description">Heading for the card containing the sum over all counters</note>
+      </trans-unit>
+      <trans-unit id="DashboardComponent:AverageOfCounters" datatype="html">
+        <source>
+        Average counter value
+      </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/dashboard/dashboard.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="description">Heading for the card containing the average over all counters</note>
+      </trans-unit>
       <trans-unit id="PageNotFoundComponent:Heading" datatype="html">
         <source>Page Not Found.</source>
         <context-group purpose="location">

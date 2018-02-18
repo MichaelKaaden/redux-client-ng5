@@ -101,6 +101,43 @@
         <target state="translated">Fehlermeldungen löschen
         </target>
       </trans-unit>
+      <trans-unit id="DashboardComponent:NumOfCounters" datatype="html">
+        <source>
+          Number of counters
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/dashboard/dashboard.component.ts</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">Heading for the card containing the number of counters</note>
+        <target state="translated">
+          Anzahl der Zähler
+        </target>
+      </trans-unit>
+      <trans-unit id="DashboardComponent:SumOfCounters" datatype="html">
+        <source>Counters sum up to
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/dashboard/dashboard.component.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <note priority="1" from="description">Heading for the card containing the sum over all counters</note>
+        <target state="translated">Summe über alle Zähler
+        </target>
+      </trans-unit>
+      <trans-unit id="DashboardComponent:AverageOfCounters" datatype="html">
+        <source>
+          Average counter value
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/dashboard/dashboard.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="description">Heading for the card containing the average over all counters</note>
+        <target state="translated">
+          Durchschnitt aller Zähler
+        </target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

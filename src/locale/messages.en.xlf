@@ -96,7 +96,44 @@
           <context context-type="linenumber">11</context>
         </context-group>
         <note priority="1" from="description">Button to delete error messages</note>
-        <target state="final">Reset errors
+        <target state="translated">Reset errors
+        </target>
+      </trans-unit>
+      <trans-unit id="DashboardComponent:NumOfCounters" datatype="html">
+        <source>
+          Number of counters
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/dashboard/dashboard.component.ts</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">Heading for the card containing the number of counters</note>
+        <target state="final">
+          Number of counters
+        </target>
+      </trans-unit>
+      <trans-unit id="DashboardComponent:SumOfCounters" datatype="html">
+        <source>Counters sum up to
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/dashboard/dashboard.component.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <note priority="1" from="description">Heading for the card containing the sum over all counters</note>
+        <target state="final">Counters sum up to
+        </target>
+      </trans-unit>
+      <trans-unit id="DashboardComponent:AverageOfCounters" datatype="html">
+        <source>
+          Average counter value
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/dashboard/dashboard.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="description">Heading for the card containing the average over all counters</note>
+        <target state="final">
+          Average counter value
         </target>
       </trans-unit>
     </body>
