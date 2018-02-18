@@ -33,22 +33,33 @@
         <source>This is an error.</source>
         <note priority="1" from="description">Description of the error</note>
         <target state="translated">Das ist ein Fehler.</target>
-      <context-group purpose="location"><context context-type="sourcefile">app/page-not-found/page-not-found.component.ts</context><context context-type="linenumber">3</context></context-group></trans-unit>
-    <trans-unit id="PageNotFoundComponent:Confirmation" datatype="html">
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/page-not-found/page-not-found.component.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="PageNotFoundComponent:Confirmation" datatype="html">
         <source>Really.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/page-not-found/page-not-found.component.ts</context>
           <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="description">Confirmation of the fact there is an error</note>
-      <target state="translated">Echt jetzt.</target></trans-unit><trans-unit id="PageNotFoundComponent:ReturnToHome" datatype="html">
-        <source>You'd better go back to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>home page<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.</source>
+        <target state="translated">Echt jetzt.</target>
+      </trans-unit>
+      <trans-unit id="PageNotFoundComponent:ReturnToHome" datatype="html">
+        <source>You'd better go back to the<x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>home page<x
+          id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
+        </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/page-not-found/page-not-found.component.ts</context>
           <context context-type="linenumber">7</context>
         </context-group>
         <note priority="1" from="description">Hint the user to go back to the home page</note>
-      <target state="translated">Du gehst jetzt besser zurück zur <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Homepage<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.</target>
-      </trans-unit></body>
+        <target state="translated">Du gehst jetzt besser zurück zur<x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>
+          Homepage<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
+        </target>
+      </trans-unit>
+    </body>
   </file>
 </xliff>
