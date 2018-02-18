@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template" target-language="en">
+    <body>
+      <trans-unit id="AppComponent:RouterLink:Counters" datatype="html">
+        <source>Counters</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+        <note priority="1" from="description">Navigate to the Counters page</note>
+        <target state="final">Counters</target>
+      </trans-unit>
+      <trans-unit id="AppComponent:RouterLink:Dashboard" datatype="html">
+        <source>Dashboard</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <note priority="1" from="description">Navigate to the dashboard page</note>
+        <target state="final">Dashboard</target>
+      </trans-unit>
+      <trans-unit id="PageNotFoundComponent:Heading" datatype="html">
+        <source>Page Not Found.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/page-not-found/page-not-found.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <note priority="1" from="description">Heading for the Page not found page</note>
+        <target state="final">Page Not Found.</target>
+      </trans-unit>
+      <trans-unit id="PageNotFoundComponent:Error" datatype="html">
+        <source>This is an error.</source>
+        <note priority="1" from="description">Description of the error</note>
+        <target state="final">This is an error.</target>
+      <context-group purpose="location"><context context-type="sourcefile">app/page-not-found/page-not-found.component.ts</context><context context-type="linenumber">3</context></context-group></trans-unit>
+    <trans-unit id="PageNotFoundComponent:Confirmation" datatype="html">
+        <source>Really.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/page-not-found/page-not-found.component.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="description">Confirmation of the fact there is an error</note>
+      <target state="final">Really.</target></trans-unit></body>
+  </file>
+</xliff>
