@@ -90,6 +90,17 @@
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="ErrorsComponent" datatype="html">
+        <source>Reset errors
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/errors/errors.component.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="description">Button to delete error messages</note>
+        <target state="translated">Fehlermeldungen löschen
+        </target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

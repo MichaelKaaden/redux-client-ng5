@@ -8,5 +8,7 @@
         color="warn"
         (click)="reset()"
         *ngIf="((errors$ | async)?.length)">
-  <mat-icon>cancel</mat-icon>&nbsp;&nbsp;Reset errors
+  <mat-icon>cancel</mat-icon>&nbsp;&nbsp;<ng-container i18n="Button to delete error messages@@ErrorsComponent">Reset
+  errors
+</ng-container>
 </button>

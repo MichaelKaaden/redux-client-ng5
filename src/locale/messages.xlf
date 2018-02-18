@@ -70,6 +70,16 @@
         </context-group>
         <note priority="1" from="description">Hint the user to go back to the home page</note>
       </trans-unit>
+      <trans-unit id="ErrorsComponent" datatype="html">
+        <source>Reset
+  errors
+</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/errors/errors.component.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="description">Button to delete error messages</note>
+      </trans-unit>
     </body>
   </file>
 </xliff>
