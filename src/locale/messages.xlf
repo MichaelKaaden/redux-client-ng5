@@ -18,6 +18,26 @@
         </context-group>
         <note priority="1" from="description">Navigate to the dashboard page</note>
       </trans-unit>
+      <trans-unit id="CounterContainerComponent" datatype="html">
+        <source>Counter #<x id="INTERPOLATION" equiv-text="{{ counterIndex }}"/>
+  </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/counter-container/counter-container.component.ts</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+        <note priority="1" from="description">A heading showing the counter&apos;s number</note>
+      </trans-unit>
+      <trans-unit id="CounterHeadingComponent:heading" datatype="html">
+        <source>
+    Counter #<x id="INTERPOLATION" equiv-text="{{ counterIndex }}"/>: Current value is
+  </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/counter-heading/counter-heading.component.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">The heading of a counter component</note>
+        <note priority="1" from="meaning">Tell the user the current value</note>
+      </trans-unit>
       <trans-unit id="PageNotFoundComponent:Heading" datatype="html">
         <source>Page Not Found.</source>
         <context-group purpose="location">

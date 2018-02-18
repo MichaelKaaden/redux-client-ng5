@@ -56,9 +56,39 @@
           <context context-type="linenumber">7</context>
         </context-group>
         <note priority="1" from="description">Hint the user to go back to the home page</note>
-        <target state="translated">Du gehst jetzt besser zurück zur<x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>
-          Homepage<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
+        <target state="translated">Du gehst jetzt besser zurück zur
+          <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>
+          Homepage
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
         </target>
+      </trans-unit>
+      <trans-unit id="CounterContainerComponent" datatype="html">
+        <source>Counter #
+          <x id="INTERPOLATION" equiv-text="{{ counterIndex }}"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/counter-container/counter-container.component.ts</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+        <note priority="1" from="description">A heading showing the counter's number</note>
+        <target state="translated">
+          Zähler #
+          <x id="INTERPOLATION" equiv-text="{{ counterIndex }}"/>
+        </target>
+      </trans-unit>
+      <trans-unit id="CounterHeadingComponent:heading" datatype="html">
+        <source>
+          Counter #<x id="INTERPOLATION" equiv-text="{{ counterIndex }}"/>: Current value is
+        </source>
+        <note priority="1" from="description">The heading of a counter component</note>
+        <note priority="1" from="meaning">Tell the user the current value</note>
+        <target state="translated">
+          Zähler #<x id="INTERPOLATION" equiv-text="{{ counterIndex }}"/>: aktueller Wert ist
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/counter-heading/counter-heading.component.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
       </trans-unit>
     </body>
   </file>
