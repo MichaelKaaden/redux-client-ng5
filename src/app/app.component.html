@@ -8,9 +8,10 @@
 </div>
 
 <nav mat-tab-nav-bar>
-  <a mat-tab-link routerLink="/counters" routerLinkActive #rla1="routerLinkActive" [active]="rla1.isActive">Counters</a>
-  <a mat-tab-link routerLink="/dashboard" routerLinkActive #rla2="routerLinkActive"
-     [active]="rla2.isActive">Dashboard</a>
+  <a mat-tab-link routerLink="/counters" routerLinkActive #rla1="routerLinkActive" [active]="rla1.isActive"
+     i18n="Navigate to the Counters page@@AppComponent:RouterLink:Counters">Counters</a>
+  <a mat-tab-link routerLink="/dashboard" routerLinkActive #rla2="routerLinkActive" [active]="rla2.isActive"
+     i18n="Navigate to the dashboard page@@AppComponent:RouterLink:Dashboard">Dashboard</a>
 </nav>
 
 <router-outlet></router-outlet>

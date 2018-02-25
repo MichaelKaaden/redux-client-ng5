@@ -1,5 +1,9 @@
 # ReduxClientNg5
 
+This project shows how to use
+[angular-redux](https://github.com/angular-redux/store)
+together with Angular.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.3.
 
 It has since been updated to [Angular CLI](https://github.com/angular/angular-cli) version 1.6.5.

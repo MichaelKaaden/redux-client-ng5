@@ -1,6 +1,6 @@
 {
   "name": "redux-client-ng5",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -8,7 +8,10 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "extract-i18n": "ng xi18n --output-path src/locale --locale en && xliffmerge --profile xliffmerge.json en de",
+    "serve-aot-de": "ng serve --aot --i18nFile=src/locale/messages.de.xlf --i18nFormat=xlf --locale=de",
+    "serve-aot-en": "ng serve --aot --i18nFile=src/locale/messages.en.xlf --i18nFormat=xlf --locale=en"
   },
   "private": true,
   "dependencies": {
@@ -50,6 +53,7 @@
     "karma-coverage-istanbul-reporter": "^1.4.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "ngx-i18nsupport": "^0.11.1",
     "protractor": "~5.1.2",
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",

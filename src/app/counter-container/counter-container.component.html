@@ -1,5 +1,6 @@
 <mat-card>
-  <mat-card-title>Counter #{{ counterIndex }}</mat-card-title>
+  <mat-card-title i18n="A heading showing the counter's number@@CounterContainerComponent">Counter #{{ counterIndex }}
+  </mat-card-title>
   <mat-card-subtitle>
     <mk-counter-heading [counterIndex]="counterIndex"
                         [counter]="counter$ | async"></mk-counter-heading>
