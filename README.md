@@ -1,33 +1,38 @@
-# ReduxClientNg5
+# Redux Client
 
-This project shows how to use
-[angular-redux](https://github.com/angular-redux/store)
-together with Angular.
+This is a single-page applicaton written in TypeScript and
+using Angular 5. It retrieves counters from a REST service
+and displays them. You can increase and decrease each counter's
+value. A second page displays a little dashboard that does
+some analytics on your counters and their values.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.3.
+## Purpose
 
-It has since been updated to [Angular CLI](https://github.com/angular/angular-cli) version 1.6.5.
+I wanted to learn more about the Redux architectural pattern
+to solve common problems like the same data being used in
+multiple components. Changes in one component would not update
+the other component's data, so one would either have to deal
+with this chaos or notify the other components about change
+with e. g. events. This is complicated, error-prone and very
+ugly. Redux perfectly solves this problem. So I wrote this
+app together with the server side which you can find 
+[here](https://github.com/MichaelKaaden/redux-server).
+
+The app utilizes
+[angular-redux](https://github.com/angular-redux/store).
+For asynchronous action like loading and saving counters
+from and to the REST service, it uses
+[redux-thunk](https://github.com/gaearon/redux-thunk).
+
+By the way, the app is translated in English and German.
+To start the app using English, use `yarn run serve-aot-en`.
+For German, use `yarn run serve-aot-de`. To add more
+translated strings, use `yarn run extract-i18n`.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
+Run `ng serve` for a dev server. Navigate to
+`http://localhost:4200/`. The app will automatically reload
+if you change any of the source files.
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
