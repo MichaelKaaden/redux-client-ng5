@@ -3,9 +3,9 @@ import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import "rxjs/add/observable/combineLatest";
 import "rxjs/add/operator/reduce";
 import { Observable } from "rxjs/Observable";
-import { CounterActionCreatorService } from "../actions/counter.action-creator.service";
-import { IAppState } from "../models/app-state";
-import { ICounter } from "../models/counter";
+import { CounterActionCreatorService } from "../../actions/counter.action-creator.service";
+import { IAppState } from "../../models/app-state";
+import { ICounter } from "../../models/counter";
 
 @Component({
   selector: "mk-dashboard",

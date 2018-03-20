@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
-import { CounterListComponent } from "./counter-list/counter-list.component";
-import { DashboardComponent } from "./dashboard/dashboard.component";
-import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
+import { CounterListComponent } from "./components/counter-list/counter-list.component";
+import { DashboardComponent } from "./components/dashboard/dashboard.component";
+import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
 
 const appRoutes: Routes = [
   {path: "counters", component: CounterListComponent},

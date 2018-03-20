@@ -1,8 +1,8 @@
 import { NgRedux, select } from "@angular-redux/store";
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { Observable } from "rxjs/Observable";
-import { ErrorsActionCreatorService } from "../actions/errors.action-creator.service";
-import { IAppState } from "../models/app-state";
+import { ErrorsActionCreatorService } from "../../actions/errors.action-creator.service";
+import { IAppState } from "../../models/app-state";
 
 @Component({
   selector: "mk-errors",

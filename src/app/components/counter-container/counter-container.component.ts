@@ -1,9 +1,9 @@
 import { NgRedux } from "@angular-redux/store";
 import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
 import { Observable } from "rxjs/Observable";
-import { CounterActionCreatorService } from "../actions/counter.action-creator.service";
-import { IAppState } from "../models/app-state";
-import { ICounter } from "../models/counter";
+import { CounterActionCreatorService } from "../../actions/counter.action-creator.service";
+import { IAppState } from "../../models/app-state";
+import { ICounter } from "../../models/counter";
 
 @Component({
   selector: "mk-counter-container",
