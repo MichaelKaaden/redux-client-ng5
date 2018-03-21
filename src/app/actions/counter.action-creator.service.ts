@@ -52,7 +52,7 @@ export class CounterActionCreatorService {
       this.counterService.decrementCounter(index, by)
         .subscribe((c: ICounter) => {
             const counter = new Counter(c.index, c.value);
-            return dispatch(this.buildDecrementedAction(index, counter));
+            dispatch(this.buildDecrementedAction(index, counter));
           }, (error: HttpErrorResponse) =>
             dispatch(this.errorActionCreatorService.buildErrorAction("decrement",
               `decrementing the counter failed with ${error instanceof Error ? error.message : error}`))
@@ -78,7 +78,7 @@ export class CounterActionCreatorService {
       this.counterService.incrementCounter(index, by)
         .subscribe((c: ICounter) => {
             const counter = new Counter(c.index, c.value);
-            return dispatch(this.buildIncrementedAction(index, counter));
+            dispatch(this.buildIncrementedAction(index, counter));
           }, (error: HttpErrorResponse) =>
             dispatch(this.errorActionCreatorService.buildErrorAction("increment",
               `incrementing the counter failed with ${error instanceof Error ? error.message : error}`))
@@ -109,7 +109,7 @@ export class CounterActionCreatorService {
       this.counterService.counter(index)
         .subscribe((c: ICounter) => {
             const counter = new Counter(c.index, c.value);
-            return dispatch(this.buildLoadedAction(index, counter));
+            dispatch(this.buildLoadedAction(index, counter));
           }, (error: HttpErrorResponse) =>
             dispatch(this.errorActionCreatorService.buildErrorAction("load",
               `retrieving the counter failed with ${error instanceof Error ? error.message : error}`))
@@ -132,7 +132,7 @@ export class CounterActionCreatorService {
             for (const c of cs) {
               counters.push(new Counter(c.index, c.value));
             }
-            return dispatch(this.buildLoadedAllAction(counters));
+            dispatch(this.buildLoadedAllAction(counters));
           }, (error: HttpErrorResponse) =>
             dispatch(this.errorActionCreatorService.buildErrorAction("loadAll",
               `retrieving all counters failed with ${error instanceof Error ? error.message : error}`))
