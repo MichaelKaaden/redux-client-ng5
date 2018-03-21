@@ -17,7 +17,13 @@ import {
 } from "./counter.actions";
 import { ErrorsActionCreatorService } from "./errors.action-creator.service";
 
-// own type to make typing easier
+/*
+ * Use a type alias for easier typing.
+ * The three types are:
+ * - thunk function return type
+ * - state type
+ * - extra argument
+ */
 type Thunk = ThunkAction<void, IAppState, void>;
 
 @Injectable()
@@ -35,7 +41,7 @@ export class CounterActionCreatorService {
    * @returns {Thunk}
    */
   public decrement = (index: number, by = 1): Thunk =>
-    (dispatch: Dispatch<IAppState>, getState: () => IAppState) => {
+    (dispatch) => {  // no need to specify types as they are defined in the ThunkAction definition
       if (index < 0) {
         return dispatch(this.errorActionCreatorService.buildErrorAction("decrement", `index ${index} < 0`));
       }
@@ -61,7 +67,7 @@ export class CounterActionCreatorService {
    * @returns {Thunk}
    */
   public increment = (index: number, by = 1): Thunk =>
-    (dispatch: Dispatch<IAppState>, getState: () => IAppState) => {
+    (dispatch) => {  // no need to specify types as they are defined in the ThunkAction definition
       if (index < 0) {
         return dispatch(this.errorActionCreatorService.buildErrorAction("increment", `index ${index} < 0`));
       }
@@ -86,7 +92,7 @@ export class CounterActionCreatorService {
    * @returns {Thunk}
    */
   public load = (index: number): Thunk =>
-    (dispatch: Dispatch<IAppState>, getState: () => IAppState) => {
+    (dispatch, getState) => {  // no need to specify types as they are defined in the ThunkAction definition
       if (index < 0) {
         return dispatch(this.errorActionCreatorService.buildErrorAction("load", `index ${index} < 0`));
       }
@@ -116,7 +122,7 @@ export class CounterActionCreatorService {
    * @returns {Thunk}
    */
   public loadAll = (): Thunk =>
-    (dispatch: Dispatch<IAppState>, getState: () => IAppState) => {
+    (dispatch) => {  // no need to specify types as they are defined in the ThunkAction definition
       // set "loading" for this counter
       dispatch(this.buildLoadingAllAction());
 
