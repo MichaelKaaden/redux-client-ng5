@@ -2,7 +2,6 @@ import { MockNgRedux, NgReduxTestingModule } from "@angular-redux/store/lib/test
 import { HttpClient } from "@angular/common/http";
 import { getTestBed, TestBed } from "@angular/core/testing";
 import { Observable } from "rxjs/Observable";
-import { IAppState } from "../models/app-state";
 import { Counter } from "../models/counter";
 import { CounterService } from "../services/counter.service";
 
@@ -44,6 +43,7 @@ describe("CounterActionCreatorService", () => {
     injector = getTestBed();
     service = injector.get(CounterActionCreatorService);
     counterService = injector.get(CounterService);
+    MockNgRedux.reset();
     mockReduxInstance = MockNgRedux.getInstance();
     dispatchSpy = spyOn(mockReduxInstance, "dispatch");
     index = 0;
@@ -65,9 +65,7 @@ describe("CounterActionCreatorService", () => {
 
     it("should not decrement for wrong indices", () => {
       // call the service under test
-      service.decrement(-1)(dispatchSpy, () => {
-        return {} as IAppState;
-      }, null);
+      service.decrement(-1);
 
       // check
       expect(dispatchSpy).toHaveBeenCalledTimes(1);
@@ -83,9 +81,7 @@ describe("CounterActionCreatorService", () => {
         .and.returnValue(Observable.of(new Counter(index, by)));
 
       // call the service under test
-      service.decrement(index, by)(dispatchSpy, () => {
-        return {} as IAppState;
-      }, null);
+      service.decrement(index, by);
 
       // check
       expect(decrementCounterSpy).toHaveBeenCalledTimes(1);
@@ -109,9 +105,7 @@ describe("CounterActionCreatorService", () => {
         .and.returnValue(Observable.throw(new Error(errorMessage)));
 
       // call the service under test
-      service.decrement(index, by)(dispatchSpy, () => {
-        return {} as IAppState;
-      }, null);
+      service.decrement(index, by);
 
       // check
       expect(decrementCounterSpy).toHaveBeenCalledTimes(1);
@@ -122,6 +116,65 @@ describe("CounterActionCreatorService", () => {
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: TypeKeys.ERROR,
         error: `error in the "decrement" action creator: decrementing the counter failed with ${errorMessage}`
+      });
+    });
+  });
+
+  describe("increment", () => {
+
+    it("should not increment for wrong indices", () => {
+      // call the service under test
+      service.increment(-1);
+
+      // check
+      expect(dispatchSpy).toHaveBeenCalledTimes(1);
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: TypeKeys.ERROR,
+        error: `error in the "increment" action creator: index -1 < 0`
+      });
+    });
+
+    it("should dispatch a saving and incremented action", () => {
+      // prepare
+      const incrementCounterSpy = spyOn(counterService, "incrementCounter")
+        .and.returnValue(Observable.of(new Counter(index, by)));
+
+      // call the service under test
+      service.increment(index, by);
+
+      // check
+      expect(incrementCounterSpy).toHaveBeenCalledTimes(1);
+      expect(incrementCounterSpy).toHaveBeenCalledWith(index, by);
+
+      expect(dispatchSpy).toHaveBeenCalledTimes(2);
+      expect(dispatchSpy).toHaveBeenCalledWith(savingAction);
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: TypeKeys.INCREMENTED,
+        payload: {
+          index,
+          counter: new Counter(index, by),
+        },
+      });
+    });
+
+    it("should dispatch errors that occured retrieving data from the REST service", () => {
+      // prepare
+      const errorMessage = "some error";
+      const incrementCounterSpy = spyOn(counterService, "incrementCounter")
+        .and.returnValue(Observable.throw(new Error(errorMessage)));
+
+      // call the service under test
+      service.increment(index, by);
+
+      // check
+      expect(incrementCounterSpy).toHaveBeenCalledTimes(1);
+      expect(incrementCounterSpy).toHaveBeenCalledWith(index, by);
+
+      expect(dispatchSpy).toHaveBeenCalledTimes(2);
+      expect(dispatchSpy).toHaveBeenCalledWith(savingAction);
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: TypeKeys.ERROR,
+        error: `error in the "increment" action creator: incrementing the counter failed with ${errorMessage}`
       });
     });
   });

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges} from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 
 export const DEFAULT_DELAY = 250;
 
@@ -19,6 +19,10 @@ export class ProgressComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.showProgressAfterDelay();
+  }
+
+  private showProgressAfterDelay() {
     setTimeout(() => {
       if (this.isLoading) {
         // console.log(`${this.delay}ms passed, showing progress...`);
@@ -30,7 +34,7 @@ export class ProgressComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.isLoading.currentValue === true) {
-      this.showProgress = true;
+      this.showProgressAfterDelay();
     }
 
     if (changes.isLoading.previousValue === true) {

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
-import { ICounter } from "../models/counter";
+import { ICounter } from "../../models/counter";
 
 @Component({
   selector: "mk-counter-heading",

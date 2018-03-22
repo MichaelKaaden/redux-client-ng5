@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
-import { Counter, ICounter } from "../models/counter";
+import { Counter, ICounter } from "../../models/counter";
 
 import { CounterInputComponent } from "./counter-input.component";
 

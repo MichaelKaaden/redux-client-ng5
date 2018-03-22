@@ -1,9 +1,9 @@
 import { NgRedux } from "@angular-redux/store";
 import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
 import { Observable } from "rxjs/Observable";
-import { CounterActionCreatorService } from "../actions/counter.action-creator.service";
-import { IAppState } from "../models/app-state";
-import { ICounter } from "../models/counter";
+import { CounterActionCreatorService } from "../../actions/counter.action-creator.service";
+import { IAppState } from "../../models/app-state";
+import { ICounter } from "../../models/counter";
 
 @Component({
   selector: "mk-counter-container",
@@ -31,16 +31,16 @@ export class CounterContainerComponent implements OnInit {
 
   // needed to capture "this" properly
   public decrement = (by: number): void => {
-    this.redux.dispatch<any>(this.counterActionCreatorService.decrement(this.counterIndex, by));
+    this.counterActionCreatorService.decrement(this.counterIndex, by);
   };
 
   // needed to capture "this" properly
   public increment = (by: number): void => {
-    this.redux.dispatch<any>(this.counterActionCreatorService.increment(this.counterIndex, by));
+    this.counterActionCreatorService.increment(this.counterIndex, by);
   };
 
   // needed to capture "this" properly
   public load = (): void => {
-    this.redux.dispatch<any>(this.counterActionCreatorService.load(this.counterIndex));
+    this.counterActionCreatorService.load(this.counterIndex);
   };
 }
