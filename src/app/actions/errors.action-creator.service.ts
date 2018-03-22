@@ -19,7 +19,7 @@ export class ErrorsActionCreatorService {
       type: TypeKeys.ERROR,
       error: `error in the "${methodName}" action creator: ${message}`,
     });
-  };
+  }
 
   /**
    * Reset the errors.
@@ -28,5 +28,5 @@ export class ErrorsActionCreatorService {
     this.ngRedux.dispatch({
       type: TypeKeys.RESET_ERRORS,
     });
-  };
+  }
 }
