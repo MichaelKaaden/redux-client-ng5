@@ -18,6 +18,6 @@ export class ErrorsComponent {
   }
 
   reset() {
-    this.redux.dispatch<any>(this.errorsActionCreatorService.buildResetErrorsAction());
+    this.errorsActionCreatorService.resetErrors();
   }
 }
