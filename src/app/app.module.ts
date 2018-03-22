@@ -4,7 +4,6 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { createLogger } from "redux-logger";
-import thunk from "redux-thunk";
 import { CounterActionCreatorService } from "./actions/counter.action-creator.service";
 import { ErrorsActionCreatorService } from "./actions/errors.action-creator.service";
 import { AppRoutingModule } from "./app-routing.module";
@@ -65,7 +64,6 @@ export class AppModule {
       INITIAL_STATE,
       // [createLogger()],
       [
-        thunk,
         createLogger(),
       ],
       storeEnhancers);
