@@ -6,6 +6,8 @@ and displays them. You can increase and decrease each counter's
 value. A second page displays a little dashboard that does
 some analytics on your counters and their values.
 
+![Screenshot of the app running in the Browser](images/screenshot1.png)
+
 ## Purpose
 
 I wanted to learn more about the Redux architectural pattern
