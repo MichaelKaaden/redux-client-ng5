@@ -31,16 +31,16 @@ export class CounterContainerComponent implements OnInit {
 
   // needed to capture "this" properly
   public decrement = (by: number): void => {
-    this.redux.dispatch<any>(this.counterActionCreatorService.decrement(this.counterIndex, by));
+    this.counterActionCreatorService.decrement(this.counterIndex, by);
   };
 
   // needed to capture "this" properly
   public increment = (by: number): void => {
-    this.redux.dispatch<any>(this.counterActionCreatorService.increment(this.counterIndex, by));
+    this.counterActionCreatorService.increment(this.counterIndex, by);
   };
 
   // needed to capture "this" properly
   public load = (): void => {
-    this.redux.dispatch<any>(this.counterActionCreatorService.load(this.counterIndex));
+    this.counterActionCreatorService.load(this.counterIndex);
   };
 }

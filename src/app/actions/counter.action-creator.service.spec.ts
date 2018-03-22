@@ -2,7 +2,6 @@ import { MockNgRedux, NgReduxTestingModule } from "@angular-redux/store/lib/test
 import { HttpClient } from "@angular/common/http";
 import { getTestBed, TestBed } from "@angular/core/testing";
 import { Observable } from "rxjs/Observable";
-import { IAppState } from "../models/app-state";
 import { Counter } from "../models/counter";
 import { CounterService } from "../services/counter.service";
 
@@ -44,6 +43,7 @@ describe("CounterActionCreatorService", () => {
     injector = getTestBed();
     service = injector.get(CounterActionCreatorService);
     counterService = injector.get(CounterService);
+    MockNgRedux.reset();
     mockReduxInstance = MockNgRedux.getInstance();
     dispatchSpy = spyOn(mockReduxInstance, "dispatch");
     index = 0;
@@ -65,9 +65,7 @@ describe("CounterActionCreatorService", () => {
 
     it("should not decrement for wrong indices", () => {
       // call the service under test
-      service.decrement(-1)(dispatchSpy, () => {
-        return {} as IAppState;
-      }, null);
+      service.decrement(-1);
 
       // check
       expect(dispatchSpy).toHaveBeenCalledTimes(1);
@@ -83,9 +81,7 @@ describe("CounterActionCreatorService", () => {
         .and.returnValue(Observable.of(new Counter(index, by)));
 
       // call the service under test
-      service.decrement(index, by)(dispatchSpy, () => {
-        return {} as IAppState;
-      }, null);
+      service.decrement(index, by);
 
       // check
       expect(decrementCounterSpy).toHaveBeenCalledTimes(1);
@@ -109,9 +105,7 @@ describe("CounterActionCreatorService", () => {
         .and.returnValue(Observable.throw(new Error(errorMessage)));
 
       // call the service under test
-      service.decrement(index, by)(dispatchSpy, () => {
-        return {} as IAppState;
-      }, null);
+      service.decrement(index, by);
 
       // check
       expect(decrementCounterSpy).toHaveBeenCalledTimes(1);
@@ -130,9 +124,7 @@ describe("CounterActionCreatorService", () => {
 
     it("should not increment for wrong indices", () => {
       // call the service under test
-      service.increment(-1)(dispatchSpy, () => {
-        return {} as IAppState;
-      }, null);
+      service.increment(-1);
 
       // check
       expect(dispatchSpy).toHaveBeenCalledTimes(1);
@@ -148,9 +140,7 @@ describe("CounterActionCreatorService", () => {
         .and.returnValue(Observable.of(new Counter(index, by)));
 
       // call the service under test
-      service.increment(index, by)(dispatchSpy, () => {
-        return {} as IAppState;
-      }, null);
+      service.increment(index, by);
 
       // check
       expect(incrementCounterSpy).toHaveBeenCalledTimes(1);
@@ -174,9 +164,7 @@ describe("CounterActionCreatorService", () => {
         .and.returnValue(Observable.throw(new Error(errorMessage)));
 
       // call the service under test
-      service.increment(index, by)(dispatchSpy, () => {
-        return {} as IAppState;
-      }, null);
+      service.increment(index, by);
 
       // check
       expect(incrementCounterSpy).toHaveBeenCalledTimes(1);

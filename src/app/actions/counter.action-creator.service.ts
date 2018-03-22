@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { ActionCreator, Dispatch } from "redux";
-import { ThunkAction } from "redux-thunk";
+import { ActionCreator } from "redux";
 import { IAppState } from "../models/app-state";
 import { Counter, ICounter } from "../models/counter";
 import { CounterService } from "../services/counter.service";
@@ -16,128 +15,115 @@ import {
   TypeKeys
 } from "./counter.actions";
 import { ErrorsActionCreatorService } from "./errors.action-creator.service";
-
-/*
- * Use a type alias for easier typing.
- * The three types are:
- * - thunk function return type
- * - state type
- * - extra argument
- */
-type Thunk = ThunkAction<void, IAppState, void>;
+import { NgRedux } from "@angular-redux/store";
 
 @Injectable()
 export class CounterActionCreatorService {
 
-  constructor(private counterService: CounterService,
+  constructor(private ngRedux: NgRedux<IAppState>,
+              private counterService: CounterService,
               private errorActionCreatorService: ErrorsActionCreatorService) {
   }
 
   /**
-   * Thunk: Decrement a counter by saving it to the RESTful Web Service.
+   * Decrement a counter by saving it to the RESTful Web Service.
    *
    * @param {number} index The counter's index
    * @param {number} by The decrement value
-   * @returns {Thunk}
    */
-  public decrement = (index: number, by = 1): Thunk =>
-    (dispatch) => {  // no need to specify types as they are defined in the ThunkAction definition
-      if (index < 0) {
-        return dispatch(this.errorActionCreatorService.buildErrorAction("decrement", `index ${index} < 0`));
-      }
+  public decrement(index: number, by = 1) {
+    if (index < 0) {
+      this.errorActionCreatorService.setError("decrement", `index ${index} < 0`);
+      return;
+    }
 
-      // set "saving" for this counter
-      dispatch(this.buildSavingAction(index));
+    // set "saving" for this counter
+    this.ngRedux.dispatch(this.buildSavingAction(index));
 
-      this.counterService.decrementCounter(index, by)
-        .subscribe((c: ICounter) => {
-            const counter = new Counter(c.index, c.value);
-            dispatch(this.buildDecrementedAction(index, counter));
-          }, (error: HttpErrorResponse) =>
-            dispatch(this.errorActionCreatorService.buildErrorAction("decrement",
-              `decrementing the counter failed with ${error instanceof Error ? error.message : error}`))
-        );
-    };
+    this.counterService.decrementCounter(index, by)
+      .subscribe((c: ICounter) => {
+          const counter = new Counter(c.index, c.value);
+          this.ngRedux.dispatch(this.buildDecrementedAction(index, counter));
+        }, (error: HttpErrorResponse) =>
+          this.errorActionCreatorService.setError("decrement",
+            `decrementing the counter failed with ${error instanceof Error ? error.message : error}`)
+      );
+  }
 
   /**
-   * Thunk: Increment a counter by saving it to the RESTful Web Service.
+   * Increment a counter by saving it to the RESTful Web Service.
    *
    * @param {number} index The counter's index
    * @param {number} by The increment value
-   * @returns {Thunk}
    */
-  public increment = (index: number, by = 1): Thunk =>
-    (dispatch) => {  // no need to specify types as they are defined in the ThunkAction definition
-      if (index < 0) {
-        return dispatch(this.errorActionCreatorService.buildErrorAction("increment", `index ${index} < 0`));
-      }
+  public increment(index: number, by = 1) {
+    if (index < 0) {
+      this.errorActionCreatorService.setError("increment", `index ${index} < 0`);
+      return;
+    }
 
-      // set "saving" for this counter
-      dispatch(this.buildSavingAction(index));
+    // set "saving" for this counter
+    this.ngRedux.dispatch(this.buildSavingAction(index));
 
-      this.counterService.incrementCounter(index, by)
-        .subscribe((c: ICounter) => {
-            const counter = new Counter(c.index, c.value);
-            dispatch(this.buildIncrementedAction(index, counter));
-          }, (error: HttpErrorResponse) =>
-            dispatch(this.errorActionCreatorService.buildErrorAction("increment",
-              `incrementing the counter failed with ${error instanceof Error ? error.message : error}`))
-        );
-    };
+    this.counterService.incrementCounter(index, by)
+      .subscribe((c: ICounter) => {
+          const counter = new Counter(c.index, c.value);
+          this.ngRedux.dispatch(this.buildIncrementedAction(index, counter));
+        }, (error: HttpErrorResponse) =>
+          this.errorActionCreatorService.setError("increment",
+            `incrementing the counter failed with ${error instanceof Error ? error.message : error}`)
+      );
+  }
 
   /***
-   * Thunk: Load a counter from the RESTful Web Service.
+   * Load a counter from the RESTful Web Service.
    *
    * @param {number} index The counter's index
-   * @returns {Thunk}
    */
-  public load = (index: number): Thunk =>
-    (dispatch, getState) => {  // no need to specify types as they are defined in the ThunkAction definition
-      if (index < 0) {
-        return dispatch(this.errorActionCreatorService.buildErrorAction("load", `index ${index} < 0`));
-      }
+  public load(index: number) {
+    if (index < 0) {
+      this.errorActionCreatorService.setError("load", `index ${index} < 0`);
+      return;
+    }
 
-      // don't load the counter if it's already loaded
-      const cachedCounter: ICounter = getState().counters.all.find((item: ICounter) => item.index === index);
-      if (cachedCounter) {
-        return;
-      }
+    // don't load the counter if it's already loaded
+    const cachedCounter: ICounter = this.ngRedux.getState().counters.all.find((item: ICounter) => item.index === index);
+    if (cachedCounter) {
+      return;
+    }
 
-      // set "loading" for this counter
-      dispatch(this.buildLoadingAction(index));
+    // set "loading" for this counter
+    this.ngRedux.dispatch(this.buildLoadingAction(index));
 
-      this.counterService.counter(index)
-        .subscribe((c: ICounter) => {
-            const counter = new Counter(c.index, c.value);
-            dispatch(this.buildLoadedAction(index, counter));
-          }, (error: HttpErrorResponse) =>
-            dispatch(this.errorActionCreatorService.buildErrorAction("load",
-              `retrieving the counter failed with ${error instanceof Error ? error.message : error}`))
-        );
-    };
+    this.counterService.counter(index)
+      .subscribe((c: ICounter) => {
+          const counter = new Counter(c.index, c.value);
+          this.ngRedux.dispatch(this.buildLoadedAction(index, counter));
+        }, (error: HttpErrorResponse) =>
+          this.errorActionCreatorService.setError("load",
+            `retrieving the counter failed with ${error instanceof Error ? error.message : error}`)
+      );
+  }
 
   /**
-   * Thunk: Load all counters from the RESTful Web Service.
-   *
-   * @returns {Thunk}
+   * Load all counters from the RESTful Web Service.
    */
-  public loadAll = (): Thunk =>
-    (dispatch) => {  // no need to specify types as they are defined in the ThunkAction definition
-      // set "loading" for this counter
-      dispatch(this.buildLoadingAllAction());
+  public loadAll() {
+    // set "loading" for this counter
+    this.ngRedux.dispatch(this.buildLoadingAllAction());
 
-      this.counterService.counters()
-        .subscribe((cs: ICounter[]) => {
-            const counters = [];
-            for (const c of cs) {
-              counters.push(new Counter(c.index, c.value));
-            }
-            dispatch(this.buildLoadedAllAction(counters));
-          }, (error: HttpErrorResponse) =>
-            dispatch(this.errorActionCreatorService.buildErrorAction("loadAll",
-              `retrieving all counters failed with ${error instanceof Error ? error.message : error}`))
-        );
-    };
+    this.counterService.counters()
+      .subscribe((cs: ICounter[]) => {
+          const counters = [];
+          for (const c of cs) {
+            counters.push(new Counter(c.index, c.value));
+          }
+          this.ngRedux.dispatch(this.buildLoadedAllAction(counters));
+        }, (error: HttpErrorResponse) =>
+          this.errorActionCreatorService.setError("loadAll",
+            `retrieving all counters failed with ${error instanceof Error ? error.message : error}`)
+      );
+  }
 
   /*
    * Helper functions
