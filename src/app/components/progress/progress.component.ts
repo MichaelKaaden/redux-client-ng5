@@ -25,7 +25,7 @@ export class ProgressComponent implements OnInit, OnChanges {
   private showProgressAfterDelay() {
     setTimeout(() => {
       if (this.isLoading) {
-        console.log(`${this.delay}ms passed, showing progress...`);
+        // console.log(`${this.delay}ms passed, showing progress...`);
         this.showProgress = true;
         this.ref.detectChanges();
       }
