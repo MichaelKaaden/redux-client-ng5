@@ -44,9 +44,10 @@ export class CounterActionCreatorService {
       .subscribe((c: ICounter) => {
           const counter = new Counter(c.index, c.value);
           this.ngRedux.dispatch(this.buildDecrementedAction(index, counter));
-        }, (error: HttpErrorResponse) =>
+        }, (error: HttpErrorResponse) => {
           this.errorActionCreatorService.setError("decrement",
-            `decrementing the counter failed with ${error instanceof Error ? error.message : error}`)
+            `decrementing the counter failed with ${error instanceof Error ? error.message : error}`);
+        }
       );
   }
 
@@ -69,9 +70,10 @@ export class CounterActionCreatorService {
       .subscribe((c: ICounter) => {
           const counter = new Counter(c.index, c.value);
           this.ngRedux.dispatch(this.buildIncrementedAction(index, counter));
-        }, (error: HttpErrorResponse) =>
+        }, (error: HttpErrorResponse) => {
           this.errorActionCreatorService.setError("increment",
-            `incrementing the counter failed with ${error instanceof Error ? error.message : error}`)
+            `incrementing the counter failed with ${error instanceof Error ? error.message : error}`);
+        }
       );
   }
 
@@ -99,9 +101,10 @@ export class CounterActionCreatorService {
       .subscribe((c: ICounter) => {
           const counter = new Counter(c.index, c.value);
           this.ngRedux.dispatch(this.buildLoadedAction(index, counter));
-        }, (error: HttpErrorResponse) =>
+        }, (error: HttpErrorResponse) => {
           this.errorActionCreatorService.setError("load",
-            `retrieving the counter failed with ${error instanceof Error ? error.message : error}`)
+            `retrieving the counter failed with ${error instanceof Error ? error.message : error}`);
+        }
       );
   }
 
@@ -119,9 +122,10 @@ export class CounterActionCreatorService {
             counters.push(new Counter(c.index, c.value));
           }
           this.ngRedux.dispatch(this.buildLoadedAllAction(counters));
-        }, (error: HttpErrorResponse) =>
+        }, (error: HttpErrorResponse) => {
           this.errorActionCreatorService.setError("loadAll",
-            `retrieving all counters failed with ${error instanceof Error ? error.message : error}`)
+            `retrieving all counters failed with ${error instanceof Error ? error.message : error}`);
+        }
       );
   }
 
