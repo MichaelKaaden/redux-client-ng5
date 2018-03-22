@@ -125,4 +125,69 @@ describe("CounterActionCreatorService", () => {
       });
     });
   });
+
+  describe("increment", () => {
+
+    it("should not increment for wrong indices", () => {
+      // call the service under test
+      service.increment(-1)(dispatchSpy, () => {
+        return {} as IAppState;
+      }, null);
+
+      // check
+      expect(dispatchSpy).toHaveBeenCalledTimes(1);
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: TypeKeys.ERROR,
+        error: `error in the "increment" action creator: index -1 < 0`
+      });
+    });
+
+    it("should dispatch a saving and incremented action", () => {
+      // prepare
+      const incrementCounterSpy = spyOn(counterService, "incrementCounter")
+        .and.returnValue(Observable.of(new Counter(index, by)));
+
+      // call the service under test
+      service.increment(index, by)(dispatchSpy, () => {
+        return {} as IAppState;
+      }, null);
+
+      // check
+      expect(incrementCounterSpy).toHaveBeenCalledTimes(1);
+      expect(incrementCounterSpy).toHaveBeenCalledWith(index, by);
+
+      expect(dispatchSpy).toHaveBeenCalledTimes(2);
+      expect(dispatchSpy).toHaveBeenCalledWith(savingAction);
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: TypeKeys.INCREMENTED,
+        payload: {
+          index,
+          counter: new Counter(index, by),
+        },
+      });
+    });
+
+    it("should dispatch errors that occured retrieving data from the REST service", () => {
+      // prepare
+      const errorMessage = "some error";
+      const incrementCounterSpy = spyOn(counterService, "incrementCounter")
+        .and.returnValue(Observable.throw(new Error(errorMessage)));
+
+      // call the service under test
+      service.increment(index, by)(dispatchSpy, () => {
+        return {} as IAppState;
+      }, null);
+
+      // check
+      expect(incrementCounterSpy).toHaveBeenCalledTimes(1);
+      expect(incrementCounterSpy).toHaveBeenCalledWith(index, by);
+
+      expect(dispatchSpy).toHaveBeenCalledTimes(2);
+      expect(dispatchSpy).toHaveBeenCalledWith(savingAction);
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: TypeKeys.ERROR,
+        error: `error in the "increment" action creator: incrementing the counter failed with ${errorMessage}`
+      });
+    });
+  });
 });
