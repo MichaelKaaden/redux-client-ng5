@@ -38,6 +38,6 @@ export class DashboardComponent implements OnInit {
 
   // needed to capture "this" properly
   public loadAll = (): void => {
-    this.redux.dispatch<any>(this.counterActionCreatorService.loadAll());
+    this.counterActionCreatorService.loadAll();
   };
 }
