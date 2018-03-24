@@ -6,3 +6,8 @@ mat-card-title {
 mat-card-subtitle {
   text-align: center;
 }
+
+.counterContainer {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
