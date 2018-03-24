@@ -3,7 +3,7 @@ import { DevToolsExtension, NgRedux, NgReduxModule } from "@angular-redux/store"
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { createLogger } from "redux-logger";
+import { createLogger, ReduxLoggerOptions } from "redux-logger";
 import { CounterActionCreatorService } from "./actions/counter.action-creator.service";
 import { ErrorsActionCreatorService } from "./actions/errors.action-creator.service";
 import { AppRoutingModule } from "./app-routing.module";
@@ -55,6 +55,9 @@ export class AppModule {
               ngRedux: NgRedux<IAppState>,
               ngReduxRouter: NgReduxRouter) {
     const storeEnhancers = devTools.isEnabled() ? [devTools.enhancer()] : [];
+    const loggerOptions: ReduxLoggerOptions = {
+      collapsed: true,
+    };
 
     // Tell @angular-redux/store about our rootReducer and our
     // initial state. It will use this to create a redux store
@@ -64,7 +67,7 @@ export class AppModule {
       INITIAL_STATE,
       // [createLogger()],
       [
-        createLogger(),
+        createLogger(loggerOptions),
       ],
       storeEnhancers);
     ngReduxRouter.initialize();
