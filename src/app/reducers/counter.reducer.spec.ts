@@ -1,11 +1,11 @@
 import {
-  IDecrementedCounterAction,
-  IIncrementedCounterAction,
-  ILoadedAction,
-  ILoadedAllAction,
-  ILoadingAction,
-  ILoadingAllAction,
-  ISavingAction,
+  IDecrementCompletedCounterAction,
+  IIncrementCompletedCounterAction,
+  ILoadAllCompletedAction,
+  ILoadAllPendingAction,
+  ILoadCompletedAction,
+  ILoadPendingAction,
+  ISavePendingAction,
   TypeKeys
 } from "../actions/counter.actions";
 import { ICounterState, INITIAL_COUNTERS_STATE } from "../models/app-state";
@@ -19,13 +19,13 @@ describe("Counter Reducer function", () => {
   let counter: ICounter;
   let anotherCounter: ICounter;
   let yetAnotherCounter: ICounter;
-  let decrementedCounterAction: IDecrementedCounterAction;
-  let incrementedCounterAction: IIncrementedCounterAction;
-  let loadedAction: ILoadedAction;
-  let loadedAllAction: ILoadedAllAction;
-  let loadingAction: ILoadingAction;
-  let loadingAllAction: ILoadingAllAction;
-  let savingAction: ISavingAction;
+  let decrementedCounterAction: IDecrementCompletedCounterAction;
+  let incrementedCounterAction: IIncrementCompletedCounterAction;
+  let loadedAction: ILoadCompletedAction;
+  let loadedAllAction: ILoadAllCompletedAction;
+  let loadingAction: ILoadPendingAction;
+  let loadingAllAction: ILoadAllPendingAction;
+  let savingAction: ISavePendingAction;
 
   /*
    * Helper function to get a specific counter out of an app state object
@@ -44,43 +44,43 @@ describe("Counter Reducer function", () => {
     yetAnotherCounter = new Counter(index + 1, value + 1);
 
     decrementedCounterAction = {
-      type: TypeKeys.DECREMENTED,
+      type: TypeKeys.DECREMENT_COMPLETED,
       payload: {
         index,
         counter: new Counter(index, value - 1),
       },
     };
     incrementedCounterAction = {
-      type: TypeKeys.INCREMENTED,
+      type: TypeKeys.INCREMENT_COMPLETED,
       payload: {
         index,
         counter: new Counter(index, value + 1),
       },
     };
     loadedAction = {
-      type: TypeKeys.LOADED,
+      type: TypeKeys.LOAD_COMPLETED,
       payload: {
         index,
         counter,
       }
     };
     loadedAllAction = {
-      type: TypeKeys.LOADED_ALL,
+      type: TypeKeys.LOAD_ALL_COMPLETED,
       payload: {
         counters: [anotherCounter, counter, yetAnotherCounter],
       },
     };
     loadingAction = {
-      type: TypeKeys.LOADING,
+      type: TypeKeys.LOAD_PENDING,
       payload: {
         index,
       }
     };
     loadingAllAction = {
-      type: TypeKeys.LOADING_ALL,
+      type: TypeKeys.LOAD_ALL_PENDING,
     };
     savingAction = {
-      type: TypeKeys.SAVING,
+      type: TypeKeys.SAVE_PENDING,
       payload: {
         index
       },

@@ -16,7 +16,7 @@ export class ErrorsActionCreatorService {
    */
   public setError(methodName: string, message: string) {
     this.ngRedux.dispatch({
-      type: TypeKeys.ERROR,
+      type: TypeKeys.ERROR_OCCURRED,
       error: `error in the "${methodName}" action creator: ${message}`,
     });
   }

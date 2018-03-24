@@ -49,7 +49,7 @@ describe("CounterActionCreatorService", () => {
     index = 0;
     by = 1;
     savingAction = {
-      type: TypeKeys.SAVING,
+      type: TypeKeys.SAVE_PENDING,
       payload: {
         index,
       },
@@ -70,7 +70,7 @@ describe("CounterActionCreatorService", () => {
       // check
       expect(dispatchSpy).toHaveBeenCalledTimes(1);
       expect(dispatchSpy).toHaveBeenCalledWith({
-        type: TypeKeys.ERROR,
+        type: TypeKeys.ERROR_OCCURRED,
         error: `error in the "decrement" action creator: index -1 < 0`
       });
     });
@@ -90,7 +90,7 @@ describe("CounterActionCreatorService", () => {
       expect(dispatchSpy).toHaveBeenCalledTimes(2);
       expect(dispatchSpy).toHaveBeenCalledWith(savingAction);
       expect(dispatchSpy).toHaveBeenCalledWith({
-        type: TypeKeys.DECREMENTED,
+        type: TypeKeys.DECREMENT_COMPLETED,
         payload: {
           index,
           counter: new Counter(index, by),
@@ -114,7 +114,7 @@ describe("CounterActionCreatorService", () => {
       expect(dispatchSpy).toHaveBeenCalledTimes(2);
       expect(dispatchSpy).toHaveBeenCalledWith(savingAction);
       expect(dispatchSpy).toHaveBeenCalledWith({
-        type: TypeKeys.ERROR,
+        type: TypeKeys.ERROR_OCCURRED,
         error: `error in the "decrement" action creator: decrementing the counter failed with ${errorMessage}`
       });
     });
@@ -129,7 +129,7 @@ describe("CounterActionCreatorService", () => {
       // check
       expect(dispatchSpy).toHaveBeenCalledTimes(1);
       expect(dispatchSpy).toHaveBeenCalledWith({
-        type: TypeKeys.ERROR,
+        type: TypeKeys.ERROR_OCCURRED,
         error: `error in the "increment" action creator: index -1 < 0`
       });
     });
@@ -149,7 +149,7 @@ describe("CounterActionCreatorService", () => {
       expect(dispatchSpy).toHaveBeenCalledTimes(2);
       expect(dispatchSpy).toHaveBeenCalledWith(savingAction);
       expect(dispatchSpy).toHaveBeenCalledWith({
-        type: TypeKeys.INCREMENTED,
+        type: TypeKeys.INCREMENT_COMPLETED,
         payload: {
           index,
           counter: new Counter(index, by),
@@ -173,7 +173,7 @@ describe("CounterActionCreatorService", () => {
       expect(dispatchSpy).toHaveBeenCalledTimes(2);
       expect(dispatchSpy).toHaveBeenCalledWith(savingAction);
       expect(dispatchSpy).toHaveBeenCalledWith({
-        type: TypeKeys.ERROR,
+        type: TypeKeys.ERROR_OCCURRED,
         error: `error in the "increment" action creator: incrementing the counter failed with ${errorMessage}`
       });
     });
