@@ -1,7 +1,7 @@
 import { MockNgRedux, NgReduxTestingModule } from "@angular-redux/store/lib/testing";
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { IErrorAction, IResetErrorsAction, TypeKeys } from "../../actions/counter.actions";
+import { IErrorOccurredAction, IResetErrorsAction, TypeKeys } from "../../actions/counter.actions";
 import { ErrorsActionCreatorService } from "../../actions/errors.action-creator.service";
 
 import { ErrorsComponent } from "./errors.component";
@@ -41,8 +41,8 @@ describe("ErrorsComponent", () => {
 
   it("should change according to the application state", () => {
     const error = "foo";
-    const errorAction: IErrorAction = {
-      type: TypeKeys.ERROR,
+    const errorAction: IErrorOccurredAction = {
+      type: TypeKeys.ERROR_OCCURRED,
       error: `${error}`
     };
     mockReduxInstance.dispatch(errorAction);
@@ -65,8 +65,8 @@ describe("ErrorsComponent", () => {
 
   it("reset should empty errors$", () => {
     const error = "foo";
-    const errorAction: IErrorAction = {
-      type: TypeKeys.ERROR,
+    const errorAction: IErrorOccurredAction = {
+      type: TypeKeys.ERROR_OCCURRED,
       error: `${error}`
     };
     mockReduxInstance.dispatch(errorAction);

@@ -10,7 +10,7 @@ export const counterReducer: Reducer<ICounterState> =
     let newCounters: ICounter[] = [];
 
     switch (action.type) {
-      case TypeKeys.DECREMENTED:
+      case TypeKeys.DECREMENT_COMPLETED:
         return {
           all: state.all.map((item) => {
             if (item.index !== action.payload.index) {
@@ -23,7 +23,7 @@ export const counterReducer: Reducer<ICounterState> =
           }),
         };
 
-      case TypeKeys.INCREMENTED:
+      case TypeKeys.INCREMENT_COMPLETED:
         return {
           all: state.all.map((item) => {
             if (item.index !== action.payload.index) {
@@ -36,7 +36,7 @@ export const counterReducer: Reducer<ICounterState> =
           }),
         };
 
-      case TypeKeys.LOADED:
+      case TypeKeys.LOAD_COMPLETED:
         return {
           all: state.all.map((item) => {
             if (item.index !== action.payload.index) {
@@ -50,7 +50,7 @@ export const counterReducer: Reducer<ICounterState> =
           }),
         };
 
-      case TypeKeys.LOADED_ALL:
+      case TypeKeys.LOAD_ALL_COMPLETED:
         const countersToAdd: ICounter[] = [];
         for (const c of action.payload.counters) {
           if (!state.all.find((item) => item.index === c.index)) {
@@ -71,7 +71,7 @@ export const counterReducer: Reducer<ICounterState> =
           all: newCounters,
         };
 
-      case TypeKeys.LOADING:
+      case TypeKeys.LOAD_PENDING:
         /*
          * This is the only case where the counter does probably not yet exist.
          * It will be created and initialized with the counter and isLoading.
@@ -100,10 +100,10 @@ export const counterReducer: Reducer<ICounterState> =
           all: newCounters,
         };
 
-      case TypeKeys.LOADING_ALL:
+      case TypeKeys.LOAD_ALL_PENDING:
         return state;
 
-      case TypeKeys.SAVING:
+      case TypeKeys.SAVE_PENDING:
         /*
          * Get the counter we're saving so we can use its old value until the new one
          * is retrieved from the server.

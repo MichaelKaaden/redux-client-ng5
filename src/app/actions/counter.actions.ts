@@ -8,16 +8,15 @@ import { ICounter } from "../models/counter";
  */
 
 export enum TypeKeys {
-  DECREMENTED = "DECREMENTED",
-  INCREMENTED = "INCREMENTED",
-  LOADED = "LOADED",
-  LOADED_ALL = "LOADED_ALL",
-  LOADING = "LOADING",
-  LOADING_ALL = "LOADING_ALL",
-  SAVED = "SAVED",
-  SAVING = "SAVING",
-  ERROR = "ERROR",
+  DECREMENT_COMPLETED = "DECREMENT_COMPLETED",
+  ERROR_OCCURRED = "ERROR_OCCURRED",
+  INCREMENT_COMPLETED = "INCREMENT_COMPLETED",
+  LOAD_ALL_COMPLETED = "LOAD_ALL_COMPLETED",
+  LOAD_ALL_PENDING = "LOAD_ALL_PENDING",
+  LOAD_COMPLETED = "LOAD_COMPLETED",
+  LOAD_PENDING = "LOAD_PENDING",
   RESET_ERRORS = "RESET_ERRORS",
+  SAVE_PENDING = "SAVE_PENDING",
   OTHER_ACTION = "__any_other_action_type__",
 }
 
@@ -26,10 +25,10 @@ export enum TypeKeys {
  ***********/
 
 /**
- * Interface for the decrement action.
+ * Interface for the decrement completed action.
  */
-export interface IDecrementedCounterAction extends Action {
-  type: TypeKeys.DECREMENTED;
+export interface IDecrementCompletedCounterAction extends Action {
+  type: TypeKeys.DECREMENT_COMPLETED;
   payload: {
     index: number;
     counter: ICounter;
@@ -37,10 +36,10 @@ export interface IDecrementedCounterAction extends Action {
 }
 
 /**
- * Interface for the increment action.
+ * Interface for the increment completed action.
  */
-export interface IIncrementedCounterAction extends Action {
-  type: TypeKeys.INCREMENTED;
+export interface IIncrementCompletedCounterAction extends Action {
+  type: TypeKeys.INCREMENT_COMPLETED;
   payload: {
     index: number;
     counter: ICounter;
@@ -48,10 +47,10 @@ export interface IIncrementedCounterAction extends Action {
 }
 
 /**
- * Interface for the loaded action.
+ * Interface for the load completed action.
  */
-export interface ILoadedAction extends Action {
-  type: TypeKeys.LOADED;
+export interface ILoadCompletedAction extends Action {
+  type: TypeKeys.LOAD_COMPLETED;
   payload: {
     index: number;
     counter: ICounter;
@@ -59,47 +58,47 @@ export interface ILoadedAction extends Action {
 }
 
 /**
- * Interface for the loaded all counters action.
+ * Interface for the load all completed counters action.
  */
-export interface ILoadedAllAction extends Action {
-  type: TypeKeys.LOADED_ALL;
+export interface ILoadAllCompletedAction extends Action {
+  type: TypeKeys.LOAD_ALL_COMPLETED;
   payload: {
     counters: ICounter[];
   };
 }
 
 /**
- * Interface for the loading action.
+ * Interface for the load pending action.
  */
-export interface ILoadingAction extends Action {
-  type: TypeKeys.LOADING;
+export interface ILoadPendingAction extends Action {
+  type: TypeKeys.LOAD_PENDING;
   payload: {
     index: number;
   };
 }
 
 /**
- * Interface for the loading all counters action.
+ * Interface for the load all pending counters action.
  */
-export interface ILoadingAllAction extends Action {
-  type: TypeKeys.LOADING_ALL;
+export interface ILoadAllPendingAction extends Action {
+  type: TypeKeys.LOAD_ALL_PENDING;
 }
 
 /**
- * Interface for the saving action.
+ * Interface for the save pending action.
  */
-export interface ISavingAction extends Action {
-  type: TypeKeys.SAVING;
+export interface ISavePendingAction extends Action {
+  type: TypeKeys.SAVE_PENDING;
   payload: {
     index: number;
   };
 }
 
 /**
- * Interface for the error action.
+ * Interface for the error occurred action.
  */
-export interface IErrorAction extends Action {
-  type: TypeKeys.ERROR;
+export interface IErrorOccurredAction extends Action {
+  type: TypeKeys.ERROR_OCCURRED;
   error: string;
 }
 
@@ -120,14 +119,14 @@ export interface IOtherAction extends Action {
  * Type for all the actions above
  */
 export type ActionTypes =
-  | IDecrementedCounterAction
-  | IIncrementedCounterAction
-  | ILoadedAction
-  | ILoadedAllAction
-  | ILoadingAction
-  | ILoadingAllAction
-  | ISavingAction
-  | IErrorAction
+  | IDecrementCompletedCounterAction
+  | IErrorOccurredAction
+  | IIncrementCompletedCounterAction
+  | ILoadAllCompletedAction
+  | ILoadAllPendingAction
+  | ILoadCompletedAction
+  | ILoadPendingAction
   | IResetErrorsAction
+  | ISavePendingAction
   | IOtherAction;
 

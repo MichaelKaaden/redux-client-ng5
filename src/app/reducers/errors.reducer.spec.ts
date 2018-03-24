@@ -1,4 +1,4 @@
-import { IErrorAction, IResetErrorsAction, TypeKeys } from "../actions/counter.actions";
+import { IErrorOccurredAction, IResetErrorsAction, TypeKeys } from "../actions/counter.actions";
 import { INITIAL_ERRORS_STATE } from "../models/app-state";
 import { errorsReducer } from "./errors.reducer";
 
@@ -14,8 +14,8 @@ describe("Error reducer function", () => {
   });
 
   it("should add an error to the initial state", () => {
-    const errorAction: IErrorAction = {
-      type: TypeKeys.ERROR,
+    const errorAction: IErrorOccurredAction = {
+      type: TypeKeys.ERROR_OCCURRED,
       error: `${firstError}`
     };
 
@@ -29,8 +29,8 @@ describe("Error reducer function", () => {
   it("should add a second error to an existing one", () => {
     initialState.push(firstError);
 
-    const errorAction: IErrorAction = {
-      type: TypeKeys.ERROR,
+    const errorAction: IErrorOccurredAction = {
+      type: TypeKeys.ERROR_OCCURRED,
       error: `${secondError}`
     };
 
