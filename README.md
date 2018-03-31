@@ -1,6 +1,6 @@
-# Redux Client
+# Angular Redux Client
 
-This is a single-page applicaton written in TypeScript and
+This is a single-page applicaton written in TypeScript 
 using Angular 5. It retrieves counters from a REST service
 and displays them. You can increase and decrease each counter's
 value. A second page displays a little dashboard that does
