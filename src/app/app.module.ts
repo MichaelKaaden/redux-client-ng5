@@ -66,9 +66,12 @@ export class AppModule {
       environment.production === false && devTools.isEnabled()
         ? [devTools.enhancer()]
         : [];
+
     const loggerOptions: ReduxLoggerOptions = {
       collapsed: true,
     };
+    const middleware =
+      environment.production === false ? [createLogger(loggerOptions)] : [];
 
     // Tell @angular-redux/store about our rootReducer and our
     // initial state. It will use this to create a redux store
@@ -76,8 +79,7 @@ export class AppModule {
     ngRedux.configureStore(
       rootReducer,
       INITIAL_STATE,
-      // [createLogger()],
-      [createLogger(loggerOptions)],
+      middleware,
       storeEnhancers
     );
     ngReduxRouter.initialize();
