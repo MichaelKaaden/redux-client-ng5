@@ -1,5 +1,9 @@
 import { NgReduxRouter, NgReduxRouterModule } from "@angular-redux/router";
-import { DevToolsExtension, NgRedux, NgReduxModule } from "@angular-redux/store";
+import {
+  DevToolsExtension,
+  NgRedux,
+  NgReduxModule,
+} from "@angular-redux/store";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
@@ -22,7 +26,7 @@ import { PageNotFoundComponent } from "./components/page-not-found/page-not-foun
 import { ProgressComponent } from "./components/progress/progress.component";
 import { rootReducer } from "./reducers/reducers";
 import { CounterService } from "./services/counter.service";
-
+import { environment } from "../environments/environment";
 
 @NgModule({
   declarations: [
@@ -34,7 +38,7 @@ import { CounterService } from "./services/counter.service";
     CounterListComponent,
     DashboardComponent,
     PageNotFoundComponent,
-    ErrorsComponent
+    ErrorsComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,13 +54,18 @@ import { CounterService } from "./services/counter.service";
     CounterActionCreatorService,
     ErrorsActionCreatorService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(devTools: DevToolsExtension,
-              ngRedux: NgRedux<IAppState>,
-              ngReduxRouter: NgReduxRouter) {
-    const storeEnhancers = devTools.isEnabled() ? [devTools.enhancer()] : [];
+  constructor(
+    devTools: DevToolsExtension,
+    ngRedux: NgRedux<IAppState>,
+    ngReduxRouter: NgReduxRouter
+  ) {
+    const storeEnhancers =
+      environment.production === false && devTools.isEnabled()
+        ? [devTools.enhancer()]
+        : [];
     const loggerOptions: ReduxLoggerOptions = {
       collapsed: true,
     };
@@ -68,10 +77,9 @@ export class AppModule {
       rootReducer,
       INITIAL_STATE,
       // [createLogger()],
-      [
-        createLogger(loggerOptions),
-      ],
-      storeEnhancers);
+      [createLogger(loggerOptions)],
+      storeEnhancers
+    );
     ngReduxRouter.initialize();
   }
 }
