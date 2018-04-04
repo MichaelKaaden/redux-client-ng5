@@ -11,7 +11,7 @@ import { ICounter } from "../../models/counter";
   selector: "mk-dashboard",
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.css"],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent implements OnInit {
   public averageCounterValue$: Observable<number>;
@@ -19,21 +19,34 @@ export class DashboardComponent implements OnInit {
   public counterValueSum$: Observable<number>;
   public numOfCounters: Observable<number>;
 
-  constructor(private redux: NgRedux<IAppState>,
-              private counterActionCreatorService: CounterActionCreatorService) {
-  }
+  constructor(
+    private redux: NgRedux<IAppState>,
+    private counterActionCreatorService: CounterActionCreatorService
+  ) {}
 
   ngOnInit() {
     this.loadAll();
 
     // select counter with matching index
-    this.counters$ = this.redux.select((state: IAppState) => state.counters.all);
-    this.numOfCounters = this.redux.select((state: IAppState) => state.counters.all.length);
+    this.counters$ = this.redux.select(
+      (state: IAppState) => state.counters.all
+    );
+    this.numOfCounters = this.redux.select(
+      (state: IAppState) => state.counters.all.length
+    );
     this.counterValueSum$ = this.redux.select((state: IAppState) =>
-      state.counters.all.reduce((accumulator: number, current: ICounter) => accumulator + current.value, 0));
-    this.averageCounterValue$ = Observable.combineLatest(this.counterValueSum$, this.numOfCounters, (sum, len) => {
-      return (len && len !== 0) ? Number.parseFloat((sum / len).toFixed(2)) : 0;
-    });
+      state.counters.all.reduce(
+        (accumulator: number, current: ICounter) => accumulator + current.value,
+        0
+      )
+    );
+    this.averageCounterValue$ = Observable.combineLatest(
+      this.counterValueSum$,
+      this.numOfCounters,
+      (sum, len) => {
+        return len && len !== 0 ? Number.parseFloat((sum / len).toFixed(2)) : 0;
+      }
+    );
   }
 
   // needed to capture "this" properly

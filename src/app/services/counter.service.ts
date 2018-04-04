@@ -20,8 +20,7 @@ export class CounterService {
   private readonly BASE_URL: string = environment.apiServer + this.API_HOME;
   private readonly DELAY = 0; // delay before the HTTP call is done
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   /**
    * Get a counter.
@@ -33,7 +32,10 @@ export class CounterService {
     return this.http
       .get<IEnvelope>(`${this.BASE_URL}/counters/${index}`)
       .delay(this.DELAY)
-      .map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value))
+      .map(
+        (result: IEnvelope) =>
+          new Counter(result.data.counter.index, result.data.counter.value)
+      )
       .catch(this.errorHandler);
   }
 
@@ -46,7 +48,9 @@ export class CounterService {
     return this.http
       .get<IEnvelope>(`${this.BASE_URL}/counters`)
       .delay(this.DELAY)
-      .map((result: IEnvelope) => this.rawCountersToCounters(result.data.counters))
+      .map((result: IEnvelope) =>
+        this.rawCountersToCounters(result.data.counters)
+      )
       .catch(this.errorHandler);
   }
 
@@ -59,9 +63,12 @@ export class CounterService {
    */
   public decrementCounter(index: number, by: number): Observable<ICounter> {
     return this.http
-      .put<IEnvelope>(`${this.BASE_URL}/counters/${index}/decrement`, {by})
+      .put<IEnvelope>(`${this.BASE_URL}/counters/${index}/decrement`, { by })
       .delay(this.DELAY)
-      .map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value))
+      .map(
+        (result: IEnvelope) =>
+          new Counter(result.data.counter.index, result.data.counter.value)
+      )
       .catch(this.errorHandler);
   }
 
@@ -74,9 +81,12 @@ export class CounterService {
    */
   public incrementCounter(index: number, by: number): Observable<ICounter> {
     return this.http
-      .put<IEnvelope>(`${this.BASE_URL}/counters/${index}/increment`, {by})
+      .put<IEnvelope>(`${this.BASE_URL}/counters/${index}/increment`, { by })
       .delay(this.DELAY)
-      .map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value))
+      .map(
+        (result: IEnvelope) =>
+          new Counter(result.data.counter.index, result.data.counter.value)
+      )
       .catch(this.errorHandler);
   }
 

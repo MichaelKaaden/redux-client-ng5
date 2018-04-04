@@ -6,7 +6,7 @@ import {
   ILoadCompletedAction,
   ILoadPendingAction,
   ISavePendingAction,
-  TypeKeys
+  TypeKeys,
 } from "../actions/counter.actions";
 import { ICounterState, INITIAL_COUNTERS_STATE } from "../models/app-state";
 import { Counter, ICounter } from "../models/counter";
@@ -30,8 +30,13 @@ describe("Counter Reducer function", () => {
   /*
    * Helper function to get a specific counter out of an app state object
    */
-  const getItemForIndex = (theState: ICounterState, theIndex: number): ICounter => {
-    return theState.all.find((theCounter: ICounter) => theCounter.index === theIndex);
+  const getItemForIndex = (
+    theState: ICounterState,
+    theIndex: number
+  ): ICounter => {
+    return theState.all.find(
+      (theCounter: ICounter) => theCounter.index === theIndex
+    );
   };
 
   beforeEach(() => {
@@ -62,7 +67,7 @@ describe("Counter Reducer function", () => {
       payload: {
         index,
         counter,
-      }
+      },
     };
     loadedAllAction = {
       type: TypeKeys.LOAD_ALL_COMPLETED,
@@ -74,7 +79,7 @@ describe("Counter Reducer function", () => {
       type: TypeKeys.LOAD_PENDING,
       payload: {
         index,
-      }
+      },
     };
     loadingAllAction = {
       type: TypeKeys.LOAD_ALL_PENDING,
@@ -82,7 +87,7 @@ describe("Counter Reducer function", () => {
     savingAction = {
       type: TypeKeys.SAVE_PENDING,
       payload: {
-        index
+        index,
       },
     };
   });
@@ -109,7 +114,6 @@ describe("Counter Reducer function", () => {
     });
 
     it("should decrement a counter in the middle of the app state", () => {
-
       state = {
         all: [anotherCounter, counter, yetAnotherCounter],
       };
@@ -158,7 +162,6 @@ describe("Counter Reducer function", () => {
     });
 
     it("should increment a counter in the middle of the app state", () => {
-
       state = {
         all: [anotherCounter, counter, yetAnotherCounter],
       };
@@ -183,7 +186,6 @@ describe("Counter Reducer function", () => {
       const newCounter = getItemForIndex(result, index);
       expect(newCounter).toBeUndefined();
     });
-
   });
 
   describe("with the loaded action", () => {
@@ -239,9 +241,13 @@ describe("Counter Reducer function", () => {
       expect(result).not.toBe(state);
       expect(state.all.length).toBe(0);
       expect(result.all.length).toBe(3);
-      expect(getItemForIndex(result, anotherCounter.index)).toBe(anotherCounter);
+      expect(getItemForIndex(result, anotherCounter.index)).toBe(
+        anotherCounter
+      );
       expect(getItemForIndex(result, counter.index)).toBe(counter);
-      expect(getItemForIndex(result, yetAnotherCounter.index)).toBe(yetAnotherCounter);
+      expect(getItemForIndex(result, yetAnotherCounter.index)).toBe(
+        yetAnotherCounter
+      );
     });
 
     it("should ignore doubles", () => {
@@ -252,7 +258,7 @@ describe("Counter Reducer function", () => {
       const doubleCounter = new Counter(index, value);
 
       loadedAllAction.payload = {
-        counters: [doubleCounter]
+        counters: [doubleCounter],
       };
 
       const result = counterReducer(state, loadedAllAction);
@@ -276,8 +282,12 @@ describe("Counter Reducer function", () => {
       expect(state.all.length).toBe(2);
       expect(result.all.length).toBe(3);
       expect(getItemForIndex(result, counter.index)).toBe(counter);
-      expect(getItemForIndex(result, anotherCounter.index)).toBe(anotherCounter);
-      expect(getItemForIndex(result, yetAnotherCounter.index)).toBe(yetAnotherCounter);
+      expect(getItemForIndex(result, anotherCounter.index)).toBe(
+        anotherCounter
+      );
+      expect(getItemForIndex(result, yetAnotherCounter.index)).toBe(
+        yetAnotherCounter
+      );
     });
 
     it("should sort the counters by index", () => {
@@ -333,7 +343,10 @@ describe("Counter Reducer function", () => {
 
       const newAnotherCounter = getItemForIndex(result, anotherCounter.index);
       expect(newAnotherCounter.value).toBe(anotherCounter.value);
-      const newYetAnotherCounter = getItemForIndex(result, yetAnotherCounter.index);
+      const newYetAnotherCounter = getItemForIndex(
+        result,
+        yetAnotherCounter.index
+      );
       expect(newYetAnotherCounter.value).toBe(yetAnotherCounter.value);
     });
 

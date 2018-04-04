@@ -1,7 +1,14 @@
-import { MockNgRedux, NgReduxTestingModule } from "@angular-redux/store/lib/testing";
+import {
+  MockNgRedux,
+  NgReduxTestingModule,
+} from "@angular-redux/store/lib/testing";
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { IErrorOccurredAction, IResetErrorsAction, TypeKeys } from "../../actions/counter.actions";
+import {
+  IErrorOccurredAction,
+  IResetErrorsAction,
+  TypeKeys,
+} from "../../actions/counter.actions";
 import { ErrorsActionCreatorService } from "../../actions/errors.action-creator.service";
 
 import { ErrorsComponent } from "./errors.component";
@@ -13,14 +20,16 @@ describe("ErrorsComponent", () => {
   let dispatchSpy;
   let resetErrorsAction: IResetErrorsAction;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ErrorsComponent],
-      imports: [NgReduxTestingModule],
-      providers: [ErrorsActionCreatorService],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
-  }));
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [ErrorsComponent],
+        imports: [NgReduxTestingModule],
+        providers: [ErrorsActionCreatorService],
+        schemas: [NO_ERRORS_SCHEMA],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ErrorsComponent);
@@ -43,7 +52,7 @@ describe("ErrorsComponent", () => {
     const error = "foo";
     const errorAction: IErrorOccurredAction = {
       type: TypeKeys.ERROR_OCCURRED,
-      error: `${error}`
+      error: `${error}`,
     };
     mockReduxInstance.dispatch(errorAction);
 
@@ -67,7 +76,7 @@ describe("ErrorsComponent", () => {
     const error = "foo";
     const errorAction: IErrorOccurredAction = {
       type: TypeKeys.ERROR_OCCURRED,
-      error: `${error}`
+      error: `${error}`,
     };
     mockReduxInstance.dispatch(errorAction);
     fixture.detectChanges();

@@ -5,7 +5,7 @@ import { ICounter } from "../../models/counter";
   selector: "mk-counter-input",
   templateUrl: "./counter-input.component.html",
   styleUrls: ["./counter-input.component.css"],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CounterInputComponent {
   @Input() counter: ICounter;
@@ -13,8 +13,7 @@ export class CounterInputComponent {
   @Input() decrementFunc: (by: number) => void;
   @Input() incrementFunc: (by: number) => void;
 
-  constructor() {
-  }
+  constructor() {}
 
   public decrement(): void {
     this.decrementFunc(1);
