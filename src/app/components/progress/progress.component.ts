@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from "@angular/core";
 
 export const DEFAULT_DELAY = 250;
 
@@ -6,7 +14,7 @@ export const DEFAULT_DELAY = 250;
   selector: "mk-progress",
   templateUrl: "./progress.component.html",
   styleUrls: ["./progress.component.css"],
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ProgressComponent implements OnInit, OnChanges {
   @Input() delay = DEFAULT_DELAY;
@@ -15,8 +23,7 @@ export class ProgressComponent implements OnInit, OnChanges {
 
   public showProgress = false;
 
-  constructor(private ref: ChangeDetectorRef) {
-  }
+  constructor(private ref: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.showProgressAfterDelay();

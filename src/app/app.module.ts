@@ -22,7 +22,7 @@ import { PageNotFoundComponent } from "./components/page-not-found/page-not-foun
 import { ProgressComponent } from "./components/progress/progress.component";
 import { rootReducer } from "./reducers/reducers";
 import { CounterService } from "./services/counter.service";
-
+import { environment } from "../environments/environment";
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import { CounterService } from "./services/counter.service";
     CounterListComponent,
     DashboardComponent,
     PageNotFoundComponent,
-    ErrorsComponent
+    ErrorsComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,33 +45,22 @@ import { CounterService } from "./services/counter.service";
     MaterialModule,
     FlexLayoutModule,
   ],
-  providers: [
-    CounterService,
-    CounterActionCreatorService,
-    ErrorsActionCreatorService,
-  ],
-  bootstrap: [AppComponent]
+  providers: [CounterService, CounterActionCreatorService, ErrorsActionCreatorService],
+  bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(devTools: DevToolsExtension,
-              ngRedux: NgRedux<IAppState>,
-              ngReduxRouter: NgReduxRouter) {
-    const storeEnhancers = devTools.isEnabled() ? [devTools.enhancer()] : [];
+  constructor(devTools: DevToolsExtension, ngRedux: NgRedux<IAppState>, ngReduxRouter: NgReduxRouter) {
+    const storeEnhancers = environment.production === false && devTools.isEnabled() ? [devTools.enhancer()] : [];
+
     const loggerOptions: ReduxLoggerOptions = {
       collapsed: true,
     };
+    const middleware = environment.production === false ? [createLogger(loggerOptions)] : [];
 
     // Tell @angular-redux/store about our rootReducer and our
     // initial state. It will use this to create a redux store
     // for us and wire up all the events.
-    ngRedux.configureStore(
-      rootReducer,
-      INITIAL_STATE,
-      // [createLogger()],
-      [
-        createLogger(loggerOptions),
-      ],
-      storeEnhancers);
+    ngRedux.configureStore(rootReducer, INITIAL_STATE, middleware, storeEnhancers);
     ngReduxRouter.initialize();
   }
 }

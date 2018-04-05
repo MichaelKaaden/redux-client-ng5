@@ -11,7 +11,10 @@
     "e2e": "ng e2e",
     "extract-i18n": "ng xi18n --output-path src/locale --locale en && xliffmerge --profile xliffmerge.json en de",
     "serve-aot-de": "ng serve --aot --i18nFile=src/locale/messages.de.xlf --i18nFormat=xlf --locale=de",
-    "serve-aot-en": "ng serve --aot --i18nFile=src/locale/messages.en.xlf --i18nFormat=xlf --locale=en"
+    "serve-aot-en": "ng serve --aot --i18nFile=src/locale/messages.en.xlf --i18nFormat=xlf --locale=en",
+    "postcommit": "git update-index --again",
+    "precommit": "lint-staged",
+    "prepush": "yarn run test"
   },
   "private": true,
   "dependencies": {
@@ -53,11 +56,27 @@
     "karma-coverage-istanbul-reporter": "^1.4.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "lint-staged": "^7.0.3",
     "ngx-i18nsupport": "^0.11.1",
     "prettier": "^1.11.1",
     "protractor": "~5.1.2",
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
     "typescript": "2.6.2"
+  },
+  "lint-staged": {
+    "*.{scss,js,css}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.md": [
+      "prettier --print-width 80 --write",
+      "git add"
+    ],
+    "*.ts": [
+      "prettier --write",
+      "tslint -c tslint.json --force --fix -t stylish",
+      "git add"
+    ]
   }
 }

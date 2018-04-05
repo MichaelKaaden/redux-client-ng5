@@ -6,7 +6,7 @@ import {
   ILoadCompletedAction,
   ILoadPendingAction,
   ISavePendingAction,
-  TypeKeys
+  TypeKeys,
 } from "../actions/counter.actions";
 import { ICounterState, INITIAL_COUNTERS_STATE } from "../models/app-state";
 import { Counter, ICounter } from "../models/counter";
@@ -62,7 +62,7 @@ describe("Counter Reducer function", () => {
       payload: {
         index,
         counter,
-      }
+      },
     };
     loadedAllAction = {
       type: TypeKeys.LOAD_ALL_COMPLETED,
@@ -74,7 +74,7 @@ describe("Counter Reducer function", () => {
       type: TypeKeys.LOAD_PENDING,
       payload: {
         index,
-      }
+      },
     };
     loadingAllAction = {
       type: TypeKeys.LOAD_ALL_PENDING,
@@ -82,7 +82,7 @@ describe("Counter Reducer function", () => {
     savingAction = {
       type: TypeKeys.SAVE_PENDING,
       payload: {
-        index
+        index,
       },
     };
   });
@@ -109,7 +109,6 @@ describe("Counter Reducer function", () => {
     });
 
     it("should decrement a counter in the middle of the app state", () => {
-
       state = {
         all: [anotherCounter, counter, yetAnotherCounter],
       };
@@ -158,7 +157,6 @@ describe("Counter Reducer function", () => {
     });
 
     it("should increment a counter in the middle of the app state", () => {
-
       state = {
         all: [anotherCounter, counter, yetAnotherCounter],
       };
@@ -183,7 +181,6 @@ describe("Counter Reducer function", () => {
       const newCounter = getItemForIndex(result, index);
       expect(newCounter).toBeUndefined();
     });
-
   });
 
   describe("with the loaded action", () => {
@@ -252,7 +249,7 @@ describe("Counter Reducer function", () => {
       const doubleCounter = new Counter(index, value);
 
       loadedAllAction.payload = {
-        counters: [doubleCounter]
+        counters: [doubleCounter],
       };
 
       const result = counterReducer(state, loadedAllAction);

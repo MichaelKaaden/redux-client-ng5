@@ -7,13 +7,14 @@ xdescribe("CounterContainerComponent", () => {
   let component: CounterContainerComponent;
   let fixture: ComponentFixture<CounterContainerComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [CounterContainerComponent],
-      imports: [NgReduxTestingModule],
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [CounterContainerComponent],
+        imports: [NgReduxTestingModule],
+      }).compileComponents();
     })
-      .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CounterContainerComponent);

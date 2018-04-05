@@ -5,12 +5,11 @@ import { ICounter } from "../../models/counter";
   selector: "mk-counter-heading",
   templateUrl: "./counter-heading.component.html",
   styleUrls: ["./counter-heading.component.css"],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CounterHeadingComponent {
   @Input() counter: ICounter;
   @Input() counterIndex: number;
 
-  constructor() {
-  }
+  constructor() {}
 }

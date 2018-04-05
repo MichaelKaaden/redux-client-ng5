@@ -13,13 +13,14 @@ describe("CounterInputComponent", () => {
   let index;
   let counter: ICounter;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [CounterInputComponent],
-      schemas: [NO_ERRORS_SCHEMA],
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [CounterInputComponent],
+        schemas: [NO_ERRORS_SCHEMA],
+      }).compileComponents();
     })
-      .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     index = 21;
@@ -57,41 +58,45 @@ describe("CounterInputComponent", () => {
     expect(span).toContain(`${BASE_VALUE + index}`);
   });
 
-  it("should use the bound decrement function", fakeAsync(() => {
-    const foo = {
-      decrement: (by: number): void => {
-      }
-    };
+  it(
+    "should use the bound decrement function",
+    fakeAsync(() => {
+      const foo = {
+        decrement: (by: number): void => {},
+      };
 
-    spyOn(foo, "decrement").and.callThrough();
-    component.decrementFunc = foo.decrement;
-    fixture.detectChanges();
+      spyOn(foo, "decrement").and.callThrough();
+      component.decrementFunc = foo.decrement;
+      fixture.detectChanges();
 
-    compiled = fixture.debugElement.nativeElement;
-    const button = compiled.querySelector(".decrementButton");
-    button.click();
-    tick();
-    fixture.detectChanges();
+      compiled = fixture.debugElement.nativeElement;
+      const button = compiled.querySelector(".decrementButton");
+      button.click();
+      tick();
+      fixture.detectChanges();
 
-    expect(foo.decrement).toHaveBeenCalledWith(1);
-  }));
+      expect(foo.decrement).toHaveBeenCalledWith(1);
+    })
+  );
 
-  it("should use the bound increment function", fakeAsync(() => {
-    const foo = {
-      increment: (by: number): void => {
-      }
-    };
+  it(
+    "should use the bound increment function",
+    fakeAsync(() => {
+      const foo = {
+        increment: (by: number): void => {},
+      };
 
-    spyOn(foo, "increment").and.callThrough();
-    component.incrementFunc = foo.increment;
-    fixture.detectChanges();
+      spyOn(foo, "increment").and.callThrough();
+      component.incrementFunc = foo.increment;
+      fixture.detectChanges();
 
-    compiled = fixture.debugElement.nativeElement;
-    const button = compiled.querySelector(".incrementButton");
-    button.click();
-    tick();
-    fixture.detectChanges();
+      compiled = fixture.debugElement.nativeElement;
+      const button = compiled.querySelector(".incrementButton");
+      button.click();
+      tick();
+      fixture.detectChanges();
 
-    expect(foo.increment).toHaveBeenCalledWith(1);
-  }));
+      expect(foo.increment).toHaveBeenCalledWith(1);
+    })
+  );
 });
