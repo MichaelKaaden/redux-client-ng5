@@ -14,7 +14,7 @@
     "serve-aot-en": "ng serve --aot --i18nFile=src/locale/messages.en.xlf --i18nFormat=xlf --locale=en",
     "postcommit": "git update-index --again",
     "precommit": "lint-staged",
-    "prepush": "yarn run test"
+    "prepush": "yarn run test --single-run"
   },
   "private": true,
   "dependencies": {
