@@ -9,12 +9,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "extract-i18n":
-      "ng xi18n --output-path src/locale --locale en && xliffmerge --profile xliffmerge.json en de",
-    "serve-aot-de":
-      "ng serve --aot --i18nFile=src/locale/messages.de.xlf --i18nFormat=xlf --locale=de",
-    "serve-aot-en":
-      "ng serve --aot --i18nFile=src/locale/messages.en.xlf --i18nFormat=xlf --locale=en",
+    "extract-i18n": "ng xi18n --output-path src/locale --locale en && xliffmerge --profile xliffmerge.json en de",
+    "serve-aot-de": "ng serve --aot --i18nFile=src/locale/messages.de.xlf --i18nFormat=xlf --locale=de",
+    "serve-aot-en": "ng serve --aot --i18nFile=src/locale/messages.en.xlf --i18nFormat=xlf --locale=en",
     "postcommit": "git update-index --again",
     "precommit": "lint-staged",
     "prepush": "yarn run test"
@@ -68,7 +65,14 @@
     "typescript": "2.6.2"
   },
   "lint-staged": {
-    "*.{scss,js,json,css,md}": ["prettier --write", "git add"],
+    "*.{scss,js,css}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.md": [
+      "prettier --print-width 80 --write",
+      "git add"
+    ],
     "*.ts": [
       "prettier --write",
       "tslint -c tslint.json --force --fix -t stylish",
