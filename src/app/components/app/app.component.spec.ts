@@ -42,9 +42,7 @@ describe("AppComponent", () => {
   it(
     "should render title in a h1 tag",
     async(() => {
-      expect(compiled.querySelector("h1").textContent).toContain(
-        "Redux Demo Application"
-      );
+      expect(compiled.querySelector("h1").textContent).toContain("Redux Demo Application");
     })
   );
 

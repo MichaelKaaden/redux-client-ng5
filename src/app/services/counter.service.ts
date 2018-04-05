@@ -32,10 +32,7 @@ export class CounterService {
     return this.http
       .get<IEnvelope>(`${this.BASE_URL}/counters/${index}`)
       .delay(this.DELAY)
-      .map(
-        (result: IEnvelope) =>
-          new Counter(result.data.counter.index, result.data.counter.value)
-      )
+      .map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value))
       .catch(this.errorHandler);
   }
 
@@ -48,9 +45,7 @@ export class CounterService {
     return this.http
       .get<IEnvelope>(`${this.BASE_URL}/counters`)
       .delay(this.DELAY)
-      .map((result: IEnvelope) =>
-        this.rawCountersToCounters(result.data.counters)
-      )
+      .map((result: IEnvelope) => this.rawCountersToCounters(result.data.counters))
       .catch(this.errorHandler);
   }
 
@@ -65,10 +60,7 @@ export class CounterService {
     return this.http
       .put<IEnvelope>(`${this.BASE_URL}/counters/${index}/decrement`, { by })
       .delay(this.DELAY)
-      .map(
-        (result: IEnvelope) =>
-          new Counter(result.data.counter.index, result.data.counter.value)
-      )
+      .map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value))
       .catch(this.errorHandler);
   }
 
@@ -83,10 +75,7 @@ export class CounterService {
     return this.http
       .put<IEnvelope>(`${this.BASE_URL}/counters/${index}/increment`, { by })
       .delay(this.DELAY)
-      .map(
-        (result: IEnvelope) =>
-          new Counter(result.data.counter.index, result.data.counter.value)
-      )
+      .map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value))
       .catch(this.errorHandler);
   }
 

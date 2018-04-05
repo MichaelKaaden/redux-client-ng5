@@ -30,13 +30,8 @@ describe("Counter Reducer function", () => {
   /*
    * Helper function to get a specific counter out of an app state object
    */
-  const getItemForIndex = (
-    theState: ICounterState,
-    theIndex: number
-  ): ICounter => {
-    return theState.all.find(
-      (theCounter: ICounter) => theCounter.index === theIndex
-    );
+  const getItemForIndex = (theState: ICounterState, theIndex: number): ICounter => {
+    return theState.all.find((theCounter: ICounter) => theCounter.index === theIndex);
   };
 
   beforeEach(() => {
@@ -241,13 +236,9 @@ describe("Counter Reducer function", () => {
       expect(result).not.toBe(state);
       expect(state.all.length).toBe(0);
       expect(result.all.length).toBe(3);
-      expect(getItemForIndex(result, anotherCounter.index)).toBe(
-        anotherCounter
-      );
+      expect(getItemForIndex(result, anotherCounter.index)).toBe(anotherCounter);
       expect(getItemForIndex(result, counter.index)).toBe(counter);
-      expect(getItemForIndex(result, yetAnotherCounter.index)).toBe(
-        yetAnotherCounter
-      );
+      expect(getItemForIndex(result, yetAnotherCounter.index)).toBe(yetAnotherCounter);
     });
 
     it("should ignore doubles", () => {
@@ -282,12 +273,8 @@ describe("Counter Reducer function", () => {
       expect(state.all.length).toBe(2);
       expect(result.all.length).toBe(3);
       expect(getItemForIndex(result, counter.index)).toBe(counter);
-      expect(getItemForIndex(result, anotherCounter.index)).toBe(
-        anotherCounter
-      );
-      expect(getItemForIndex(result, yetAnotherCounter.index)).toBe(
-        yetAnotherCounter
-      );
+      expect(getItemForIndex(result, anotherCounter.index)).toBe(anotherCounter);
+      expect(getItemForIndex(result, yetAnotherCounter.index)).toBe(yetAnotherCounter);
     });
 
     it("should sort the counters by index", () => {
@@ -343,10 +330,7 @@ describe("Counter Reducer function", () => {
 
       const newAnotherCounter = getItemForIndex(result, anotherCounter.index);
       expect(newAnotherCounter.value).toBe(anotherCounter.value);
-      const newYetAnotherCounter = getItemForIndex(
-        result,
-        yetAnotherCounter.index
-      );
+      const newYetAnotherCounter = getItemForIndex(result, yetAnotherCounter.index);
       expect(newYetAnotherCounter.value).toBe(yetAnotherCounter.value);
     });
 

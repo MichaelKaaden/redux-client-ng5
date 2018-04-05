@@ -1,14 +1,7 @@
-import {
-  MockNgRedux,
-  NgReduxTestingModule,
-} from "@angular-redux/store/lib/testing";
+import { MockNgRedux, NgReduxTestingModule } from "@angular-redux/store/lib/testing";
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import {
-  IErrorOccurredAction,
-  IResetErrorsAction,
-  TypeKeys,
-} from "../../actions/counter.actions";
+import { IErrorOccurredAction, IResetErrorsAction, TypeKeys } from "../../actions/counter.actions";
 import { ErrorsActionCreatorService } from "../../actions/errors.action-creator.service";
 
 import { ErrorsComponent } from "./errors.component";

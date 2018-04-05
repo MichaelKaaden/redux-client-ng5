@@ -1,10 +1,5 @@
 import { NgRedux } from "@angular-redux/store";
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { CounterActionCreatorService } from "../../actions/counter.action-creator.service";
 import { IAppState } from "../../models/app-state";
@@ -21,19 +16,14 @@ export class CounterContainerComponent implements OnInit {
 
   public counter$: Observable<ICounter>;
 
-  constructor(
-    private redux: NgRedux<IAppState>,
-    private counterActionCreatorService: CounterActionCreatorService
-  ) {}
+  constructor(private redux: NgRedux<IAppState>, private counterActionCreatorService: CounterActionCreatorService) {}
 
   ngOnInit() {
     this.load();
 
     // select counter with matching index
     this.counter$ = this.redux.select((state: IAppState) =>
-      state.counters.all.find(
-        (item: ICounter) => item.index === this.counterIndex
-      )
+      state.counters.all.find((item: ICounter) => item.index === this.counterIndex)
     );
   }
 

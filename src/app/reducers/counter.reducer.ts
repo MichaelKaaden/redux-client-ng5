@@ -21,10 +21,7 @@ export const counterReducer: Reducer<ICounterState> = (
           }
 
           // Otherwise, this is the one we want - return an updated value resetting all flags
-          return new Counter(
-            action.payload.counter.index,
-            action.payload.counter.value
-          );
+          return new Counter(action.payload.counter.index, action.payload.counter.value);
         }),
       };
 
@@ -37,10 +34,7 @@ export const counterReducer: Reducer<ICounterState> = (
           }
 
           // Otherwise, this is the one we want - return an updated value resetting all flags
-          return new Counter(
-            action.payload.counter.index,
-            action.payload.counter.value
-          );
+          return new Counter(action.payload.counter.index, action.payload.counter.value);
         }),
       };
 
@@ -53,10 +47,7 @@ export const counterReducer: Reducer<ICounterState> = (
           }
 
           // Otherwise, this is the one we want - return an updated value
-          counter = new Counter(
-            action.payload.counter.index,
-            action.payload.counter.value
-          );
+          counter = new Counter(action.payload.counter.index, action.payload.counter.value);
           return counter;
         }),
       };

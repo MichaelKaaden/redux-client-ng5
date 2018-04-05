@@ -33,10 +33,7 @@ export class CounterActionCreatorService {
    */
   public decrement(index: number, by = 1) {
     if (index < 0) {
-      this.errorActionCreatorService.setError(
-        "decrement",
-        `index ${index} < 0`
-      );
+      this.errorActionCreatorService.setError("decrement", `index ${index} < 0`);
       return;
     }
 
@@ -46,16 +43,12 @@ export class CounterActionCreatorService {
     this.counterService.decrementCounter(index, by).subscribe(
       (c: ICounter) => {
         const counter = new Counter(c.index, c.value);
-        this.ngRedux.dispatch(
-          this.buildDecrementCompletedAction(index, counter)
-        );
+        this.ngRedux.dispatch(this.buildDecrementCompletedAction(index, counter));
       },
       (error: HttpErrorResponse) => {
         this.errorActionCreatorService.setError(
           "decrement",
-          `decrementing the counter failed with ${
-            error instanceof Error ? error.message : error
-          }`
+          `decrementing the counter failed with ${error instanceof Error ? error.message : error}`
         );
       }
     );
@@ -69,10 +62,7 @@ export class CounterActionCreatorService {
    */
   public increment(index: number, by = 1) {
     if (index < 0) {
-      this.errorActionCreatorService.setError(
-        "increment",
-        `index ${index} < 0`
-      );
+      this.errorActionCreatorService.setError("increment", `index ${index} < 0`);
       return;
     }
 
@@ -82,16 +72,12 @@ export class CounterActionCreatorService {
     this.counterService.incrementCounter(index, by).subscribe(
       (c: ICounter) => {
         const counter = new Counter(c.index, c.value);
-        this.ngRedux.dispatch(
-          this.buildIncrementCompletedAction(index, counter)
-        );
+        this.ngRedux.dispatch(this.buildIncrementCompletedAction(index, counter));
       },
       (error: HttpErrorResponse) => {
         this.errorActionCreatorService.setError(
           "increment",
-          `incrementing the counter failed with ${
-            error instanceof Error ? error.message : error
-          }`
+          `incrementing the counter failed with ${error instanceof Error ? error.message : error}`
         );
       }
     );
@@ -109,9 +95,7 @@ export class CounterActionCreatorService {
     }
 
     // don't load the counter if it's already loaded
-    const cachedCounter: ICounter = this.ngRedux
-      .getState()
-      .counters.all.find((item: ICounter) => item.index === index);
+    const cachedCounter: ICounter = this.ngRedux.getState().counters.all.find((item: ICounter) => item.index === index);
     if (cachedCounter) {
       return;
     }
@@ -127,9 +111,7 @@ export class CounterActionCreatorService {
       (error: HttpErrorResponse) => {
         this.errorActionCreatorService.setError(
           "load",
-          `retrieving the counter failed with ${
-            error instanceof Error ? error.message : error
-          }`
+          `retrieving the counter failed with ${error instanceof Error ? error.message : error}`
         );
       }
     );
@@ -153,9 +135,7 @@ export class CounterActionCreatorService {
       (error: HttpErrorResponse) => {
         this.errorActionCreatorService.setError(
           "loadAll",
-          `retrieving all counters failed with ${
-            error instanceof Error ? error.message : error
-          }`
+          `retrieving all counters failed with ${error instanceof Error ? error.message : error}`
         );
       }
     );
@@ -165,9 +145,10 @@ export class CounterActionCreatorService {
    * Helper functions
    */
 
-  private buildDecrementCompletedAction: ActionCreator<
-    IDecrementCompletedCounterAction
-  > = (index: number, counter: ICounter) => {
+  private buildDecrementCompletedAction: ActionCreator<IDecrementCompletedCounterAction> = (
+    index: number,
+    counter: ICounter
+  ) => {
     return {
       type: TypeKeys.DECREMENT_COMPLETED,
       payload: {
@@ -177,9 +158,10 @@ export class CounterActionCreatorService {
     };
   };
 
-  private buildIncrementCompletedAction: ActionCreator<
-    IIncrementCompletedCounterAction
-  > = (index: number, counter: ICounter) => {
+  private buildIncrementCompletedAction: ActionCreator<IIncrementCompletedCounterAction> = (
+    index: number,
+    counter: ICounter
+  ) => {
     return {
       type: TypeKeys.INCREMENT_COMPLETED,
       payload: {
@@ -189,10 +171,7 @@ export class CounterActionCreatorService {
     };
   };
 
-  private buildLoadCompletedAction: ActionCreator<ILoadCompletedAction> = (
-    index: number,
-    counter: ICounter
-  ) => {
+  private buildLoadCompletedAction: ActionCreator<ILoadCompletedAction> = (index: number, counter: ICounter) => {
     return {
       type: TypeKeys.LOAD_COMPLETED,
       payload: {
@@ -202,9 +181,7 @@ export class CounterActionCreatorService {
     };
   };
 
-  private buildLoadAllCompletedAction: ActionCreator<
-    ILoadAllCompletedAction
-  > = (counters: ICounter[]) => {
+  private buildLoadAllCompletedAction: ActionCreator<ILoadAllCompletedAction> = (counters: ICounter[]) => {
     return {
       type: TypeKeys.LOAD_ALL_COMPLETED,
       payload: {
@@ -213,9 +190,7 @@ export class CounterActionCreatorService {
     };
   };
 
-  private buildLoadPendingAction: ActionCreator<ILoadPendingAction> = (
-    index: number
-  ) => {
+  private buildLoadPendingAction: ActionCreator<ILoadPendingAction> = (index: number) => {
     return {
       type: TypeKeys.LOAD_PENDING,
       payload: {
@@ -224,17 +199,13 @@ export class CounterActionCreatorService {
     };
   };
 
-  private buildLoadAllPendingAction: ActionCreator<
-    ILoadAllPendingAction
-  > = () => {
+  private buildLoadAllPendingAction: ActionCreator<ILoadAllPendingAction> = () => {
     return {
       type: TypeKeys.LOAD_ALL_PENDING,
     };
   };
 
-  private buildSavePendingAction: ActionCreator<ISavePendingAction> = (
-    index: number
-  ) => {
+  private buildSavePendingAction: ActionCreator<ISavePendingAction> = (index: number) => {
     return {
       type: TypeKeys.SAVE_PENDING,
       payload: {

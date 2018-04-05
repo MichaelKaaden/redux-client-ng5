@@ -11,13 +11,6 @@ import {
 
 @NgModule({
   imports: [MatButtonModule, MatIconModule],
-  exports: [
-    MatButtonModule,
-    MatCardModule,
-    MatGridListModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatTabsModule,
-  ],
+  exports: [MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatProgressSpinnerModule, MatTabsModule],
 })
 export class MaterialModule {}

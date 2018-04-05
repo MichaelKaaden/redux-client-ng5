@@ -1,9 +1,5 @@
 import { NgReduxRouter, NgReduxRouterModule } from "@angular-redux/router";
-import {
-  DevToolsExtension,
-  NgRedux,
-  NgReduxModule,
-} from "@angular-redux/store";
+import { DevToolsExtension, NgRedux, NgReduxModule } from "@angular-redux/store";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
@@ -49,39 +45,22 @@ import { environment } from "../environments/environment";
     MaterialModule,
     FlexLayoutModule,
   ],
-  providers: [
-    CounterService,
-    CounterActionCreatorService,
-    ErrorsActionCreatorService,
-  ],
+  providers: [CounterService, CounterActionCreatorService, ErrorsActionCreatorService],
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(
-    devTools: DevToolsExtension,
-    ngRedux: NgRedux<IAppState>,
-    ngReduxRouter: NgReduxRouter
-  ) {
-    const storeEnhancers =
-      environment.production === false && devTools.isEnabled()
-        ? [devTools.enhancer()]
-        : [];
+  constructor(devTools: DevToolsExtension, ngRedux: NgRedux<IAppState>, ngReduxRouter: NgReduxRouter) {
+    const storeEnhancers = environment.production === false && devTools.isEnabled() ? [devTools.enhancer()] : [];
 
     const loggerOptions: ReduxLoggerOptions = {
       collapsed: true,
     };
-    const middleware =
-      environment.production === false ? [createLogger(loggerOptions)] : [];
+    const middleware = environment.production === false ? [createLogger(loggerOptions)] : [];
 
     // Tell @angular-redux/store about our rootReducer and our
     // initial state. It will use this to create a redux store
     // for us and wire up all the events.
-    ngRedux.configureStore(
-      rootReducer,
-      INITIAL_STATE,
-      middleware,
-      storeEnhancers
-    );
+    ngRedux.configureStore(rootReducer, INITIAL_STATE, middleware, storeEnhancers);
     ngReduxRouter.initialize();
   }
 }

@@ -1,7 +1,4 @@
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from "@angular/common/http/testing";
+import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { async, getTestBed, TestBed } from "@angular/core/testing";
 import { environment } from "../../environments/environment";
 import { Counter, ICounter } from "../models/counter";
@@ -50,16 +47,11 @@ describe("CounterService", () => {
       service.counter(index).subscribe((counter: ICounter) => {
         expect(counter.index).toBe(index, "index doesn't match");
         expect(counter.value).toBe(value, "value doesn't match");
-        expect(counter).not.toBe(
-          dummyEnvelope.data.counter,
-          "counter should be a copy"
-        );
+        expect(counter).not.toBe(dummyEnvelope.data.counter, "counter should be a copy");
       });
 
       // the request is pending, therefor expect that it sometimes happens
-      const req = httpMock.expectOne(
-        `${environment.apiServer}/counters/${index}`
-      );
+      const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}`);
       expect(req.request.method).toBe("GET", "expect a GET request");
 
       // fulfill the request by transmitting a response
@@ -83,9 +75,7 @@ describe("CounterService", () => {
       );
 
       // the request is pending, therefor expect that it sometimes happens
-      const req = httpMock.expectOne(
-        `${environment.apiServer}/counters/${index}`
-      );
+      const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}`);
       expect(req.request.method).toBe("GET", "expect a GET request");
 
       // fulfill the request by transmitting an error
@@ -114,17 +104,11 @@ describe("CounterService", () => {
 
         expect(counters[0].index).toBe(index0, "first index doesn't match");
         expect(counters[0].value).toBe(value0, "first value doesn't match");
-        expect(counters[0]).not.toBe(
-          dummyEnvelope.data.counters[0],
-          "first counter should be a copy"
-        );
+        expect(counters[0]).not.toBe(dummyEnvelope.data.counters[0], "first counter should be a copy");
 
         expect(counters[1].index).toBe(index1, "second index doesn't match");
         expect(counters[1].value).toBe(value1, "second value doesn't match");
-        expect(counters[1]).not.toBe(
-          dummyEnvelope.data.counters[1],
-          "second counter should be a copy"
-        );
+        expect(counters[1]).not.toBe(dummyEnvelope.data.counters[1], "second counter should be a copy");
       });
 
       // the request is pending, therefor expect that it sometimes happens
@@ -142,9 +126,7 @@ describe("CounterService", () => {
       // make the HTTP request via the service
       service.counters().subscribe(
         (counters: ICounter[]) => {
-          expect(counters).toBeUndefined(
-            "shouldn't run into this success case"
-          );
+          expect(counters).toBeUndefined("shouldn't run into this success case");
         },
         (error) => {
           expect(error).toBeDefined("should receive an error");
@@ -177,16 +159,11 @@ describe("CounterService", () => {
       service.decrementCounter(index, by).subscribe((counter: ICounter) => {
         expect(counter.index).toBe(index, "index doesn't match");
         expect(counter.value).toBe(by, "value doesn't match");
-        expect(counter).not.toBe(
-          dummyEnvelope.data.counter,
-          "counter should be a copy"
-        );
+        expect(counter).not.toBe(dummyEnvelope.data.counter, "counter should be a copy");
       });
 
       // the request is pending, therefor expect that it sometimes happens
-      const req = httpMock.expectOne(
-        `${environment.apiServer}/counters/${index}/decrement`
-      );
+      const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}/decrement`);
       expect(req.request.method).toBe("PUT", "expect a PUT request");
 
       // fulfill the request by transmitting a response
@@ -211,9 +188,7 @@ describe("CounterService", () => {
       );
 
       // the request is pending, therefor expect that it sometimes happens
-      const req = httpMock.expectOne(
-        `${environment.apiServer}/counters/${index}/decrement`
-      );
+      const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}/decrement`);
       expect(req.request.method).toBe("PUT", "expect a PUT request");
 
       // fulfill the request by transmitting an error
@@ -238,16 +213,11 @@ describe("CounterService", () => {
       service.incrementCounter(index, by).subscribe((counter: ICounter) => {
         expect(counter.index).toBe(index, "index doesn't match");
         expect(counter.value).toBe(by, "value doesn't match");
-        expect(counter).not.toBe(
-          dummyEnvelope.data.counter,
-          "counter should be a copy"
-        );
+        expect(counter).not.toBe(dummyEnvelope.data.counter, "counter should be a copy");
       });
 
       // the request is pending, therefor expect that it sometimes happens
-      const req = httpMock.expectOne(
-        `${environment.apiServer}/counters/${index}/increment`
-      );
+      const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}/increment`);
       expect(req.request.method).toBe("PUT", "expect a PUT request");
 
       // fulfill the request by transmitting a response
@@ -272,9 +242,7 @@ describe("CounterService", () => {
       );
 
       // the request is pending, therefor expect that it sometimes happens
-      const req = httpMock.expectOne(
-        `${environment.apiServer}/counters/${index}/increment`
-      );
+      const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}/increment`);
       expect(req.request.method).toBe("PUT", "expect a PUT request");
 
       // fulfill the request by transmitting an error

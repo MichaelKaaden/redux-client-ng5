@@ -1,7 +1,4 @@
-import {
-  MockNgRedux,
-  NgReduxTestingModule,
-} from "@angular-redux/store/lib/testing";
+import { MockNgRedux, NgReduxTestingModule } from "@angular-redux/store/lib/testing";
 import { HttpClient } from "@angular/common/http";
 import { getTestBed, TestBed } from "@angular/core/testing";
 import { Observable } from "rxjs/Observable";
@@ -78,10 +75,9 @@ describe("CounterActionCreatorService", () => {
 
     it("should dispatch a saving and decremented action", () => {
       // prepare
-      const decrementCounterSpy = spyOn(
-        counterService,
-        "decrementCounter"
-      ).and.returnValue(Observable.of(new Counter(index, by)));
+      const decrementCounterSpy = spyOn(counterService, "decrementCounter").and.returnValue(
+        Observable.of(new Counter(index, by))
+      );
 
       // call the service under test
       service.decrement(index, by);
@@ -104,10 +100,9 @@ describe("CounterActionCreatorService", () => {
     it("should dispatch errors that occured retrieving data from the REST service", () => {
       // prepare
       const errorMessage = "some error";
-      const decrementCounterSpy = spyOn(
-        counterService,
-        "decrementCounter"
-      ).and.returnValue(Observable.throw(new Error(errorMessage)));
+      const decrementCounterSpy = spyOn(counterService, "decrementCounter").and.returnValue(
+        Observable.throw(new Error(errorMessage))
+      );
 
       // call the service under test
       service.decrement(index, by);
@@ -140,10 +135,9 @@ describe("CounterActionCreatorService", () => {
 
     it("should dispatch a saving and incremented action", () => {
       // prepare
-      const incrementCounterSpy = spyOn(
-        counterService,
-        "incrementCounter"
-      ).and.returnValue(Observable.of(new Counter(index, by)));
+      const incrementCounterSpy = spyOn(counterService, "incrementCounter").and.returnValue(
+        Observable.of(new Counter(index, by))
+      );
 
       // call the service under test
       service.increment(index, by);
@@ -166,10 +160,9 @@ describe("CounterActionCreatorService", () => {
     it("should dispatch errors that occured retrieving data from the REST service", () => {
       // prepare
       const errorMessage = "some error";
-      const incrementCounterSpy = spyOn(
-        counterService,
-        "incrementCounter"
-      ).and.returnValue(Observable.throw(new Error(errorMessage)));
+      const incrementCounterSpy = spyOn(counterService, "incrementCounter").and.returnValue(
+        Observable.throw(new Error(errorMessage))
+      );
 
       // call the service under test
       service.increment(index, by);

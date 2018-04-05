@@ -1,11 +1,5 @@
 import { NO_ERRORS_SCHEMA, SimpleChange } from "@angular/core";
-import {
-  async,
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-} from "@angular/core/testing";
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
 
 import { DEFAULT_DELAY, ProgressComponent } from "./progress.component";
 

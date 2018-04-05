@@ -14,10 +14,7 @@ export class ErrorsComponent {
   @select((state: IAppState) => state.errors)
   errors$: Observable<string[]>;
 
-  constructor(
-    private redux: NgRedux<IAppState>,
-    private errorsActionCreatorService: ErrorsActionCreatorService
-  ) {}
+  constructor(private redux: NgRedux<IAppState>, private errorsActionCreatorService: ErrorsActionCreatorService) {}
 
   reset() {
     this.errorsActionCreatorService.resetErrors();

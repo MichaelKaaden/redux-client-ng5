@@ -1,8 +1,4 @@
-import {
-  IErrorOccurredAction,
-  IResetErrorsAction,
-  TypeKeys,
-} from "../actions/counter.actions";
+import { IErrorOccurredAction, IResetErrorsAction, TypeKeys } from "../actions/counter.actions";
 import { INITIAL_ERRORS_STATE } from "../models/app-state";
 import { errorsReducer } from "./errors.reducer";
 
