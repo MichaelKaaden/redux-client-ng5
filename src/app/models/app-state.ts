@@ -1,17 +1,11 @@
 import { ICounter } from "./counter";
 
-export interface ICounterState {
-  all: ICounter[];
-}
-
 export interface IAppState {
-  counters: ICounterState;
+  counters: ICounter[];
   errors: string[];
 }
 
-export const INITIAL_COUNTERS_STATE: ICounterState = {
-  all: [],
-};
+export const INITIAL_COUNTERS_STATE: ICounter[] = [];
 
 export const INITIAL_ERRORS_STATE: string[] = [];
 

@@ -23,7 +23,7 @@ export class CounterContainerComponent implements OnInit {
 
     // select counter with matching index
     this.counter$ = this.redux.select((state: IAppState) =>
-      state.counters.all.find((item: ICounter) => item.index === this.counterIndex)
+      state.counters.find((item: ICounter) => item.index === this.counterIndex)
     );
   }
 

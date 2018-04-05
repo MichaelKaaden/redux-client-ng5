@@ -25,10 +25,10 @@ export class DashboardComponent implements OnInit {
     this.loadAll();
 
     // select counter with matching index
-    this.counters$ = this.redux.select((state: IAppState) => state.counters.all);
-    this.numOfCounters = this.redux.select((state: IAppState) => state.counters.all.length);
+    this.counters$ = this.redux.select((state: IAppState) => state.counters);
+    this.numOfCounters = this.redux.select((state: IAppState) => state.counters.length);
     this.counterValueSum$ = this.redux.select((state: IAppState) =>
-      state.counters.all.reduce((accumulator: number, current: ICounter) => accumulator + current.value, 0)
+      state.counters.reduce((accumulator: number, current: ICounter) => accumulator + current.value, 0)
     );
     this.averageCounterValue$ = Observable.combineLatest(this.counterValueSum$, this.numOfCounters, (sum, len) => {
       return len && len !== 0 ? Number.parseFloat((sum / len).toFixed(2)) : 0;

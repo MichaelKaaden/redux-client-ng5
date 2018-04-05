@@ -95,7 +95,7 @@ export class CounterActionCreatorService {
     }
 
     // don't load the counter if it's already loaded
-    const cachedCounter: ICounter = this.ngRedux.getState().counters.all.find((item: ICounter) => item.index === index);
+    const cachedCounter: ICounter = this.ngRedux.getState().counters.find((item: ICounter) => item.index === index);
     if (cachedCounter) {
       return;
     }
