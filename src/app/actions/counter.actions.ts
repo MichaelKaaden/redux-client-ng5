@@ -129,4 +129,3 @@ export type ActionTypes =
   | IResetErrorsAction
   | ISavePendingAction
   | IOtherAction;
-

@@ -6,14 +6,14 @@ import {
   ILoadCompletedAction,
   ILoadPendingAction,
   ISavePendingAction,
-  TypeKeys
+  TypeKeys,
 } from "../actions/counter.actions";
-import { ICounterState, INITIAL_COUNTERS_STATE } from "../models/app-state";
+import { INITIAL_COUNTERS_STATE } from "../models/app-state";
 import { Counter, ICounter } from "../models/counter";
 import { counterReducer } from "./counter.reducer";
 
 describe("Counter Reducer function", () => {
-  let state: ICounterState; // tslint:disable-line:prefer-const
+  let state: ICounter[]; // tslint:disable-line:prefer-const
   let index;
   let value;
   let counter: ICounter;
@@ -30,8 +30,8 @@ describe("Counter Reducer function", () => {
   /*
    * Helper function to get a specific counter out of an app state object
    */
-  const getItemForIndex = (theState: ICounterState, theIndex: number): ICounter => {
-    return theState.all.find((theCounter: ICounter) => theCounter.index === theIndex);
+  const getItemForIndex = (theState: ICounter[], theIndex: number): ICounter => {
+    return theState.find((theCounter: ICounter) => theCounter.index === theIndex);
   };
 
   beforeEach(() => {
@@ -62,7 +62,7 @@ describe("Counter Reducer function", () => {
       payload: {
         index,
         counter,
-      }
+      },
     };
     loadedAllAction = {
       type: TypeKeys.LOAD_ALL_COMPLETED,
@@ -74,7 +74,7 @@ describe("Counter Reducer function", () => {
       type: TypeKeys.LOAD_PENDING,
       payload: {
         index,
-      }
+      },
     };
     loadingAllAction = {
       type: TypeKeys.LOAD_ALL_PENDING,
@@ -82,7 +82,7 @@ describe("Counter Reducer function", () => {
     savingAction = {
       type: TypeKeys.SAVE_PENDING,
       payload: {
-        index
+        index,
       },
     };
   });
@@ -91,17 +91,15 @@ describe("Counter Reducer function", () => {
     it("should not decrement a counter not in the app state", () => {
       const result = counterReducer(state, decrementedCounterAction);
 
-      expect(result.all.length).toBe(0);
+      expect(result.length).toBe(0);
     });
 
     it("should decrement a single counter in the app state", () => {
-      state = {
-        all: [counter],
-      };
+      state = [counter];
 
       const result = counterReducer(state, decrementedCounterAction);
       expect(result).not.toBe(state);
-      expect(result.all.length).toBe(state.all.length);
+      expect(result.length).toBe(state.length);
       const oldItem = getItemForIndex(state, index);
       const newItem = getItemForIndex(result, index);
       expect(newItem).not.toBe(oldItem);
@@ -109,14 +107,11 @@ describe("Counter Reducer function", () => {
     });
 
     it("should decrement a counter in the middle of the app state", () => {
-
-      state = {
-        all: [anotherCounter, counter, yetAnotherCounter],
-      };
+      state = [anotherCounter, counter, yetAnotherCounter];
 
       const result = counterReducer(state, decrementedCounterAction);
       expect(result).not.toBe(state);
-      expect(result.all.length).toBe(state.all.length);
+      expect(result.length).toBe(state.length);
       const oldItem = getItemForIndex(state, index);
       const newItem = getItemForIndex(result, index);
       expect(newItem).not.toBe(oldItem);
@@ -124,12 +119,10 @@ describe("Counter Reducer function", () => {
     });
 
     it("should handle a non-present counter", () => {
-      state = {
-        all: [anotherCounter, yetAnotherCounter],
-      };
+      state = [anotherCounter, yetAnotherCounter];
 
       const result = counterReducer(state, decrementedCounterAction);
-      expect(result.all.length).toBe(state.all.length);
+      expect(result.length).toBe(state.length);
 
       const newCounter = getItemForIndex(result, index);
       expect(newCounter).toBeUndefined();
@@ -140,17 +133,15 @@ describe("Counter Reducer function", () => {
     it("should not increment a counter not in the app state", () => {
       const result = counterReducer(state, incrementedCounterAction);
 
-      expect(result.all.length).toBe(0);
+      expect(result.length).toBe(0);
     });
 
     it("should increment a single counter in the app state", () => {
-      state = {
-        all: [counter],
-      };
+      state = [counter];
 
       const result = counterReducer(state, incrementedCounterAction);
       expect(result).not.toBe(state);
-      expect(result.all.length).toBe(state.all.length);
+      expect(result.length).toBe(state.length);
       const oldItem = getItemForIndex(state, index);
       const newItem = getItemForIndex(result, index);
       expect(newItem).not.toBe(oldItem);
@@ -158,14 +149,11 @@ describe("Counter Reducer function", () => {
     });
 
     it("should increment a counter in the middle of the app state", () => {
-
-      state = {
-        all: [anotherCounter, counter, yetAnotherCounter],
-      };
+      state = [anotherCounter, counter, yetAnotherCounter];
 
       const result = counterReducer(state, incrementedCounterAction);
       expect(result).not.toBe(state);
-      expect(result.all.length).toBe(state.all.length);
+      expect(result.length).toBe(state.length);
       const oldItem = getItemForIndex(state, index);
       const newItem = getItemForIndex(result, index);
       expect(newItem).not.toBe(oldItem);
@@ -173,29 +161,24 @@ describe("Counter Reducer function", () => {
     });
 
     it("should handle a non-present counter", () => {
-      state = {
-        all: [anotherCounter, yetAnotherCounter],
-      };
+      state = [anotherCounter, yetAnotherCounter];
 
       const result = counterReducer(state, incrementedCounterAction);
-      expect(result.all.length).toBe(state.all.length);
+      expect(result.length).toBe(state.length);
 
       const newCounter = getItemForIndex(result, index);
       expect(newCounter).toBeUndefined();
     });
-
   });
 
   describe("with the loaded action", () => {
     it("should set the properties for the placeholder counter as single counter in the array", () => {
       const oldCounter = new Counter(index);
       oldCounter.isLoading = true;
-      state = {
-        all: [oldCounter],
-      };
+      state = [oldCounter];
 
       const result = counterReducer(state, loadedAction);
-      expect(result.all.length).toBe(1);
+      expect(result.length).toBe(1);
       const newCounter = getItemForIndex(result, index);
       expect(newCounter.index).toBe(oldCounter.index);
       expect(newCounter.value).toBe(value);
@@ -205,12 +188,10 @@ describe("Counter Reducer function", () => {
     it("should set the properties for the placeholder counter for some counters in the array", () => {
       const oldCounter = new Counter(index);
       oldCounter.isLoading = true;
-      state = {
-        all: [anotherCounter, oldCounter, yetAnotherCounter],
-      };
+      state = [anotherCounter, oldCounter, yetAnotherCounter];
 
       const result = counterReducer(state, loadedAction);
-      expect(result.all.length).toBe(3);
+      expect(result.length).toBe(3);
       const newCounter = getItemForIndex(result, index);
       expect(newCounter.index).toBe(oldCounter.index);
       expect(newCounter.value).toBe(value);
@@ -218,13 +199,11 @@ describe("Counter Reducer function", () => {
     });
 
     it("should handle a non-present counter", () => {
-      state = {
-        all: [anotherCounter, yetAnotherCounter],
-      };
+      state = [anotherCounter, yetAnotherCounter];
 
       const result = counterReducer(state, loadedAction);
 
-      expect(result.all.length).toBe(state.all.length);
+      expect(result.length).toBe(state.length);
       const newCounter = getItemForIndex(result, index);
       expect(newCounter).toBeUndefined();
     });
@@ -232,40 +211,36 @@ describe("Counter Reducer function", () => {
 
   describe("with the loaded all action", () => {
     it("should add all counters to the state", () => {
-      expect(state.all.length).toBe(0);
+      expect(state.length).toBe(0);
 
       const result = counterReducer(state, loadedAllAction);
 
       expect(result).not.toBe(state);
-      expect(state.all.length).toBe(0);
-      expect(result.all.length).toBe(3);
+      expect(state.length).toBe(0);
+      expect(result.length).toBe(3);
       expect(getItemForIndex(result, anotherCounter.index)).toBe(anotherCounter);
       expect(getItemForIndex(result, counter.index)).toBe(counter);
       expect(getItemForIndex(result, yetAnotherCounter.index)).toBe(yetAnotherCounter);
     });
 
     it("should ignore doubles", () => {
-      state = {
-        all: [anotherCounter, counter, yetAnotherCounter],
-      };
+      state = [anotherCounter, counter, yetAnotherCounter];
 
       const doubleCounter = new Counter(index, value);
 
       loadedAllAction.payload = {
-        counters: [doubleCounter]
+        counters: [doubleCounter],
       };
 
       const result = counterReducer(state, loadedAllAction);
 
-      expect(result.all.length).toBe(state.all.length);
+      expect(result.length).toBe(state.length);
       expect(getItemForIndex(result, counter.index)).toBe(counter);
       expect(getItemForIndex(result, doubleCounter.index)).toBe(counter);
     });
 
     it("should add counters to existing ones in the state", () => {
-      state = {
-        all: [anotherCounter, yetAnotherCounter],
-      };
+      state = [anotherCounter, yetAnotherCounter];
 
       loadedAllAction.payload = {
         counters: [anotherCounter, counter, yetAnotherCounter],
@@ -273,8 +248,8 @@ describe("Counter Reducer function", () => {
 
       const result = counterReducer(state, loadedAllAction);
 
-      expect(state.all.length).toBe(2);
-      expect(result.all.length).toBe(3);
+      expect(state.length).toBe(2);
+      expect(result.length).toBe(3);
       expect(getItemForIndex(result, counter.index)).toBe(counter);
       expect(getItemForIndex(result, anotherCounter.index)).toBe(anotherCounter);
       expect(getItemForIndex(result, yetAnotherCounter.index)).toBe(yetAnotherCounter);
@@ -287,10 +262,10 @@ describe("Counter Reducer function", () => {
 
       const result = counterReducer(state, loadedAllAction);
 
-      expect(result.all.length).toBe(3);
-      expect(result.all[0].index).toBe(anotherCounter.index);
-      expect(result.all[1].index).toBe(counter.index);
-      expect(result.all[2].index).toBe(yetAnotherCounter.index);
+      expect(result.length).toBe(3);
+      expect(result[0].index).toBe(anotherCounter.index);
+      expect(result[1].index).toBe(counter.index);
+      expect(result[2].index).toBe(yetAnotherCounter.index);
     });
   });
 
@@ -298,8 +273,8 @@ describe("Counter Reducer function", () => {
     it("should add a counter if the app state is empty", () => {
       const result = counterReducer(state, loadingAction);
 
-      expect(state.all.length).toBe(0);
-      expect(result.all.length).toBe(1);
+      expect(state.length).toBe(0);
+      expect(result.length).toBe(1);
 
       const newCounter = getItemForIndex(result, index);
       expect(newCounter.value).toBeUndefined();
@@ -308,13 +283,11 @@ describe("Counter Reducer function", () => {
     });
 
     it("should add a counter if the counter is not yet in the app state", () => {
-      state = {
-        all: [anotherCounter, yetAnotherCounter],
-      };
+      state = [anotherCounter, yetAnotherCounter];
       const result = counterReducer(state, loadingAction);
 
-      expect(state.all.length).toBe(2);
-      expect(result.all.length).toBe(3);
+      expect(state.length).toBe(2);
+      expect(result.length).toBe(3);
 
       const newCounter = getItemForIndex(result, index);
       expect(newCounter.value).toBeUndefined();
@@ -323,13 +296,11 @@ describe("Counter Reducer function", () => {
     });
 
     it("should not change the other counters if the counter is not yet in the app state", () => {
-      state = {
-        all: [anotherCounter, yetAnotherCounter],
-      };
+      state = [anotherCounter, yetAnotherCounter];
       const result = counterReducer(state, loadingAction);
 
-      expect(state.all.length).toBe(2);
-      expect(result.all.length).toBe(3);
+      expect(state.length).toBe(2);
+      expect(result.length).toBe(3);
 
       const newAnotherCounter = getItemForIndex(result, anotherCounter.index);
       expect(newAnotherCounter.value).toBe(anotherCounter.value);
@@ -338,28 +309,24 @@ describe("Counter Reducer function", () => {
     });
 
     it("should sort the counter list if the counter is not yet in the app state", () => {
-      state = {
-        all: [anotherCounter, yetAnotherCounter],
-      };
+      state = [anotherCounter, yetAnotherCounter];
       const result = counterReducer(state, loadingAction);
 
-      expect(state.all.length).toBe(2);
-      expect(result.all.length).toBe(3);
-      expect(result.all[0].index).toBe(0);
-      expect(result.all[1].index).toBe(1);
-      expect(result.all[2].index).toBe(2);
+      expect(state.length).toBe(2);
+      expect(result.length).toBe(3);
+      expect(result[0].index).toBe(0);
+      expect(result[1].index).toBe(1);
+      expect(result[2].index).toBe(2);
     });
 
     it("should not add a counter if the counter already is in the app state", () => {
       counter = new Counter(index);
       counter.isLoading = true;
-      state = {
-        all: [counter],
-      };
+      state = [counter];
 
       const result = counterReducer(state, loadingAction);
 
-      expect(state.all.length).toBe(1);
+      expect(state.length).toBe(1);
       expect(result).toBe(state);
     });
   });
@@ -368,14 +335,12 @@ describe("Counter Reducer function", () => {
     it("should not add to the app state", () => {
       const result = counterReducer(state, loadingAllAction);
 
-      expect(state.all.length).toBe(0);
-      expect(result.all.length).toBe(0);
+      expect(state.length).toBe(0);
+      expect(result.length).toBe(0);
     });
 
     it("should not change the app state", () => {
-      state = {
-        all: [anotherCounter, counter, yetAnotherCounter],
-      };
+      state = [anotherCounter, counter, yetAnotherCounter];
 
       const result = counterReducer(state, loadingAllAction);
 
@@ -385,9 +350,7 @@ describe("Counter Reducer function", () => {
 
   describe("with the saving action", () => {
     it("should set the isSaving flag", () => {
-      state = {
-        all: [counter],
-      };
+      state = [counter];
 
       const result = counterReducer(state, savingAction);
 

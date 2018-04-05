@@ -8,15 +8,15 @@ describe("AppComponent", () => {
   let fixture: ComponentFixture<AppComponent>;
   let compiled: any;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-      imports: [RouterTestingModule],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
-  }));
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [AppComponent],
+        imports: [RouterTestingModule],
+        schemas: [NO_ERRORS_SCHEMA],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
@@ -25,27 +25,41 @@ describe("AppComponent", () => {
     compiled = fixture.debugElement.nativeElement;
   });
 
+  it(
+    "should create the app",
+    async(() => {
+      expect(app).toBeTruthy();
+    })
+  );
 
-  it("should create the app", async(() => {
-    expect(app).toBeTruthy();
-  }));
+  it(
+    `should have as title 'Redux Demo Application'`,
+    async(() => {
+      expect(app.title).toEqual("Redux Demo Application");
+    })
+  );
 
-  it(`should have as title 'Redux Demo Application'`, async(() => {
-    expect(app.title).toEqual("Redux Demo Application");
-  }));
+  it(
+    "should render title in a h1 tag",
+    async(() => {
+      expect(compiled.querySelector("h1").textContent).toContain("Redux Demo Application");
+    })
+  );
 
-  it("should render title in a h1 tag", async(() => {
-    expect(compiled.querySelector("h1").textContent).toContain("Redux Demo Application");
-  }));
+  it(
+    "should contain a navigation bar",
+    async(() => {
+      expect(compiled.querySelector("nav")).not.toBe(null);
+    })
+  );
 
-  it("should contain a navigation bar", async(() => {
-    expect(compiled.querySelector("nav")).not.toBe(null);
-  }));
-
-  it("should have links in the navigation bar", async(() => {
-    const links = compiled.querySelectorAll("nav a");
-    expect(links.length).toBe(2);
-    expect(links[0].href).toMatch(/\/counters/);
-    expect(links[1].href).toMatch(/\/dashboard/);
-  }));
+  it(
+    "should have links in the navigation bar",
+    async(() => {
+      const links = compiled.querySelectorAll("nav a");
+      expect(links.length).toBe(2);
+      expect(links[0].href).toMatch(/\/counters/);
+      expect(links[1].href).toMatch(/\/dashboard/);
+    })
+  );
 });

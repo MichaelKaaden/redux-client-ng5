@@ -5,8 +5,7 @@ import { NgRedux } from "@angular-redux/store";
 
 @Injectable()
 export class ErrorsActionCreatorService {
-  constructor(private ngRedux: NgRedux<IAppState>) {
-  }
+  constructor(private ngRedux: NgRedux<IAppState>) {}
 
   /**
    * Create an error.

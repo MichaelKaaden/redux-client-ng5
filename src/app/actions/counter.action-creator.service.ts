@@ -12,18 +12,18 @@ import {
   ILoadCompletedAction,
   ILoadPendingAction,
   ISavePendingAction,
-  TypeKeys
+  TypeKeys,
 } from "./counter.actions";
 import { ErrorsActionCreatorService } from "./errors.action-creator.service";
 import { NgRedux } from "@angular-redux/store";
 
 @Injectable()
 export class CounterActionCreatorService {
-
-  constructor(private ngRedux: NgRedux<IAppState>,
-              private counterService: CounterService,
-              private errorActionCreatorService: ErrorsActionCreatorService) {
-  }
+  constructor(
+    private ngRedux: NgRedux<IAppState>,
+    private counterService: CounterService,
+    private errorActionCreatorService: ErrorsActionCreatorService
+  ) {}
 
   /**
    * Decrement a counter by saving it to the RESTful Web Service.
@@ -40,15 +40,18 @@ export class CounterActionCreatorService {
     // set "saving" for this counter
     this.ngRedux.dispatch(this.buildSavePendingAction(index));
 
-    this.counterService.decrementCounter(index, by)
-      .subscribe((c: ICounter) => {
-          const counter = new Counter(c.index, c.value);
-          this.ngRedux.dispatch(this.buildDecrementCompletedAction(index, counter));
-        }, (error: HttpErrorResponse) => {
-          this.errorActionCreatorService.setError("decrement",
-            `decrementing the counter failed with ${error instanceof Error ? error.message : error}`);
-        }
-      );
+    this.counterService.decrementCounter(index, by).subscribe(
+      (c: ICounter) => {
+        const counter = new Counter(c.index, c.value);
+        this.ngRedux.dispatch(this.buildDecrementCompletedAction(index, counter));
+      },
+      (error: HttpErrorResponse) => {
+        this.errorActionCreatorService.setError(
+          "decrement",
+          `decrementing the counter failed with ${error instanceof Error ? error.message : error}`
+        );
+      }
+    );
   }
 
   /**
@@ -66,15 +69,18 @@ export class CounterActionCreatorService {
     // set "saving" for this counter
     this.ngRedux.dispatch(this.buildSavePendingAction(index));
 
-    this.counterService.incrementCounter(index, by)
-      .subscribe((c: ICounter) => {
-          const counter = new Counter(c.index, c.value);
-          this.ngRedux.dispatch(this.buildIncrementCompletedAction(index, counter));
-        }, (error: HttpErrorResponse) => {
-          this.errorActionCreatorService.setError("increment",
-            `incrementing the counter failed with ${error instanceof Error ? error.message : error}`);
-        }
-      );
+    this.counterService.incrementCounter(index, by).subscribe(
+      (c: ICounter) => {
+        const counter = new Counter(c.index, c.value);
+        this.ngRedux.dispatch(this.buildIncrementCompletedAction(index, counter));
+      },
+      (error: HttpErrorResponse) => {
+        this.errorActionCreatorService.setError(
+          "increment",
+          `incrementing the counter failed with ${error instanceof Error ? error.message : error}`
+        );
+      }
+    );
   }
 
   /***
@@ -89,7 +95,7 @@ export class CounterActionCreatorService {
     }
 
     // don't load the counter if it's already loaded
-    const cachedCounter: ICounter = this.ngRedux.getState().counters.all.find((item: ICounter) => item.index === index);
+    const cachedCounter: ICounter = this.ngRedux.getState().counters.find((item: ICounter) => item.index === index);
     if (cachedCounter) {
       return;
     }
@@ -97,15 +103,18 @@ export class CounterActionCreatorService {
     // set "loading" for this counter
     this.ngRedux.dispatch(this.buildLoadPendingAction(index));
 
-    this.counterService.counter(index)
-      .subscribe((c: ICounter) => {
-          const counter = new Counter(c.index, c.value);
-          this.ngRedux.dispatch(this.buildLoadCompletedAction(index, counter));
-        }, (error: HttpErrorResponse) => {
-          this.errorActionCreatorService.setError("load",
-            `retrieving the counter failed with ${error instanceof Error ? error.message : error}`);
-        }
-      );
+    this.counterService.counter(index).subscribe(
+      (c: ICounter) => {
+        const counter = new Counter(c.index, c.value);
+        this.ngRedux.dispatch(this.buildLoadCompletedAction(index, counter));
+      },
+      (error: HttpErrorResponse) => {
+        this.errorActionCreatorService.setError(
+          "load",
+          `retrieving the counter failed with ${error instanceof Error ? error.message : error}`
+        );
+      }
+    );
   }
 
   /**
@@ -115,25 +124,31 @@ export class CounterActionCreatorService {
     // set "loading" for this counter
     this.ngRedux.dispatch(this.buildLoadAllPendingAction());
 
-    this.counterService.counters()
-      .subscribe((cs: ICounter[]) => {
-          const counters = [];
-          for (const c of cs) {
-            counters.push(new Counter(c.index, c.value));
-          }
-          this.ngRedux.dispatch(this.buildLoadAllCompletedAction(counters));
-        }, (error: HttpErrorResponse) => {
-          this.errorActionCreatorService.setError("loadAll",
-            `retrieving all counters failed with ${error instanceof Error ? error.message : error}`);
+    this.counterService.counters().subscribe(
+      (cs: ICounter[]) => {
+        const counters = [];
+        for (const c of cs) {
+          counters.push(new Counter(c.index, c.value));
         }
-      );
+        this.ngRedux.dispatch(this.buildLoadAllCompletedAction(counters));
+      },
+      (error: HttpErrorResponse) => {
+        this.errorActionCreatorService.setError(
+          "loadAll",
+          `retrieving all counters failed with ${error instanceof Error ? error.message : error}`
+        );
+      }
+    );
   }
 
   /*
    * Helper functions
    */
 
-  private buildDecrementCompletedAction: ActionCreator<IDecrementCompletedCounterAction> = (index: number, counter: ICounter) => {
+  private buildDecrementCompletedAction: ActionCreator<IDecrementCompletedCounterAction> = (
+    index: number,
+    counter: ICounter
+  ) => {
     return {
       type: TypeKeys.DECREMENT_COMPLETED,
       payload: {
@@ -143,7 +158,10 @@ export class CounterActionCreatorService {
     };
   };
 
-  private buildIncrementCompletedAction: ActionCreator<IIncrementCompletedCounterAction> = (index: number, counter: ICounter) => {
+  private buildIncrementCompletedAction: ActionCreator<IIncrementCompletedCounterAction> = (
+    index: number,
+    counter: ICounter
+  ) => {
     return {
       type: TypeKeys.INCREMENT_COMPLETED,
       payload: {
@@ -168,7 +186,7 @@ export class CounterActionCreatorService {
       type: TypeKeys.LOAD_ALL_COMPLETED,
       payload: {
         counters,
-      }
+      },
     };
   };
 

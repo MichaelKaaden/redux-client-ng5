@@ -13,13 +13,14 @@ describe("CounterHeadingComponent", () => {
   let compiled: any;
   let index;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [CounterHeadingComponent],
-      schemas: [NO_ERRORS_SCHEMA],
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [CounterHeadingComponent],
+        schemas: [NO_ERRORS_SCHEMA],
+      }).compileComponents();
     })
-      .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     index = 12;

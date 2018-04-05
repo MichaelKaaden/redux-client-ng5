@@ -8,14 +8,13 @@ import { IAppState } from "../../models/app-state";
   selector: "mk-errors",
   templateUrl: "./errors.component.html",
   styleUrls: ["./errors.component.css"],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ErrorsComponent {
-  @select((state: IAppState) => state.errors) errors$: Observable<string[]>;
+  @select((state: IAppState) => state.errors)
+  errors$: Observable<string[]>;
 
-  constructor(private redux: NgRedux<IAppState>,
-              private errorsActionCreatorService: ErrorsActionCreatorService) {
-  }
+  constructor(private redux: NgRedux<IAppState>, private errorsActionCreatorService: ErrorsActionCreatorService) {}
 
   reset() {
     this.errorsActionCreatorService.resetErrors();
