@@ -19,7 +19,7 @@ describe("CounterActionCreatorService", () => {
   let dispatchSpy;
   let index;
   let by;
-  let savingAction;
+  let savePendingAction;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -48,7 +48,7 @@ describe("CounterActionCreatorService", () => {
     dispatchSpy = spyOn(mockReduxInstance, "dispatch");
     index = 0;
     by = 1;
-    savingAction = {
+    savePendingAction = {
       type: TypeKeys.SAVE_PENDING,
       payload: {
         index,
@@ -87,7 +87,7 @@ describe("CounterActionCreatorService", () => {
       expect(decrementCounterSpy).toHaveBeenCalledWith(index, by);
 
       expect(dispatchSpy).toHaveBeenCalledTimes(2);
-      expect(dispatchSpy).toHaveBeenCalledWith(savingAction);
+      expect(dispatchSpy).toHaveBeenCalledWith(savePendingAction);
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: TypeKeys.DECREMENT_COMPLETED,
         payload: {
@@ -112,7 +112,7 @@ describe("CounterActionCreatorService", () => {
       expect(decrementCounterSpy).toHaveBeenCalledWith(index, by);
 
       expect(dispatchSpy).toHaveBeenCalledTimes(2);
-      expect(dispatchSpy).toHaveBeenCalledWith(savingAction);
+      expect(dispatchSpy).toHaveBeenCalledWith(savePendingAction);
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: TypeKeys.ERROR_OCCURRED,
         error: `error in the "decrement" action creator: decrementing the counter failed with ${errorMessage}`,
@@ -147,7 +147,7 @@ describe("CounterActionCreatorService", () => {
       expect(incrementCounterSpy).toHaveBeenCalledWith(index, by);
 
       expect(dispatchSpy).toHaveBeenCalledTimes(2);
-      expect(dispatchSpy).toHaveBeenCalledWith(savingAction);
+      expect(dispatchSpy).toHaveBeenCalledWith(savePendingAction);
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: TypeKeys.INCREMENT_COMPLETED,
         payload: {
@@ -172,7 +172,7 @@ describe("CounterActionCreatorService", () => {
       expect(incrementCounterSpy).toHaveBeenCalledWith(index, by);
 
       expect(dispatchSpy).toHaveBeenCalledTimes(2);
-      expect(dispatchSpy).toHaveBeenCalledWith(savingAction);
+      expect(dispatchSpy).toHaveBeenCalledWith(savePendingAction);
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: TypeKeys.ERROR_OCCURRED,
         error: `error in the "increment" action creator: incrementing the counter failed with ${errorMessage}`,
