@@ -99,7 +99,9 @@ export interface ISavePendingAction extends Action {
  */
 export interface IErrorOccurredAction extends Action {
   type: TypeKeys.ERROR_OCCURRED;
-  error: string;
+  payload: {
+    error: string;
+  };
 }
 
 export interface IResetErrorsAction extends Action {

@@ -16,7 +16,9 @@ describe("Error reducer function", () => {
   it("should add an error to the initial state", () => {
     const errorAction: IErrorOccurredAction = {
       type: TypeKeys.ERROR_OCCURRED,
-      error: `${firstError}`,
+      payload: {
+        error: `${firstError}`,
+      },
     };
 
     const state = errorsReducer(initialState, errorAction);
@@ -31,7 +33,9 @@ describe("Error reducer function", () => {
 
     const errorAction: IErrorOccurredAction = {
       type: TypeKeys.ERROR_OCCURRED,
-      error: `${secondError}`,
+      payload: {
+        error: `${secondError}`,
+      },
     };
 
     const state = errorsReducer(initialState, errorAction);

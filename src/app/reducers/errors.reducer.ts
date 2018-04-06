@@ -8,7 +8,7 @@ export const errorsReducer: Reducer<string[]> = (
 ): string[] => {
   switch (action.type) {
     case TypeKeys.ERROR_OCCURRED:
-      return [...state, action.error];
+      return [...state, action.payload.error];
 
     case TypeKeys.RESET_ERRORS:
       return INITIAL_ERRORS_STATE;

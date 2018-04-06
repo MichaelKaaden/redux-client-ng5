@@ -45,7 +45,9 @@ describe("ErrorsComponent", () => {
     const error = "foo";
     const errorAction: IErrorOccurredAction = {
       type: TypeKeys.ERROR_OCCURRED,
-      error: `${error}`,
+      payload: {
+        error: `${error}`,
+      },
     };
     mockReduxInstance.dispatch(errorAction);
 
@@ -69,7 +71,9 @@ describe("ErrorsComponent", () => {
     const error = "foo";
     const errorAction: IErrorOccurredAction = {
       type: TypeKeys.ERROR_OCCURRED,
-      error: `${error}`,
+      payload: {
+        error: `${error}`,
+      },
     };
     mockReduxInstance.dispatch(errorAction);
     fixture.detectChanges();
