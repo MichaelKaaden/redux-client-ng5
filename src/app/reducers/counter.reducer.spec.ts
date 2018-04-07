@@ -1,4 +1,5 @@
 import {
+  CounterActionTypeKeys,
   IDecrementCompletedCounterAction,
   IIncrementCompletedCounterAction,
   ILoadAllCompletedAction,
@@ -6,7 +7,6 @@ import {
   ILoadCompletedAction,
   ILoadPendingAction,
   ISavePendingAction,
-  TypeKeys,
 } from "../actions/counter.actions";
 import { INITIAL_COUNTERS_STATE } from "../models/app-state";
 import { Counter, ICounter } from "../models/counter";
@@ -44,43 +44,43 @@ describe("Counter Reducer function", () => {
     yetAnotherCounter = new Counter(index + 1, value + 1);
 
     decrementedCounterAction = {
-      type: TypeKeys.DECREMENT_COMPLETED,
+      type: CounterActionTypeKeys.DECREMENT_COMPLETED,
       payload: {
         index,
         counter: new Counter(index, value - 1),
       },
     };
     incrementedCounterAction = {
-      type: TypeKeys.INCREMENT_COMPLETED,
+      type: CounterActionTypeKeys.INCREMENT_COMPLETED,
       payload: {
         index,
         counter: new Counter(index, value + 1),
       },
     };
     loadedAction = {
-      type: TypeKeys.LOAD_COMPLETED,
+      type: CounterActionTypeKeys.LOAD_COMPLETED,
       payload: {
         index,
         counter,
       },
     };
     loadedAllAction = {
-      type: TypeKeys.LOAD_ALL_COMPLETED,
+      type: CounterActionTypeKeys.LOAD_ALL_COMPLETED,
       payload: {
         counters: [anotherCounter, counter, yetAnotherCounter],
       },
     };
     loadingAction = {
-      type: TypeKeys.LOAD_PENDING,
+      type: CounterActionTypeKeys.LOAD_PENDING,
       payload: {
         index,
       },
     };
     loadingAllAction = {
-      type: TypeKeys.LOAD_ALL_PENDING,
+      type: CounterActionTypeKeys.LOAD_ALL_PENDING,
     };
     savingAction = {
-      type: TypeKeys.SAVE_PENDING,
+      type: CounterActionTypeKeys.SAVE_PENDING,
       payload: {
         index,
       },

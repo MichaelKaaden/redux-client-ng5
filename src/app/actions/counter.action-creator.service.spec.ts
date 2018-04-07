@@ -2,12 +2,14 @@ import { MockNgRedux, NgReduxTestingModule } from "@angular-redux/store/lib/test
 import { HttpClient } from "@angular/common/http";
 import { getTestBed, TestBed } from "@angular/core/testing";
 import { Observable } from "rxjs/Observable";
+import "rxjs/add/observable/of";
 import { Counter } from "../models/counter";
 import { CounterService } from "../services/counter.service";
 
 import { CounterActionCreatorService } from "./counter.action-creator.service";
-import { TypeKeys } from "./counter.actions";
+import { CounterActionTypeKeys } from "./counter.actions";
 import { ErrorsActionCreatorService } from "./errors.action-creator.service";
+import { ErrorActionTypeKeys } from "./error.actions";
 
 const BASE_VALUE = 60;
 
@@ -49,7 +51,7 @@ describe("CounterActionCreatorService", () => {
     index = 0;
     by = 1;
     savePendingAction = {
-      type: TypeKeys.SAVE_PENDING,
+      type: CounterActionTypeKeys.SAVE_PENDING,
       payload: {
         index,
       },
@@ -68,8 +70,10 @@ describe("CounterActionCreatorService", () => {
       // check
       expect(dispatchSpy).toHaveBeenCalledTimes(1);
       expect(dispatchSpy).toHaveBeenCalledWith({
-        type: TypeKeys.ERROR_OCCURRED,
-        error: `error in the "decrement" action creator: index -1 < 0`,
+        type: ErrorActionTypeKeys.ERROR_OCCURRED,
+        payload: {
+          error: `error in the "decrement" action creator: index -1 < 0`,
+        },
       });
     });
 
@@ -89,7 +93,7 @@ describe("CounterActionCreatorService", () => {
       expect(dispatchSpy).toHaveBeenCalledTimes(2);
       expect(dispatchSpy).toHaveBeenCalledWith(savePendingAction);
       expect(dispatchSpy).toHaveBeenCalledWith({
-        type: TypeKeys.DECREMENT_COMPLETED,
+        type: CounterActionTypeKeys.DECREMENT_COMPLETED,
         payload: {
           index,
           counter: new Counter(index, by),
@@ -114,8 +118,10 @@ describe("CounterActionCreatorService", () => {
       expect(dispatchSpy).toHaveBeenCalledTimes(2);
       expect(dispatchSpy).toHaveBeenCalledWith(savePendingAction);
       expect(dispatchSpy).toHaveBeenCalledWith({
-        type: TypeKeys.ERROR_OCCURRED,
-        error: `error in the "decrement" action creator: decrementing the counter failed with ${errorMessage}`,
+        type: ErrorActionTypeKeys.ERROR_OCCURRED,
+        payload: {
+          error: `error in the "decrement" action creator: decrementing the counter failed with ${errorMessage}`,
+        },
       });
     });
   });
@@ -128,8 +134,10 @@ describe("CounterActionCreatorService", () => {
       // check
       expect(dispatchSpy).toHaveBeenCalledTimes(1);
       expect(dispatchSpy).toHaveBeenCalledWith({
-        type: TypeKeys.ERROR_OCCURRED,
-        error: `error in the "increment" action creator: index -1 < 0`,
+        type: ErrorActionTypeKeys.ERROR_OCCURRED,
+        payload: {
+          error: `error in the "increment" action creator: index -1 < 0`,
+        },
       });
     });
 
@@ -149,7 +157,7 @@ describe("CounterActionCreatorService", () => {
       expect(dispatchSpy).toHaveBeenCalledTimes(2);
       expect(dispatchSpy).toHaveBeenCalledWith(savePendingAction);
       expect(dispatchSpy).toHaveBeenCalledWith({
-        type: TypeKeys.INCREMENT_COMPLETED,
+        type: CounterActionTypeKeys.INCREMENT_COMPLETED,
         payload: {
           index,
           counter: new Counter(index, by),
@@ -174,8 +182,10 @@ describe("CounterActionCreatorService", () => {
       expect(dispatchSpy).toHaveBeenCalledTimes(2);
       expect(dispatchSpy).toHaveBeenCalledWith(savePendingAction);
       expect(dispatchSpy).toHaveBeenCalledWith({
-        type: TypeKeys.ERROR_OCCURRED,
-        error: `error in the "increment" action creator: incrementing the counter failed with ${errorMessage}`,
+        type: ErrorActionTypeKeys.ERROR_OCCURRED,
+        payload: {
+          error: `error in the "increment" action creator: incrementing the counter failed with ${errorMessage}`,
+        },
       });
     });
   });

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { TypeKeys } from "./counter.actions";
 import { IAppState } from "../models/app-state";
 import { NgRedux } from "@angular-redux/store";
+import { ErrorActionTypeKeys } from "./error.actions";
 
 @Injectable()
 export class ErrorsActionCreatorService {
@@ -15,8 +15,10 @@ export class ErrorsActionCreatorService {
    */
   public setError(methodName: string, message: string) {
     this.ngRedux.dispatch({
-      type: TypeKeys.ERROR_OCCURRED,
-      error: `error in the "${methodName}" action creator: ${message}`,
+      type: ErrorActionTypeKeys.ERROR_OCCURRED,
+      payload: {
+        error: `error in the "${methodName}" action creator: ${message}`,
+      },
     });
   }
 
@@ -25,7 +27,7 @@ export class ErrorsActionCreatorService {
    */
   public resetErrors() {
     this.ngRedux.dispatch({
-      type: TypeKeys.RESET_ERRORS,
+      type: ErrorActionTypeKeys.RESET_ERRORS,
     });
   }
 }
