@@ -1,16 +1,16 @@
 import { Reducer } from "redux";
-import { ActionTypes, TypeKeys } from "../actions/counter.actions";
 import { INITIAL_ERRORS_STATE } from "../models/app-state";
+import { ErrorActionTypeKeys, ErrorActionTypes } from "../actions/error.actions";
 
 export const errorsReducer: Reducer<string[]> = (
   state: string[] = INITIAL_ERRORS_STATE,
-  action: ActionTypes
+  action: ErrorActionTypes
 ): string[] => {
   switch (action.type) {
-    case TypeKeys.ERROR_OCCURRED:
-      return [...state, action.error];
+    case ErrorActionTypeKeys.ERROR_OCCURRED:
+      return [...state, action.payload.error];
 
-    case TypeKeys.RESET_ERRORS:
+    case ErrorActionTypeKeys.RESET_ERRORS:
       return INITIAL_ERRORS_STATE;
 
     default:

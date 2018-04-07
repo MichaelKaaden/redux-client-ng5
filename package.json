@@ -1,6 +1,6 @@
 {
   "name": "redux-client-ng5",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -14,7 +14,7 @@
     "serve-aot-en": "ng serve --aot --i18nFile=src/locale/messages.en.xlf --i18nFormat=xlf --locale=en",
     "postcommit": "git update-index --again",
     "precommit": "lint-staged",
-    "prepush": "yarn run test --single-run"
+    "prepush-disabled": "yarn run test --single-run"
   },
   "private": true,
   "dependencies": {
@@ -37,10 +37,10 @@
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "rxjs": "^5.5.8",
-    "zone.js": "^0.8.22"
+    "zone.js": "^0.8.25"
   },
   "devDependencies": {
-    "@angular/cli": "1.7.3",
+    "@angular/cli": "1.7.4",
     "@angular/compiler-cli": "5.2.9",
     "@angular/language-service": "5.2.9",
     "@types/jasmine": "^2.8.5",
