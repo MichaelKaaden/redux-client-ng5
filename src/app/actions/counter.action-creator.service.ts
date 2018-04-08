@@ -46,10 +46,7 @@ export class CounterActionCreatorService {
         this.ngRedux.dispatch(this.buildDecrementCompletedAction(index, counter));
       },
       (error: HttpErrorResponse) => {
-        this.errorActionCreatorService.setError(
-          "decrement",
-          `decrementing the counter failed with ${error instanceof Error ? error.message : error}`
-        );
+        this.errorActionCreatorService.setError("decrement", `decrementing the counter failed with ${error.message}`);
       }
     );
   }
@@ -75,10 +72,7 @@ export class CounterActionCreatorService {
         this.ngRedux.dispatch(this.buildIncrementCompletedAction(index, counter));
       },
       (error: HttpErrorResponse) => {
-        this.errorActionCreatorService.setError(
-          "increment",
-          `incrementing the counter failed with ${error instanceof Error ? error.message : error}`
-        );
+        this.errorActionCreatorService.setError("increment", `incrementing the counter failed with ${error.message}`);
       }
     );
   }
@@ -110,10 +104,7 @@ export class CounterActionCreatorService {
       },
       (error: HttpErrorResponse) => {
         console.log("Error during loading");
-        this.errorActionCreatorService.setError(
-          "load",
-          `retrieving the counter failed with ${error instanceof Error ? error.message : error}`
-        );
+        this.errorActionCreatorService.setError("load", `retrieving the counter failed with ${error.message}`);
       }
     );
   }
@@ -134,10 +125,7 @@ export class CounterActionCreatorService {
         this.ngRedux.dispatch(this.buildLoadAllCompletedAction(counters));
       },
       (error: HttpErrorResponse) => {
-        this.errorActionCreatorService.setError(
-          "loadAll",
-          `retrieving all counters failed with ${error instanceof Error ? error.message : error}`
-        );
+        this.errorActionCreatorService.setError("loadAll", `retrieving all counters failed with ${error.message}`);
       }
     );
   }
