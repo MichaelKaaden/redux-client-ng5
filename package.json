@@ -14,7 +14,7 @@
     "serve-aot-en": "ng serve --aot --i18nFile=src/locale/messages.en.xlf --i18nFormat=xlf --locale=en",
     "postcommit": "git update-index --again",
     "precommit": "lint-staged",
-    "prepush-disabled": "yarn run test --single-run"
+    "prepush": "yarn run test --single-run"
   },
   "private": true,
   "dependencies": {
@@ -75,7 +75,7 @@
     ],
     "*.ts": [
       "prettier --write",
-      "tslint -c tslint.json --force --fix -t stylish",
+      "tslint -c tslint.json --fix -t stylish",
       "git add"
     ]
   }
