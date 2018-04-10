@@ -72,7 +72,7 @@ describe("CounterActionCreatorService", () => {
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: ErrorActionTypeKeys.ERROR_OCCURRED,
         payload: {
-          error: `error in the "decrement" action creator: index -1 < 0`,
+          error: `error in the "decrement" action creator: "index -1 < 0"`,
         },
       });
     });
@@ -120,7 +120,7 @@ describe("CounterActionCreatorService", () => {
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: ErrorActionTypeKeys.ERROR_OCCURRED,
         payload: {
-          error: `error in the "decrement" action creator: decrementing the counter failed with ${errorMessage}`,
+          error: `error in the "decrement" action creator: "decrementing the counter failed with ${errorMessage}"`,
         },
       });
     });
@@ -136,7 +136,7 @@ describe("CounterActionCreatorService", () => {
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: ErrorActionTypeKeys.ERROR_OCCURRED,
         payload: {
-          error: `error in the "increment" action creator: index -1 < 0`,
+          error: `error in the "increment" action creator: "index -1 < 0"`,
         },
       });
     });
@@ -184,7 +184,7 @@ describe("CounterActionCreatorService", () => {
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: ErrorActionTypeKeys.ERROR_OCCURRED,
         payload: {
-          error: `error in the "increment" action creator: incrementing the counter failed with ${errorMessage}`,
+          error: `error in the "increment" action creator: "incrementing the counter failed with ${errorMessage}"`,
         },
       });
     });
