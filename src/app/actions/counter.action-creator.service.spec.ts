@@ -237,7 +237,7 @@ describe("CounterActionCreatorService", () => {
       });
     });
 
-    it("should exit immediately if the counter is found in the cache", () => {
+    it("should return immediately if the counter is found in the cache", () => {
       // prepare
       const counterSpy = spyOn(counterService, "counter").and.returnValue(Observable.of(new Counter(index, by)));
       spyOn(MockNgRedux.getInstance(), "getState").and.returnValue({
@@ -250,6 +250,31 @@ describe("CounterActionCreatorService", () => {
       // check
       expect(counterSpy).toHaveBeenCalledTimes(0);
       expect(dispatchSpy).toHaveBeenCalledTimes(0);
+    });
+
+    it("should ignore irrelevant counters in the cache", () => {
+      // prepare
+      const counterSpy = spyOn(counterService, "counter").and.returnValue(Observable.of(new Counter(index, by)));
+      spyOn(MockNgRedux.getInstance(), "getState").and.returnValue({
+        counters: [new Counter(index + 1, by)],
+      });
+
+      // call the service under test
+      service.load(index);
+
+      // check
+      expect(counterSpy).toHaveBeenCalledTimes(1);
+      expect(counterSpy).toHaveBeenCalledWith(index);
+
+      expect(dispatchSpy).toHaveBeenCalledTimes(2);
+      expect(dispatchSpy).toHaveBeenCalledWith(loadPendingAction);
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: CounterActionTypeKeys.LOAD_COMPLETED,
+        payload: {
+          index,
+          counter: new Counter(index, by),
+        },
+      });
     });
 
     it("should dispatch errors that occurred retrieving data from the REST service", () => {
