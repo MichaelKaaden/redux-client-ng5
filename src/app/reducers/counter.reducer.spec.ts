@@ -24,9 +24,9 @@ describe("Counter Reducer function", () => {
   let incrementedCounterAction: IIncrementCompletedCounterAction;
   let loadedAction: ILoadCompletedAction;
   let loadedAllAction: ILoadAllCompletedAction;
-  let loadingAction: ILoadPendingAction;
+  let loadPendingAction: ILoadPendingAction;
   let loadingAllAction: ILoadAllPendingAction;
-  let savingAction: ISavePendingAction;
+  let savePendingAction: ISavePendingAction;
 
   /*
    * Helper function to get a specific counter out of an app state object
@@ -71,7 +71,7 @@ describe("Counter Reducer function", () => {
         counters: [anotherCounter, counter, yetAnotherCounter],
       },
     };
-    loadingAction = {
+    loadPendingAction = {
       type: CounterActionTypeKeys.LOAD_PENDING,
       payload: {
         index,
@@ -80,7 +80,7 @@ describe("Counter Reducer function", () => {
     loadingAllAction = {
       type: CounterActionTypeKeys.LOAD_ALL_PENDING,
     };
-    savingAction = {
+    savePendingAction = {
       type: CounterActionTypeKeys.SAVE_PENDING,
       payload: {
         index,
@@ -270,9 +270,9 @@ describe("Counter Reducer function", () => {
     });
   });
 
-  describe("with the loading action", () => {
+  describe("with the load pending action", () => {
     it("should add a counter if the app state is empty", () => {
-      const result = counterReducer(state, loadingAction);
+      const result = counterReducer(state, loadPendingAction);
 
       expect(state.length).toBe(0);
       expect(result.length).toBe(1);
@@ -285,7 +285,7 @@ describe("Counter Reducer function", () => {
 
     it("should add a counter if the counter is not yet in the app state", () => {
       state = [anotherCounter, yetAnotherCounter];
-      const result = counterReducer(state, loadingAction);
+      const result = counterReducer(state, loadPendingAction);
 
       expect(state.length).toBe(2);
       expect(result.length).toBe(3);
@@ -298,7 +298,7 @@ describe("Counter Reducer function", () => {
 
     it("should not change the other counters if the counter is not yet in the app state", () => {
       state = [anotherCounter, yetAnotherCounter];
-      const result = counterReducer(state, loadingAction);
+      const result = counterReducer(state, loadPendingAction);
 
       expect(state.length).toBe(2);
       expect(result.length).toBe(3);
@@ -311,7 +311,7 @@ describe("Counter Reducer function", () => {
 
     it("should sort the counter list if the counter is not yet in the app state", () => {
       state = [anotherCounter, yetAnotherCounter];
-      const result = counterReducer(state, loadingAction);
+      const result = counterReducer(state, loadPendingAction);
 
       expect(state.length).toBe(2);
       expect(result.length).toBe(3);
@@ -325,14 +325,14 @@ describe("Counter Reducer function", () => {
       counter.isLoading = true;
       state = [counter];
 
-      const result = counterReducer(state, loadingAction);
+      const result = counterReducer(state, loadPendingAction);
 
       expect(state.length).toBe(1);
       expect(result).toBe(state);
     });
   });
 
-  describe("with the loading all action", () => {
+  describe("with the load all pending action", () => {
     it("should not add to the app state", () => {
       const result = counterReducer(state, loadingAllAction);
 
@@ -349,16 +349,18 @@ describe("Counter Reducer function", () => {
     });
   });
 
-  describe("with the saving action", () => {
+  describe("with the save pending action", () => {
     it("should set the isSaving flag", () => {
-      state = [counter];
+      state = [anotherCounter, counter, yetAnotherCounter];
 
-      const result = counterReducer(state, savingAction);
+      const result = counterReducer(state, savePendingAction);
 
       expect(result).not.toBe(state);
       const newCounter = getItemForIndex(result, index);
       expect(newCounter).not.toBe(counter);
       expect(newCounter.isSaving).toBeTruthy();
+      expect(getItemForIndex(result, anotherCounter.index)).toBe(anotherCounter);
+      expect(getItemForIndex(result, yetAnotherCounter.index)).toBe(yetAnotherCounter);
     });
   });
 
