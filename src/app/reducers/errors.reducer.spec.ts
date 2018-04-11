@@ -1,6 +1,7 @@
 import { INITIAL_ERRORS_STATE } from "../models/app-state";
 import { errorsReducer } from "./errors.reducer";
 import { ErrorActionTypeKeys, IErrorOccurredAction, IResetErrorsAction } from "../actions/error.actions";
+import { CounterActionTypeKeys, ILoadPendingAction } from "../actions/counter.actions";
 
 describe("Error reducer function", () => {
   let initialState: string[];
@@ -56,5 +57,16 @@ describe("Error reducer function", () => {
     const state = errorsReducer(initialState, resetErrorsAction);
 
     expect(state.length).toBe(0);
+  });
+
+  it("should ignore unknown action types", () => {
+    const anAction: ILoadPendingAction = {
+      type: CounterActionTypeKeys.LOAD_PENDING,
+      payload: {
+        index: 0,
+      },
+    };
+    const state = errorsReducer(initialState, anAction);
+    expect(state).toBe(initialState);
   });
 });

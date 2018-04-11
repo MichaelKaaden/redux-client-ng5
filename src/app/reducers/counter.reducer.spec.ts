@@ -11,6 +11,7 @@ import {
 import { INITIAL_COUNTERS_STATE } from "../models/app-state";
 import { Counter, ICounter } from "../models/counter";
 import { counterReducer } from "./counter.reducer";
+import { ErrorActionTypeKeys, IResetErrorsAction } from "../actions/error.actions";
 
 describe("Counter Reducer function", () => {
   let state: ICounter[]; // tslint:disable-line:prefer-const
@@ -358,6 +359,18 @@ describe("Counter Reducer function", () => {
       const newCounter = getItemForIndex(result, index);
       expect(newCounter).not.toBe(counter);
       expect(newCounter.isSaving).toBeTruthy();
+    });
+  });
+
+  describe("with any other action", () => {
+    it("should ignore unknown action types", () => {
+      const anAction: IResetErrorsAction = {
+        type: ErrorActionTypeKeys.RESET_ERRORS,
+      };
+
+      state = counterReducer(INITIAL_COUNTERS_STATE, anAction);
+
+      expect(state).toBe(INITIAL_COUNTERS_STATE);
     });
   });
 });
