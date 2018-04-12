@@ -103,7 +103,6 @@ export class CounterActionCreatorService {
         this.ngRedux.dispatch(this.buildLoadCompletedAction(index, counter));
       },
       (error: HttpErrorResponse) => {
-        console.log("Error during loading");
         this.errorActionCreatorService.setError("load", `retrieving the counter failed with ${error.message}`);
       }
     );
