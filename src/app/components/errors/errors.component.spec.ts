@@ -4,6 +4,8 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { ErrorsActionCreatorService } from "../../actions/errors.action-creator.service";
 import { ErrorsComponent } from "./errors.component";
 import { ErrorActionTypeKeys, IErrorOccurredAction, IResetErrorsAction } from "../../actions/error.actions";
+import { Subject } from "rxjs/Subject";
+import { IAppState } from "../../models/app-state";
 
 describe("ErrorsComponent", () => {
   let component: ErrorsComponent;
@@ -12,16 +14,14 @@ describe("ErrorsComponent", () => {
   let dispatchSpy;
   let resetErrorsAction: IResetErrorsAction;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        declarations: [ErrorsComponent],
-        imports: [NgReduxTestingModule],
-        providers: [ErrorsActionCreatorService],
-        schemas: [NO_ERRORS_SCHEMA],
-      }).compileComponents();
-    })
-  );
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ErrorsComponent],
+      imports: [NgReduxTestingModule],
+      providers: [ErrorsActionCreatorService],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ErrorsComponent);
@@ -38,6 +38,31 @@ describe("ErrorsComponent", () => {
 
   it("should create", () => {
     expect(component).toBeTruthy();
+  });
+
+  it("should select the errors from Redux", (done) => {
+    const errorsStub: Subject<string[]> = MockNgRedux.getSelectorStub<IAppState, string[]>(["errors"]);
+
+    // determine a sequence of values we'd like to test the Redux store with
+    const expectedValues: string[][] = [["foo"], ["foo", "bar", "baz"]];
+
+    // drive those values through our stub
+    expectedValues.forEach((error: string[]) => errorsStub.next(error));
+    // errorsStub.next(expectedValues);
+
+    // toArray only deals with completed streams
+    errorsStub.complete();
+
+    // make sure counters$ receives these values
+    // component.counter$.toArray().subscribe((values) => expect(values).toEqual(expectedValues));
+    let i = 0;
+    component.errors$.subscribe(
+      (value) => {
+        expect(value).toEqual(expectedValues[i++]);
+      },
+      (error) => console.log(`error ${error}`),
+      done
+    );
   });
 
   it("should change according to the application state", () => {
