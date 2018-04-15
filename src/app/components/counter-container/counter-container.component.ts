@@ -1,9 +1,11 @@
-import { NgRedux } from "@angular-redux/store";
+import { NgRedux, select } from "@angular-redux/store";
 import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { CounterActionCreatorService } from "../../actions/counter.action-creator.service";
 import { IAppState } from "../../models/app-state";
 import { ICounter } from "../../models/counter";
+import "rxjs/add/operator/filter";
+import "rxjs/add/operator/mergeMap";
 
 @Component({
   selector: "mk-counter-container",
@@ -14,17 +16,25 @@ import { ICounter } from "../../models/counter";
 export class CounterContainerComponent implements OnInit {
   @Input() counterIndex;
 
-  public counter$: Observable<ICounter>;
+  @select(["counters"])
+  private counters$: Observable<ICounter[]>;
+
+  public counter$: Observable<ICounter> = this.counters$.flatMap((x) => x).filter((counter: ICounter) => {
+    return counter.index === this.counterIndex;
+  });
 
   constructor(private redux: NgRedux<IAppState>, private counterActionCreatorService: CounterActionCreatorService) {}
 
   ngOnInit() {
     this.load();
 
-    // select counter with matching index
-    this.counter$ = this.redux.select((state: IAppState) =>
-      state.counters.find((item: ICounter) => item.index === this.counterIndex)
-    );
+    // to show what's going on
+    // this.counters$.subscribe((value) =>
+    //   console.log(`Counter Component #${this.counterIndex}: counters$ is now ${JSON.stringify(value)}`)
+    // );
+    // this.counter$.subscribe((value) =>
+    //   console.log(`Counter Component #${this.counterIndex}: counter$ is now ${JSON.stringify(value)}`)
+    // );
   }
 
   // needed to capture "this" properly
