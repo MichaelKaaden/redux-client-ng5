@@ -11,7 +11,7 @@ import { IAppState } from "../../models/app-state";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ErrorsComponent {
-  @select((state: IAppState) => state.errors)
+  @select(["errors"])
   errors$: Observable<string[]>;
 
   constructor(private redux: NgRedux<IAppState>, private errorsActionCreatorService: ErrorsActionCreatorService) {}
