@@ -8,14 +8,12 @@ describe("ProgressComponent", () => {
   let fixture: ComponentFixture<ProgressComponent>;
   let compiled: any;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        declarations: [ProgressComponent],
-        schemas: [NO_ERRORS_SCHEMA],
-      }).compileComponents();
-    })
-  );
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ProgressComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProgressComponent);
@@ -79,6 +77,24 @@ describe("ProgressComponent", () => {
       tick(delay - 1);
       expect(component.showProgress).toBeFalsy();
       tick(delay + 1);
+      expect(component.showProgress).toBeTruthy();
+    })
+  );
+
+  it(
+    "should show thw progress when time travel debugging ",
+    fakeAsync(() => {
+      component.isLoading = false;
+      fixture.detectChanges();
+      tick(DEFAULT_DELAY + 1);
+
+      component.isLoading = true;
+      component.ngOnChanges({
+        isLoading: new SimpleChange(true, component.isLoading, true),
+      });
+      fixture.detectChanges();
+      tick(DEFAULT_DELAY + 1);
+
       expect(component.showProgress).toBeTruthy();
     })
   );
