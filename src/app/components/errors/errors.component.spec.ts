@@ -47,7 +47,7 @@ describe("ErrorsComponent", () => {
     const expectedValues: string[][] = [["foo"], ["foo", "bar", "baz"]];
 
     // drive those values through our stub
-    expectedValues.forEach((error: string[]) => errorsStub.next(error));
+    expectedValues.forEach((errorArray: string[]) => errorsStub.next(errorArray));
     // errorsStub.next(expectedValues);
 
     // toArray only deals with completed streams
@@ -57,8 +57,8 @@ describe("ErrorsComponent", () => {
     // component.counter$.toArray().subscribe((values) => expect(values).toEqual(expectedValues));
     let i = 0;
     component.errors$.subscribe(
-      (value) => {
-        expect(value).toEqual(expectedValues[i++]);
+      (errorArray) => {
+        expect(errorArray).toEqual(expectedValues[i++]);
       },
       (error) => console.log(`error ${error}`),
       done
