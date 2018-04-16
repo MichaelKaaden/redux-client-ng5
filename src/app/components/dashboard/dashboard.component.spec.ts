@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { MockNgRedux, NgReduxTestingModule } from "@angular-redux/store/lib/testing";
 
-import { DashboardComponent } from "./dashboard.component";
+import { counterValueSumFunc, DashboardComponent } from "./dashboard.component";
 import { CounterActionCreatorService } from "../../actions/counter.action-creator.service";
 import { Subject } from "rxjs/Subject";
 import { Counter, ICounter } from "../../models/counter";
@@ -100,6 +100,24 @@ describe("DashboardComponent", () => {
       (length: number) => {
         console.log(`got length ${length}`);
         expect(length).toEqual(expectedValues[i++].length, "numOfCounters$ received the correct length");
+      },
+      (error) => console.log(error),
+      done
+    );
+  });
+
+  it("should select the sum from Redux", (done) => {
+    const counterValueSumStub: Subject<number> = MockNgRedux.getSelectorStub<IAppState, number>(counterValueSumFunc);
+    const values: number = [1, 2];
+
+    values.forEach((value: number) => counterValueSumStub.next(value));
+    counterValueSumStub.complete();
+
+    let i = 0;
+    component.counterValueSum$.subscribe(
+      (sum: number) => {
+        console.log(`sum is ${JSON.stringify(sum)}`);
+        expect(sum).toBe(values[i++]);
       },
       (error) => console.log(error),
       done
