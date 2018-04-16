@@ -17,7 +17,7 @@ export class CounterContainerComponent implements OnInit {
   @Input() counterIndex;
 
   @select(["counters"])
-  private counters$: Observable<ICounter[]>;
+  public counters$: Observable<ICounter[]>;
 
   public counter$: Observable<ICounter> = this.counters$.flatMap((x) => x).filter((counter: ICounter) => {
     return counter.index === this.counterIndex;
