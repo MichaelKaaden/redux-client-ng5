@@ -8,6 +8,12 @@ import { CounterActionCreatorService } from "../../actions/counter.action-creato
 import { IAppState } from "../../models/app-state";
 import { ICounter } from "../../models/counter";
 
+export const counterValueSumFunc = (state: IAppState) =>
+  state.counters.reduce(
+    (accumulator: number, current: ICounter) => accumulator + (current.value ? current.value : 0),
+    0
+  );
+
 @Component({
   selector: "mk-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -17,7 +23,7 @@ import { ICounter } from "../../models/counter";
 export class DashboardComponent implements OnInit {
   @select(["counters"])
   counters$: Observable<ICounter[]>;
-  public counterValueSum$: Observable<number>;
+  @select(counterValueSumFunc) counterValueSum$: Observable<number>;
   @select(["counters", "length"])
   numOfCounters$: Observable<number>;
 
@@ -28,15 +34,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.loadAll();
 
-    // select counter with matching index
-    // this.counters$ = this.redux.select((state: IAppState) => state.counters);
-    // this.numOfCounters$ = this.redux.select((state: IAppState) => state.counters.length);
-    this.counterValueSum$ = this.redux.select((state: IAppState) =>
-      state.counters.reduce(
-        (accumulator: number, current: ICounter) => accumulator + (current.value ? current.value : 0),
-        0
-      )
-    );
     this.averageCounterValue$ = Observable.combineLatest(this.counterValueSum$, this.numOfCounters$, (sum, len) => {
       return len && len !== 0 ? Number.parseFloat((sum / len).toFixed(2)) : 0;
     });
