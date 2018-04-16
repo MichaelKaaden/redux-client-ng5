@@ -20,7 +20,7 @@ describe("CounterContainerComponent", () => {
       providers: [
         {
           provide: CounterActionCreatorService,
-          useValue: jasmine.createSpyObj("CounterActionCreatorService", ["load", "loadAll", "increment", "decrement"]),
+          useValue: jasmine.createSpyObj("CounterActionCreatorService", ["load", "increment", "decrement"]),
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],
@@ -37,7 +37,7 @@ describe("CounterContainerComponent", () => {
     component.counterIndex = counterIndex;
 
     // prepare stubs
-    creatorSpy.load.and.returnValue({});
+    // creatorSpy.load.and.returnValue({});
 
     // fixture.detectChanges();  // will do this explicitly when needed
   });
@@ -51,7 +51,6 @@ describe("CounterContainerComponent", () => {
       fixture.detectChanges();
 
       expect(creatorSpy.load.calls.count()).toBe(1, "load was called once");
-      expect(creatorSpy.loadAll.calls.count()).toBe(0, "loadAll was not called");
       expect(creatorSpy.decrement.calls.count()).toBe(0, "decrement was not called");
       expect(creatorSpy.increment.calls.count()).toBe(0, "increment was not called");
     });
@@ -106,6 +105,30 @@ describe("CounterContainerComponent", () => {
         (error) => console.log(error),
         done
       );
+    });
+  });
+
+  describe("and its decrement and increment operations", () => {
+    it("should call decrement on the counter action creator", () => {
+      const by = 5;
+      component.decrement(by);
+
+      expect(creatorSpy.decrement.calls.count()).toBe(1, "decrement did call decrement on its action creator");
+      expect(creatorSpy.increment.calls.count()).toBe(0, "decrement did not call increment on its action creator");
+      expect(creatorSpy.load.calls.count()).toBe(0, "decrement did not call load on its action creator");
+      expect(creatorSpy.decrement.calls.mostRecent().args[0]).toBe(counterIndex, "decrement used the correct index");
+      expect(creatorSpy.decrement.calls.mostRecent().args[1]).toBe(by, "decrement used the correct by value");
+    });
+
+    it("should call increment on the counter action creator", () => {
+      const by = 5;
+      component.increment(by);
+
+      expect(creatorSpy.increment.calls.count()).toBe(1, "increment did call increment on its action creator");
+      expect(creatorSpy.decrement.calls.count()).toBe(0, "increment did not call decrement on its action creator");
+      expect(creatorSpy.load.calls.count()).toBe(0, "increment did not call load on its action creator");
+      expect(creatorSpy.increment.calls.mostRecent().args[0]).toBe(counterIndex, "increment used the correct index");
+      expect(creatorSpy.increment.calls.mostRecent().args[1]).toBe(by, "increment used the correct by value");
     });
   });
 });
