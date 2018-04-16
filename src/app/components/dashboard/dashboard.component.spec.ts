@@ -108,7 +108,7 @@ describe("DashboardComponent", () => {
 
   it("should select the sum from Redux", (done) => {
     const counterValueSumStub: Subject<number> = MockNgRedux.getSelectorStub<IAppState, number>(counterValueSumFunc);
-    const values: number = [1, 2];
+    const values: number[] = [1, 2];
 
     values.forEach((value: number) => counterValueSumStub.next(value));
     counterValueSumStub.complete();
