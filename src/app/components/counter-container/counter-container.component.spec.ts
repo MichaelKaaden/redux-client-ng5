@@ -58,7 +58,7 @@ describe("CounterContainerComponent", () => {
   });
 
   describe("and Redux use", () => {
-    it("should select the errors from Redux", (done) => {
+    it("should select the counters from Redux", (done) => {
       const countersStub: Subject<ICounter[]> = MockNgRedux.getSelectorStub(["counters"]);
 
       // determine a sequence of values we'd like to test the Redux store with
@@ -78,7 +78,30 @@ describe("CounterContainerComponent", () => {
       component.counters$.subscribe(
         (counterArray: ICounter[]) => {
           // console.log(`received ${JSON.stringify(counterArray)}`);
-          expect(counterArray).toEqual(expectedValues[i++]);
+          expect(counterArray).toEqual(expectedValues[i++], "counters$ received the correct array");
+        },
+        (error) => console.log(error),
+        done
+      );
+    });
+
+    it("should retrieve its counter from the counters", (done) => {
+      const countersStub: Subject<ICounter[]> = MockNgRedux.getSelectorStub(["counters"]);
+
+      const counters: ICounter[] = [
+        new Counter(counterIndex, 42),
+        new Counter(counterIndex + 1, 43),
+        new Counter(counterIndex + 2, 44),
+      ];
+
+      countersStub.next(counters);
+      countersStub.complete();
+
+      component.counter$.subscribe(
+        (counter: ICounter) => {
+          console.log(`received ${JSON.stringify(counter)}`);
+          expect(counter.index).toBe(counterIndex, "counter has the correct index");
+          expect(counter.value).toBe(42, "counter has the correct value");
         },
         (error) => console.log(error),
         done
