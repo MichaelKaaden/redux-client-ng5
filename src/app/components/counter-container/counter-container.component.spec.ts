@@ -98,7 +98,7 @@ describe("CounterContainerComponent", () => {
 
       component.counter$.subscribe(
         (counter: ICounter) => {
-          console.log(`received ${JSON.stringify(counter)}`);
+          // console.log(`received ${JSON.stringify(counter)}`);
           expect(counter.index).toBe(counterIndex, "counter has the correct index");
           expect(counter.value).toBe(42, "counter has the correct value");
         },
