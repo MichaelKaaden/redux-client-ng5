@@ -98,7 +98,7 @@ describe("DashboardComponent", () => {
     let i = 0;
     component.numOfCounters$.subscribe(
       (length: number) => {
-        console.log(`got length ${length}`);
+        // console.log(`got length ${length}`);
         expect(length).toEqual(expectedValues[i++].length, "numOfCounters$ received the correct length");
       },
       (error) => console.log(error),
@@ -116,7 +116,6 @@ describe("DashboardComponent", () => {
     let i = 0;
     component.counterValueSum$.subscribe(
       (sum: number) => {
-        console.log(`sum is ${JSON.stringify(sum)}`);
         expect(sum).toBe(values[i++]);
       },
       (error) => console.log(error),
