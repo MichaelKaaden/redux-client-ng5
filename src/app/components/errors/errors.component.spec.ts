@@ -21,12 +21,13 @@ describe("ErrorsComponent", () => {
       providers: [ErrorsActionCreatorService],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
+
+    MockNgRedux.reset();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ErrorsComponent);
     component = fixture.componentInstance;
-    MockNgRedux.reset();
     mockReduxInstance = MockNgRedux.getInstance();
     dispatchSpy = spyOn(mockReduxInstance, "dispatch");
     resetErrorsAction = {
