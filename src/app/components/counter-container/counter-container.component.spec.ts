@@ -6,6 +6,7 @@ import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { CounterContainerComponent } from "./counter-container.component";
 import { Counter, ICounter } from "../../models/counter";
 import { CounterActionCreatorService } from "../../actions/counter.action-creator.service";
+import { IAppState } from "../../models/app-state";
 
 describe("CounterContainerComponent", () => {
   let component: CounterContainerComponent;
@@ -58,7 +59,7 @@ describe("CounterContainerComponent", () => {
 
   describe("and Redux use", () => {
     it("should select the counters from Redux", (done) => {
-      const countersStub: Subject<ICounter[]> = MockNgRedux.getSelectorStub(["counters"]);
+      const countersStub: Subject<ICounter[]> = MockNgRedux.getSelectorStub<IAppState, ICounter[]>(["counters"]);
 
       // determine a sequence of values we'd like to test the Redux store with
       const expectedValues: ICounter[][] = [
