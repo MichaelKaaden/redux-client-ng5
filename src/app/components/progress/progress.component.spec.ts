@@ -82,9 +82,12 @@ describe("ProgressComponent", () => {
   );
 
   it(
-    "should show thw progress when time travel debugging ",
+    "should show the progress during time travel debugging ",
     fakeAsync(() => {
       component.isLoading = false;
+      component.ngOnChanges({
+        isLoading: new SimpleChange(false, component.isLoading, false),
+      });
       fixture.detectChanges();
       tick(DEFAULT_DELAY + 1);
 
