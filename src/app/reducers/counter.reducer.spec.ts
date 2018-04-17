@@ -6,11 +6,13 @@ import {
   ILoadAllPendingAction,
   ILoadCompletedAction,
   ILoadPendingAction,
+  IOtherAction,
   ISavePendingAction,
 } from "../actions/counter.actions";
 import { INITIAL_COUNTERS_STATE } from "../models/app-state";
 import { Counter, ICounter } from "../models/counter";
 import { counterReducer } from "./counter.reducer";
+import { ErrorActionTypeKeys, IResetErrorsAction } from "../actions/error.actions";
 
 describe("Counter Reducer function", () => {
   let state: ICounter[]; // tslint:disable-line:prefer-const
@@ -23,9 +25,9 @@ describe("Counter Reducer function", () => {
   let incrementedCounterAction: IIncrementCompletedCounterAction;
   let loadedAction: ILoadCompletedAction;
   let loadedAllAction: ILoadAllCompletedAction;
-  let loadingAction: ILoadPendingAction;
+  let loadPendingAction: ILoadPendingAction;
   let loadingAllAction: ILoadAllPendingAction;
-  let savingAction: ISavePendingAction;
+  let savePendingAction: ISavePendingAction;
 
   /*
    * Helper function to get a specific counter out of an app state object
@@ -70,7 +72,7 @@ describe("Counter Reducer function", () => {
         counters: [anotherCounter, counter, yetAnotherCounter],
       },
     };
-    loadingAction = {
+    loadPendingAction = {
       type: CounterActionTypeKeys.LOAD_PENDING,
       payload: {
         index,
@@ -79,12 +81,22 @@ describe("Counter Reducer function", () => {
     loadingAllAction = {
       type: CounterActionTypeKeys.LOAD_ALL_PENDING,
     };
-    savingAction = {
+    savePendingAction = {
       type: CounterActionTypeKeys.SAVE_PENDING,
       payload: {
         index,
       },
     };
+  });
+
+  it("should use its initial value with an undefined state", () => {
+    const otherAction: IOtherAction = {
+      type: CounterActionTypeKeys.OTHER_ACTION,
+    };
+
+    state = counterReducer(undefined, otherAction);
+
+    expect(state.length).toBe(0);
   });
 
   describe("with the decremented action", () => {
@@ -269,9 +281,9 @@ describe("Counter Reducer function", () => {
     });
   });
 
-  describe("with the loading action", () => {
+  describe("with the load pending action", () => {
     it("should add a counter if the app state is empty", () => {
-      const result = counterReducer(state, loadingAction);
+      const result = counterReducer(state, loadPendingAction);
 
       expect(state.length).toBe(0);
       expect(result.length).toBe(1);
@@ -284,7 +296,7 @@ describe("Counter Reducer function", () => {
 
     it("should add a counter if the counter is not yet in the app state", () => {
       state = [anotherCounter, yetAnotherCounter];
-      const result = counterReducer(state, loadingAction);
+      const result = counterReducer(state, loadPendingAction);
 
       expect(state.length).toBe(2);
       expect(result.length).toBe(3);
@@ -297,7 +309,7 @@ describe("Counter Reducer function", () => {
 
     it("should not change the other counters if the counter is not yet in the app state", () => {
       state = [anotherCounter, yetAnotherCounter];
-      const result = counterReducer(state, loadingAction);
+      const result = counterReducer(state, loadPendingAction);
 
       expect(state.length).toBe(2);
       expect(result.length).toBe(3);
@@ -310,7 +322,7 @@ describe("Counter Reducer function", () => {
 
     it("should sort the counter list if the counter is not yet in the app state", () => {
       state = [anotherCounter, yetAnotherCounter];
-      const result = counterReducer(state, loadingAction);
+      const result = counterReducer(state, loadPendingAction);
 
       expect(state.length).toBe(2);
       expect(result.length).toBe(3);
@@ -324,14 +336,14 @@ describe("Counter Reducer function", () => {
       counter.isLoading = true;
       state = [counter];
 
-      const result = counterReducer(state, loadingAction);
+      const result = counterReducer(state, loadPendingAction);
 
       expect(state.length).toBe(1);
       expect(result).toBe(state);
     });
   });
 
-  describe("with the loading all action", () => {
+  describe("with the load all pending action", () => {
     it("should not add to the app state", () => {
       const result = counterReducer(state, loadingAllAction);
 
@@ -348,16 +360,30 @@ describe("Counter Reducer function", () => {
     });
   });
 
-  describe("with the saving action", () => {
+  describe("with the save pending action", () => {
     it("should set the isSaving flag", () => {
-      state = [counter];
+      state = [anotherCounter, counter, yetAnotherCounter];
 
-      const result = counterReducer(state, savingAction);
+      const result = counterReducer(state, savePendingAction);
 
       expect(result).not.toBe(state);
       const newCounter = getItemForIndex(result, index);
       expect(newCounter).not.toBe(counter);
       expect(newCounter.isSaving).toBeTruthy();
+      expect(getItemForIndex(result, anotherCounter.index)).toBe(anotherCounter);
+      expect(getItemForIndex(result, yetAnotherCounter.index)).toBe(yetAnotherCounter);
+    });
+  });
+
+  describe("with any other action", () => {
+    it("should ignore unknown action types", () => {
+      const anAction: IResetErrorsAction = {
+        type: ErrorActionTypeKeys.RESET_ERRORS,
+      };
+
+      state = counterReducer(INITIAL_COUNTERS_STATE, anAction);
+
+      expect(state).toBe(INITIAL_COUNTERS_STATE);
     });
   });
 });

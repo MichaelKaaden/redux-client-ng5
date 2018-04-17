@@ -7,11 +7,14 @@ import { Counter } from "../models/counter";
 import { CounterService } from "../services/counter.service";
 
 import { CounterActionCreatorService } from "./counter.action-creator.service";
-import { CounterActionTypeKeys } from "./counter.actions";
+import {
+  CounterActionTypeKeys,
+  ILoadAllPendingAction,
+  ILoadPendingAction,
+  ISavePendingAction,
+} from "./counter.actions";
 import { ErrorsActionCreatorService } from "./errors.action-creator.service";
 import { ErrorActionTypeKeys } from "./error.actions";
-
-const BASE_VALUE = 60;
 
 describe("CounterActionCreatorService", () => {
   let injector: TestBed;
@@ -21,7 +24,9 @@ describe("CounterActionCreatorService", () => {
   let dispatchSpy;
   let index;
   let by;
-  let savePendingAction;
+  let savePendingAction: ISavePendingAction;
+  let loadPendingAction: ILoadPendingAction;
+  let loadAllPendingAction: ILoadAllPendingAction;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -56,6 +61,15 @@ describe("CounterActionCreatorService", () => {
         index,
       },
     };
+    loadPendingAction = {
+      type: CounterActionTypeKeys.LOAD_PENDING,
+      payload: {
+        index,
+      },
+    };
+    loadAllPendingAction = {
+      type: CounterActionTypeKeys.LOAD_ALL_PENDING,
+    };
   });
 
   it("should be created", () => {
@@ -72,12 +86,12 @@ describe("CounterActionCreatorService", () => {
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: ErrorActionTypeKeys.ERROR_OCCURRED,
         payload: {
-          error: `error in the "decrement" action creator: index -1 < 0`,
+          error: `error in the "decrement" action creator: "index -1 < 0"`,
         },
       });
     });
 
-    it("should dispatch a saving and decremented action", () => {
+    it("should dispatch a save pending and decrement completed action", () => {
       // prepare
       const decrementCounterSpy = spyOn(counterService, "decrementCounter").and.returnValue(
         Observable.of(new Counter(index, by))
@@ -101,7 +115,7 @@ describe("CounterActionCreatorService", () => {
       });
     });
 
-    it("should dispatch errors that occured retrieving data from the REST service", () => {
+    it("should dispatch errors that occurred retrieving data from the REST service", () => {
       // prepare
       const errorMessage = "some error";
       const decrementCounterSpy = spyOn(counterService, "decrementCounter").and.returnValue(
@@ -120,7 +134,7 @@ describe("CounterActionCreatorService", () => {
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: ErrorActionTypeKeys.ERROR_OCCURRED,
         payload: {
-          error: `error in the "decrement" action creator: decrementing the counter failed with ${errorMessage}`,
+          error: `error in the "decrement" action creator: "decrementing the counter failed with ${errorMessage}"`,
         },
       });
     });
@@ -136,12 +150,12 @@ describe("CounterActionCreatorService", () => {
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: ErrorActionTypeKeys.ERROR_OCCURRED,
         payload: {
-          error: `error in the "increment" action creator: index -1 < 0`,
+          error: `error in the "increment" action creator: "index -1 < 0"`,
         },
       });
     });
 
-    it("should dispatch a saving and incremented action", () => {
+    it("should dispatch a save pending and increment completed action", () => {
       // prepare
       const incrementCounterSpy = spyOn(counterService, "incrementCounter").and.returnValue(
         Observable.of(new Counter(index, by))
@@ -165,7 +179,7 @@ describe("CounterActionCreatorService", () => {
       });
     });
 
-    it("should dispatch errors that occured retrieving data from the REST service", () => {
+    it("should dispatch errors that occurred retrieving data from the REST service", () => {
       // prepare
       const errorMessage = "some error";
       const incrementCounterSpy = spyOn(counterService, "incrementCounter").and.returnValue(
@@ -184,7 +198,157 @@ describe("CounterActionCreatorService", () => {
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: ErrorActionTypeKeys.ERROR_OCCURRED,
         payload: {
-          error: `error in the "increment" action creator: incrementing the counter failed with ${errorMessage}`,
+          error: `error in the "increment" action creator: "incrementing the counter failed with ${errorMessage}"`,
+        },
+      });
+    });
+  });
+
+  describe("load", () => {
+    it("should not load for wrong indices", () => {
+      // call the service under test
+      service.load(-1);
+
+      // check
+      expect(dispatchSpy).toHaveBeenCalledTimes(1);
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: ErrorActionTypeKeys.ERROR_OCCURRED,
+        payload: {
+          error: `error in the "load" action creator: "index -1 < 0"`,
+        },
+      });
+    });
+
+    it("should dispatch a load pending and load completed action", () => {
+      // prepare
+      const counterSpy = spyOn(counterService, "counter").and.returnValue(Observable.of(new Counter(index, by)));
+      spyOn(MockNgRedux.getInstance(), "getState").and.returnValue({
+        counters: [],
+      });
+
+      // call the service under test
+      service.load(index);
+
+      // check
+      expect(counterSpy).toHaveBeenCalledTimes(1);
+      expect(counterSpy).toHaveBeenCalledWith(index);
+
+      expect(dispatchSpy).toHaveBeenCalledTimes(2);
+      expect(dispatchSpy).toHaveBeenCalledWith(loadPendingAction);
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: CounterActionTypeKeys.LOAD_COMPLETED,
+        payload: {
+          index,
+          counter: new Counter(index, by),
+        },
+      });
+    });
+
+    it("should return immediately if the counter is found in the cache", () => {
+      // prepare
+      const counterSpy = spyOn(counterService, "counter").and.returnValue(Observable.of(new Counter(index, by)));
+      spyOn(MockNgRedux.getInstance(), "getState").and.returnValue({
+        counters: [new Counter(index, by)],
+      });
+
+      // call the service under test
+      service.load(index);
+
+      // check
+      expect(counterSpy).toHaveBeenCalledTimes(0);
+      expect(dispatchSpy).toHaveBeenCalledTimes(0);
+    });
+
+    it("should ignore irrelevant counters in the cache", () => {
+      // prepare
+      const counterSpy = spyOn(counterService, "counter").and.returnValue(Observable.of(new Counter(index, by)));
+      spyOn(MockNgRedux.getInstance(), "getState").and.returnValue({
+        counters: [new Counter(index + 1, by)],
+      });
+
+      // call the service under test
+      service.load(index);
+
+      // check
+      expect(counterSpy).toHaveBeenCalledTimes(1);
+      expect(counterSpy).toHaveBeenCalledWith(index);
+
+      expect(dispatchSpy).toHaveBeenCalledTimes(2);
+      expect(dispatchSpy).toHaveBeenCalledWith(loadPendingAction);
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: CounterActionTypeKeys.LOAD_COMPLETED,
+        payload: {
+          index,
+          counter: new Counter(index, by),
+        },
+      });
+    });
+
+    it("should dispatch errors that occurred retrieving data from the REST service", () => {
+      // prepare
+      const errorMessage = "some error";
+      const counterSpy = spyOn(counterService, "counter").and.returnValue(Observable.throw(new Error(errorMessage)));
+      spyOn(MockNgRedux.getInstance(), "getState").and.returnValue({
+        counters: [],
+      });
+
+      // call the service under test
+      service.load(index);
+
+      // check
+      expect(counterSpy).toHaveBeenCalledTimes(1);
+      expect(counterSpy).toHaveBeenCalledWith(index);
+
+      expect(dispatchSpy).toHaveBeenCalledTimes(2);
+      expect(dispatchSpy).toHaveBeenCalledWith(loadPendingAction);
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: ErrorActionTypeKeys.ERROR_OCCURRED,
+        payload: {
+          error: `error in the "load" action creator: "retrieving the counter failed with ${errorMessage}"`,
+        },
+      });
+    });
+  });
+
+  describe("loadAll", () => {
+    it("should dispatch a loadAll pending and loadAll completed action", () => {
+      const counters = [new Counter(index, by), new Counter(index + 1, by)];
+      // prepare
+      const countersSpy = spyOn(counterService, "counters").and.returnValue(Observable.of(counters));
+
+      // call the service under test
+      service.loadAll();
+
+      // check
+      expect(countersSpy).toHaveBeenCalledTimes(1);
+
+      expect(dispatchSpy).toHaveBeenCalledTimes(2);
+      expect(dispatchSpy).toHaveBeenCalledWith(loadAllPendingAction);
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: CounterActionTypeKeys.LOAD_ALL_COMPLETED,
+        payload: {
+          counters,
+        },
+      });
+    });
+
+    it("should dispatch errors that occurred retrieving data from the REST service", () => {
+      // prepare
+      const errorMessage = "some error";
+      const countersSpy = spyOn(counterService, "counters").and.returnValue(Observable.throw(new Error(errorMessage)));
+
+      // call the service under test
+      service.loadAll();
+
+      // check
+      expect(countersSpy).toHaveBeenCalledTimes(1);
+
+      expect(dispatchSpy).toHaveBeenCalledTimes(2);
+      expect(dispatchSpy).toHaveBeenCalledWith(loadAllPendingAction);
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: ErrorActionTypeKeys.ERROR_OCCURRED,
+        payload: {
+          error: `error in the "loadAll" action creator: "retrieving all counters failed with ${errorMessage}"`,
         },
       });
     });
