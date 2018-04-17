@@ -6,6 +6,7 @@ import {
   ILoadAllPendingAction,
   ILoadCompletedAction,
   ILoadPendingAction,
+  IOtherAction,
   ISavePendingAction,
 } from "../actions/counter.actions";
 import { INITIAL_COUNTERS_STATE } from "../models/app-state";
@@ -86,6 +87,16 @@ describe("Counter Reducer function", () => {
         index,
       },
     };
+  });
+
+  it("should use its initial value with an undefined state", () => {
+    const otherAction: IOtherAction = {
+      type: CounterActionTypeKeys.OTHER_ACTION,
+    };
+
+    state = counterReducer(undefined, otherAction);
+
+    expect(state.length).toBe(0);
   });
 
   describe("with the decremented action", () => {
