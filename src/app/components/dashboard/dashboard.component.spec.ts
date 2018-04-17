@@ -2,11 +2,12 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { MockNgRedux, NgReduxTestingModule } from "@angular-redux/store/lib/testing";
 
-import { counterValueSumFunc, DashboardComponent } from "./dashboard.component";
+import { averageCounterValue, counterValueSumFunc, DashboardComponent } from "./dashboard.component";
 import { CounterActionCreatorService } from "../../actions/counter.action-creator.service";
 import { Subject } from "rxjs/Subject";
 import { Counter, ICounter } from "../../models/counter";
 import { IAppState, INITIAL_COUNTERS_STATE, INITIAL_ERRORS_STATE } from "../../models/app-state";
+import { Observable } from "rxjs/Observable";
 
 describe("DashboardComponent", () => {
   let component: DashboardComponent;
@@ -126,6 +127,32 @@ describe("DashboardComponent", () => {
   });
 
   describe("pure functions", () => {
+    it("should calculate the average counter value for regular values", (done) => {
+      const sum$: Observable<number> = Observable.of(1, 2, 3);
+      const numOfCounters$: Observable<number> = Observable.of(2, 2, 2);
+
+      averageCounterValue(sum$, numOfCounters$).subscribe(
+        (value: number) => {
+          expect(value).toBe(1.5, "the average counter was 1.5");
+        },
+        (error) => console.log(error),
+        done
+      );
+    });
+
+    it("should deal with length == 0", (done) => {
+      const sum$: Observable<number> = Observable.of(3);
+      const numOfCounters$: Observable<number> = Observable.of(0);
+
+      averageCounterValue(sum$, numOfCounters$).subscribe(
+        (value: number) => {
+          expect(value).toBe(0, "the average counter value was 0");
+        },
+        (error) => console.log(error),
+        done
+      );
+    });
+
     it("should correctly calculate an initial counter value sum", () => {
       const state: IAppState = {
         counters: INITIAL_COUNTERS_STATE,
@@ -142,6 +169,15 @@ describe("DashboardComponent", () => {
       };
 
       expect(counterValueSumFunc(state)).toBe(2, "sum should be 2");
+    });
+
+    it("should deal with a missing counter value", () => {
+      const state: IAppState = {
+        counters: [new Counter(counterIndex)],
+        errors: INITIAL_ERRORS_STATE,
+      };
+
+      expect(counterValueSumFunc(state)).toBe(0, "sum should be 0");
     });
   });
 });
