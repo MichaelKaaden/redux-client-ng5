@@ -1,6 +1,6 @@
 import { INITIAL_ERRORS_STATE } from "../models/app-state";
 import { errorsReducer } from "./errors.reducer";
-import { ErrorActionTypeKeys, IErrorOccurredAction, IResetErrorsAction } from "../actions/error.actions";
+import { ErrorActionTypeKeys, IErrorOccurredAction, IOtherAction, IResetErrorsAction } from "../actions/error.actions";
 import { CounterActionTypeKeys, ILoadPendingAction } from "../actions/counter.actions";
 
 describe("Error reducer function", () => {
@@ -12,6 +12,16 @@ describe("Error reducer function", () => {
     initialState = [...INITIAL_ERRORS_STATE];
     firstError = "first error";
     secondError = "I'm thirsty";
+  });
+
+  it("should use its initial value with an undefined state", () => {
+    const otherAction: IOtherAction = {
+      type: ErrorActionTypeKeys.OTHER_ACTION,
+    };
+
+    const state = errorsReducer(undefined, otherAction);
+
+    expect(state.length).toBe(0);
   });
 
   it("should add an error to the initial state", () => {
