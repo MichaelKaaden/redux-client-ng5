@@ -6,7 +6,7 @@ import { counterValueSumFunc, DashboardComponent } from "./dashboard.component";
 import { CounterActionCreatorService } from "../../actions/counter.action-creator.service";
 import { Subject } from "rxjs/Subject";
 import { Counter, ICounter } from "../../models/counter";
-import { IAppState } from "../../models/app-state";
+import { IAppState, INITIAL_COUNTERS_STATE, INITIAL_ERRORS_STATE } from "../../models/app-state";
 
 describe("DashboardComponent", () => {
   let component: DashboardComponent;
@@ -52,74 +52,96 @@ describe("DashboardComponent", () => {
     expect(creatorSpy.loadAll.calls.count()).toBe(1, "loadAll was called once");
   });
 
-  it("should select the counters from Redux", (done) => {
-    const countersStub: Subject<ICounter[]> = MockNgRedux.getSelectorStub<IAppState, ICounter[]>("counters");
+  describe("Redux", () => {
+    it("should select the counters from Redux", (done) => {
+      const countersStub: Subject<ICounter[]> = MockNgRedux.getSelectorStub<IAppState, ICounter[]>("counters");
 
-    // determine a sequence of values we'd like to test the Redux store with
-    const expectedValues: ICounter[][] = [
-      [new Counter(counterIndex, 42)],
-      [new Counter(counterIndex, 42), new Counter(counterIndex + 1, 43)],
-      [new Counter(counterIndex, 42), new Counter(counterIndex + 1, 43), new Counter(counterIndex + 2, 44)],
-    ];
+      // determine a sequence of values we'd like to test the Redux store with
+      const expectedValues: ICounter[][] = [
+        [new Counter(counterIndex, 42)],
+        [new Counter(counterIndex, 42), new Counter(counterIndex + 1, 43)],
+        [new Counter(counterIndex, 42), new Counter(counterIndex + 1, 43), new Counter(counterIndex + 2, 44)],
+      ];
 
-    // drive those values through our stub
-    expectedValues.forEach((counterArray: ICounter[]) => countersStub.next(counterArray));
-    // toArray only deals with completed streams
-    countersStub.complete();
+      // drive those values through our stub
+      expectedValues.forEach((counterArray: ICounter[]) => countersStub.next(counterArray));
+      // toArray only deals with completed streams
+      countersStub.complete();
 
-    // make sure counters$ receives these values
-    let i = 0;
-    component.counters$.subscribe(
-      (counterArray: ICounter[]) => {
-        // console.log(`received ${JSON.stringify(counterArray)}`);
-        expect(counterArray).toEqual(expectedValues[i++], "counters$ received the correct array");
-      },
-      (error) => console.log(error),
-      done
-    );
+      // make sure counters$ receives these values
+      let i = 0;
+      component.counters$.subscribe(
+        (counterArray: ICounter[]) => {
+          // console.log(`received ${JSON.stringify(counterArray)}`);
+          expect(counterArray).toEqual(expectedValues[i++], "counters$ received the correct array");
+        },
+        (error) => console.log(error),
+        done
+      );
+    });
+
+    it("should select the counters length from Redux", (done) => {
+      const numOfCountersStub: Subject<number> = MockNgRedux.getSelectorStub<IAppState, number>(["counters", "length"]);
+
+      // determine a sequence of values we'd like to test the Redux store with
+      const expectedValues: ICounter[][] = [
+        [new Counter(counterIndex, 42)],
+        [new Counter(counterIndex, 42), new Counter(counterIndex + 1, 43)],
+        [new Counter(counterIndex, 42), new Counter(counterIndex + 1, 43), new Counter(counterIndex + 2, 44)],
+      ];
+
+      // drive those values through our stub
+      expectedValues.forEach((counterArray: ICounter[]) => numOfCountersStub.next(counterArray.length));
+      // toArray only deals with completed streams
+      numOfCountersStub.complete();
+
+      // make sure counters$ receives these values
+      let i = 0;
+      component.numOfCounters$.subscribe(
+        (length: number) => {
+          // console.log(`got length ${length}`);
+          expect(length).toEqual(expectedValues[i++].length, "numOfCounters$ received the correct length");
+        },
+        (error) => console.log(error),
+        done
+      );
+    });
+
+    it("should select the sum from Redux", (done) => {
+      const counterValueSumStub: Subject<number> = MockNgRedux.getSelectorStub<IAppState, number>(counterValueSumFunc);
+      const values: number[] = [1, 2];
+
+      values.forEach((value: number) => counterValueSumStub.next(value));
+      counterValueSumStub.complete();
+
+      let i = 0;
+      component.counterValueSum$.subscribe(
+        (sum: number) => {
+          expect(sum).toBe(values[i++]);
+        },
+        (error) => console.log(error),
+        done
+      );
+    });
   });
 
-  it("should select the counters length from Redux", (done) => {
-    const numOfCountersStub: Subject<number> = MockNgRedux.getSelectorStub<IAppState, number>(["counters", "length"]);
+  describe("pure functions", () => {
+    it("should correctly calculate an initial counter value sum", () => {
+      const state: IAppState = {
+        counters: INITIAL_COUNTERS_STATE,
+        errors: INITIAL_ERRORS_STATE,
+      };
 
-    // determine a sequence of values we'd like to test the Redux store with
-    const expectedValues: ICounter[][] = [
-      [new Counter(counterIndex, 42)],
-      [new Counter(counterIndex, 42), new Counter(counterIndex + 1, 43)],
-      [new Counter(counterIndex, 42), new Counter(counterIndex + 1, 43), new Counter(counterIndex + 2, 44)],
-    ];
+      expect(counterValueSumFunc(state)).toBe(0, "sum should initially be 0");
+    });
 
-    // drive those values through our stub
-    expectedValues.forEach((counterArray: ICounter[]) => numOfCountersStub.next(counterArray.length));
-    // toArray only deals with completed streams
-    numOfCountersStub.complete();
+    it("should correctly calculate the counter value sum", () => {
+      const state: IAppState = {
+        counters: [new Counter(counterIndex, 1), new Counter(counterIndex + 1, 2), new Counter(counterIndex + 2, -1)],
+        errors: INITIAL_ERRORS_STATE,
+      };
 
-    // make sure counters$ receives these values
-    let i = 0;
-    component.numOfCounters$.subscribe(
-      (length: number) => {
-        // console.log(`got length ${length}`);
-        expect(length).toEqual(expectedValues[i++].length, "numOfCounters$ received the correct length");
-      },
-      (error) => console.log(error),
-      done
-    );
-  });
-
-  it("should select the sum from Redux", (done) => {
-    const counterValueSumStub: Subject<number> = MockNgRedux.getSelectorStub<IAppState, number>(counterValueSumFunc);
-    const values: number[] = [1, 2];
-
-    values.forEach((value: number) => counterValueSumStub.next(value));
-    counterValueSumStub.complete();
-
-    let i = 0;
-    component.counterValueSum$.subscribe(
-      (sum: number) => {
-        expect(sum).toBe(values[i++]);
-      },
-      (error) => console.log(error),
-      done
-    );
+      expect(counterValueSumFunc(state)).toBe(2, "sum should be 2");
+    });
   });
 });
