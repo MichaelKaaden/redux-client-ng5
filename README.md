@@ -1,7 +1,10 @@
 # Angular Redux Client
 
-[![GitHub version](https://badge.fury.io/gh/MichaelKaaden%2Fredux-client-ng5.svg)](https://badge.fury.io/gh/MichaelKaaden%2Fredux-client-ng5)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub last commit](https://img.shields.io/github/last-commit/MichaelKaaden/redux-client-ng5.svg)](https://github.com/MichaelKaaden/redux-client-ng5/commits/master)
+[![GitHub tag](https://img.shields.io/github/tag/MichaelKaaden/redux-client-ng5.svg)](https://github.com/MichaelKaaden/redux-client-ng5/releases)
+[![GitHub version](https://img.shields.io/github/package-json/v/MichaelKaaden/redux-client-ng5.svg)](https://github.com/MichaelKaaden/redux-client-ng5/blob/master/package.json)
+[![GitHub issues](https://img.shields.io/github/issues/MichaelKaaden/redux-client-ng5.svg)](https://github.com/MichaelKaaden/redux-client-ng5/issues)
+[![license](https://img.shields.io/github/license/MichaelKaaden/redux-client-ng5.svg)](https://github.com/MichaelKaaden/redux-client-ng5)
 
 This is a single-page applicaton written in TypeScript using Angular 5. It
 retrieves counters from a REST service and displays them. You can increase and
