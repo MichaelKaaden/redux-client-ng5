@@ -1,6 +1,8 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ActionCreator } from "redux";
+import { NgRedux } from "@angular-redux/store";
+
 import { IAppState } from "../models/app-state";
 import { Counter, ICounter } from "../models/counter";
 import { CounterService } from "../services/counter.service";
@@ -15,7 +17,6 @@ import {
   ISavePendingAction,
 } from "./counter.actions";
 import { ErrorsActionCreatorService } from "./errors.action-creator.service";
-import { NgRedux } from "@angular-redux/store";
 
 @Injectable()
 export class CounterActionCreatorService {
