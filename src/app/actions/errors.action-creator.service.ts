@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
-import { IAppState } from "../models/app-state";
 import { NgRedux } from "@angular-redux/store";
+
+import { IAppState } from "../models/app-state";
 import { ErrorActionTypeKeys } from "./error.actions";
 
 @Injectable()

@@ -3,9 +3,9 @@ import { HttpClient } from "@angular/common/http";
 import { getTestBed, TestBed } from "@angular/core/testing";
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/of";
+
 import { Counter } from "../models/counter";
 import { CounterService } from "../services/counter.service";
-
 import { CounterActionCreatorService } from "./counter.action-creator.service";
 import {
   CounterActionTypeKeys,

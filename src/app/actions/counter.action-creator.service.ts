@@ -1,8 +1,10 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ActionCreator } from "redux";
+import { NgRedux } from "@angular-redux/store";
+
 import { IAppState } from "../models/app-state";
-import { Counter, ICounter } from "../models/counter";
+import { ICounter } from "../models/counter";
 import { CounterService } from "../services/counter.service";
 import {
   CounterActionTypeKeys,
@@ -15,7 +17,6 @@ import {
   ISavePendingAction,
 } from "./counter.actions";
 import { ErrorsActionCreatorService } from "./errors.action-creator.service";
-import { NgRedux } from "@angular-redux/store";
 
 @Injectable()
 export class CounterActionCreatorService {
@@ -41,8 +42,7 @@ export class CounterActionCreatorService {
     this.ngRedux.dispatch(this.buildSavePendingAction(index));
 
     this.counterService.decrementCounter(index, by).subscribe(
-      (c: ICounter) => {
-        const counter = new Counter(c.index, c.value);
+      (counter: ICounter) => {
         this.ngRedux.dispatch(this.buildDecrementCompletedAction(index, counter));
       },
       (error: HttpErrorResponse) => {
@@ -67,8 +67,7 @@ export class CounterActionCreatorService {
     this.ngRedux.dispatch(this.buildSavePendingAction(index));
 
     this.counterService.incrementCounter(index, by).subscribe(
-      (c: ICounter) => {
-        const counter = new Counter(c.index, c.value);
+      (counter: ICounter) => {
         this.ngRedux.dispatch(this.buildIncrementCompletedAction(index, counter));
       },
       (error: HttpErrorResponse) => {
@@ -98,8 +97,7 @@ export class CounterActionCreatorService {
     this.ngRedux.dispatch(this.buildLoadPendingAction(index));
 
     this.counterService.counter(index).subscribe(
-      (c: ICounter) => {
-        const counter = new Counter(c.index, c.value);
+      (counter: ICounter) => {
         this.ngRedux.dispatch(this.buildLoadCompletedAction(index, counter));
       },
       (error: HttpErrorResponse) => {
@@ -116,11 +114,7 @@ export class CounterActionCreatorService {
     this.ngRedux.dispatch(this.buildLoadAllPendingAction());
 
     this.counterService.counters().subscribe(
-      (cs: ICounter[]) => {
-        const counters = [];
-        for (const c of cs) {
-          counters.push(new Counter(c.index, c.value));
-        }
+      (counters: ICounter[]) => {
         this.ngRedux.dispatch(this.buildLoadAllCompletedAction(counters));
       },
       (error: HttpErrorResponse) => {
