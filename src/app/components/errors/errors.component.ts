@@ -1,6 +1,6 @@
 import { NgRedux, select } from "@angular-redux/store";
 import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { Observable } from "rxjs/Observable";
+import { Observable } from "rxjs";
 import { ErrorsActionCreatorService } from "../../actions/errors.action-creator.service";
 import { IAppState } from "../../models/app-state";
 

@@ -1,8 +1,8 @@
+import { combineLatest as observableCombineLatest, Observable } from "rxjs";
 import { NgRedux, select } from "@angular-redux/store";
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import "rxjs/add/observable/combineLatest";
 import "rxjs/add/operator/reduce";
-import { Observable } from "rxjs/Observable";
 
 import { CounterActionCreatorService } from "../../actions/counter.action-creator.service";
 import { IAppState } from "../../models/app-state";
@@ -19,7 +19,7 @@ export const averageCounterValue = (
   sum$: Observable<number>,
   numOfCounters$: Observable<number>
 ): Observable<number> => {
-  return Observable.combineLatest(sum$, numOfCounters$, (sum, len) => {
+  return observableCombineLatest(sum$, numOfCounters$, (sum, len) => {
     // console.log(`sum: ${sum}, len: ${len}`);
     return len && len !== 0 ? Number.parseFloat((sum / len).toFixed(2)) : 0;
   });

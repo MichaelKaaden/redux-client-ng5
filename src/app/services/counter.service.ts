@@ -1,10 +1,12 @@
+import { throwError as observableThrowError, Observable } from "rxjs";
+
+import { delay, catchError, map } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import "rxjs/add/observable/throw";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/delay";
 import "rxjs/add/operator/map";
-import { Observable } from "rxjs/Observable";
 import { environment } from "../../environments/environment";
 import { Counter, ICounter, ICounterRaw } from "../models/counter";
 
@@ -31,9 +33,11 @@ export class CounterService {
   public counter(index: number): Observable<ICounter> {
     return this.http
       .get<IEnvelope>(`${this.BASE_URL}/counters/${index}`)
-      .delay(this.DELAY)
-      .map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value))
-      .catch(this.errorHandler);
+      .pipe(
+        delay(this.DELAY),
+        map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value)),
+        catchError(this.errorHandler)
+      );
   }
 
   /**
@@ -44,9 +48,11 @@ export class CounterService {
   public counters(): Observable<ICounter[]> {
     return this.http
       .get<IEnvelope>(`${this.BASE_URL}/counters`)
-      .delay(this.DELAY)
-      .map((result: IEnvelope) => this.rawCountersToCounters(result.data.counters))
-      .catch(this.errorHandler);
+      .pipe(
+        delay(this.DELAY),
+        map((result: IEnvelope) => this.rawCountersToCounters(result.data.counters)),
+        catchError(this.errorHandler)
+      );
   }
 
   /**
@@ -59,9 +65,11 @@ export class CounterService {
   public decrementCounter(index: number, by: number): Observable<ICounter> {
     return this.http
       .put<IEnvelope>(`${this.BASE_URL}/counters/${index}/decrement`, { by })
-      .delay(this.DELAY)
-      .map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value))
-      .catch(this.errorHandler);
+      .pipe(
+        delay(this.DELAY),
+        map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value)),
+        catchError(this.errorHandler)
+      );
   }
 
   /**
@@ -74,9 +82,11 @@ export class CounterService {
   public incrementCounter(index: number, by: number): Observable<ICounter> {
     return this.http
       .put<IEnvelope>(`${this.BASE_URL}/counters/${index}/increment`, { by })
-      .delay(this.DELAY)
-      .map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value))
-      .catch(this.errorHandler);
+      .pipe(
+        delay(this.DELAY),
+        map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value)),
+        catchError(this.errorHandler)
+      );
   }
 
   /**
@@ -86,7 +96,7 @@ export class CounterService {
    * @returns {Observable<any>}
    */
   private errorHandler(error: Error | any): Observable<any> {
-    return Observable.throw(error);
+    return observableThrowError(error);
   }
 
   /**
