@@ -3,6 +3,8 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/MichaelKaaden/redux-client-ng5.svg)](https://github.com/MichaelKaaden/redux-client-ng5/commits/master)
 [![GitHub tag](https://img.shields.io/github/tag/MichaelKaaden/redux-client-ng5.svg)](https://github.com/MichaelKaaden/redux-client-ng5/releases)
 [![GitHub version](https://img.shields.io/github/package-json/v/MichaelKaaden/redux-client-ng5.svg)](https://github.com/MichaelKaaden/redux-client-ng5/blob/master/package.json)
+[![dependencies](https://img.shields.io/david/MichaelKaaden/redux-client-ng5.svg)](https://david-dm.org/MichaelKaaden/redux-client-ng5)
+[![devDependencies](https://img.shields.io/david/dev/MichaelKaaden/redux-client-ng5.svg)](https://david-dm.org/MichaelKaaden/redux-client-ng5?type=dev)
 [![GitHub issues](https://img.shields.io/github/issues/MichaelKaaden/redux-client-ng5.svg)](https://github.com/MichaelKaaden/redux-client-ng5/issues)
 [![license](https://img.shields.io/github/license/MichaelKaaden/redux-client-ng5.svg)](https://github.com/MichaelKaaden/redux-client-ng5)
 
