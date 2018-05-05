@@ -1,6 +1,7 @@
+import { filter, mergeMap } from "rxjs/operators";
 import { NgRedux, select } from "@angular-redux/store";
 import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
-import { Observable } from "rxjs/Observable";
+import { Observable } from "rxjs";
 import { CounterActionCreatorService } from "../../actions/counter.action-creator.service";
 import { IAppState } from "../../models/app-state";
 import { ICounter } from "../../models/counter";
@@ -19,9 +20,12 @@ export class CounterContainerComponent implements OnInit {
   @select(["counters"])
   public counters$: Observable<ICounter[]>;
 
-  public counter$: Observable<ICounter> = this.counters$.flatMap((x) => x).filter((counter: ICounter) => {
-    return counter.index === this.counterIndex;
-  });
+  public counter$: Observable<ICounter> = this.counters$.pipe(
+    mergeMap((x) => x),
+    filter((counter: ICounter) => {
+      return counter.index === this.counterIndex;
+    })
+  );
 
   constructor(private redux: NgRedux<IAppState>, private counterActionCreatorService: CounterActionCreatorService) {}
 
