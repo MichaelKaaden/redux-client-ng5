@@ -48,9 +48,7 @@
         <target state="translated">Echt jetzt.</target>
       </trans-unit>
       <trans-unit id="PageNotFoundComponent:ReturnToHome" datatype="html">
-        <source>You'd better go back to the<x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>home page<x
-          id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
-        </source>
+        <source>You'd better go back to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>home page<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/page-not-found/page-not-found.component.ts</context>
           <context context-type="linenumber">7</context>
@@ -63,9 +61,8 @@
         </target>
       </trans-unit>
       <trans-unit id="CounterContainerComponent" datatype="html">
-        <source>Counter #
-          <x id="INTERPOLATION" equiv-text="{{ counterIndex }}"/>
-        </source>
+        <source>Counter #<x id="INTERPOLATION" equiv-text="{{ counterIndex }}"/>
+  </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/counter-container/counter-container.component.ts</context>
           <context context-type="linenumber">2</context>
@@ -78,8 +75,8 @@
       </trans-unit>
       <trans-unit id="CounterHeadingComponent:heading" datatype="html">
         <source>
-          Counter #<x id="INTERPOLATION" equiv-text="{{ counterIndex }}"/>: Current value is
-        </source>
+    Counter #<x id="INTERPOLATION" equiv-text="{{ counterIndex }}"/>: Current value is
+  </source>
         <note priority="1" from="description">The heading of a counter component</note>
         <note priority="1" from="meaning">Tell the user the current value</note>
         <target state="translated">
@@ -91,8 +88,9 @@
         </context-group>
       </trans-unit>
       <trans-unit id="ErrorsComponent" datatype="html">
-        <source>Reset errors
-        </source>
+        <source>Reset
+  errors
+</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/errors/errors.component.ts</context>
           <context context-type="linenumber">11</context>
@@ -103,8 +101,8 @@
       </trans-unit>
       <trans-unit id="DashboardComponent:NumOfCounters" datatype="html">
         <source>
-          Number of counters
-        </source>
+        Number of counters
+      </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/dashboard/dashboard.component.ts</context>
           <context context-type="linenumber">4</context>
@@ -115,8 +113,9 @@
         </target>
       </trans-unit>
       <trans-unit id="DashboardComponent:SumOfCounters" datatype="html">
-        <source>Counters sum up to
-        </source>
+        <source>Counters sum
+        up to
+      </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/dashboard/dashboard.component.ts</context>
           <context context-type="linenumber">16</context>
@@ -127,8 +126,8 @@
       </trans-unit>
       <trans-unit id="DashboardComponent:AverageOfCounters" datatype="html">
         <source>
-          Average counter value
-        </source>
+        Average counter value
+      </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/dashboard/dashboard.component.ts</context>
           <context context-type="linenumber">28</context>

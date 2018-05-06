@@ -45,6 +45,22 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ]
+            },
+            "de": {
+              "aot": true,
+              "outputPath": "dist/de/",
+              "i18nFile": "src/locale/messages.de.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "de",
+              "i18nMissingTranslation": "error"
+            },
+            "en": {
+              "aot": true,
+              "outputPath": "dist/en/",
+              "i18nFile": "src/locale/messages.en.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "en",
+              "i18nMissingTranslation": "error"
             }
           }
         },
@@ -56,6 +72,12 @@
           "configurations": {
             "production": {
               "browserTarget": "redux-client-ng5:build:production"
+            },
+            "de": {
+              "browserTarget": "redux-client-ng5:build:de"
+            },
+            "en": {
+              "browserTarget": "redux-client-ng5:build:en"
             }
           }
         },
