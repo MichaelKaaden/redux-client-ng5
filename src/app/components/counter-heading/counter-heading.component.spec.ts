@@ -1,6 +1,5 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import "rxjs/add/observable/of";
 import { Counter } from "../../models/counter";
 
 import { CounterHeadingComponent } from "./counter-heading.component";
@@ -13,14 +12,12 @@ describe("CounterHeadingComponent", () => {
   let compiled: any;
   let index;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        declarations: [CounterHeadingComponent],
-        schemas: [NO_ERRORS_SCHEMA],
-      }).compileComponents();
-    })
-  );
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [CounterHeadingComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     index = 12;

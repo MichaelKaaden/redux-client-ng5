@@ -4,7 +4,7 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { ErrorsActionCreatorService } from "../../actions/errors.action-creator.service";
 import { ErrorsComponent } from "./errors.component";
 import { ErrorActionTypeKeys, IErrorOccurredAction, IResetErrorsAction } from "../../actions/error.actions";
-import { Subject } from "rxjs/Subject";
+import { Subject } from "rxjs";
 import { IAppState } from "../../models/app-state";
 
 describe("ErrorsComponent", () => {

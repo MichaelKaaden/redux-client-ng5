@@ -1,12 +1,7 @@
-import { throwError as observableThrowError, Observable } from "rxjs";
-
-import { delay, catchError, map } from "rxjs/operators";
+import { Observable, throwError } from "rxjs";
+import { catchError, delay, map } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import "rxjs/add/observable/throw";
-import "rxjs/add/operator/catch";
-import "rxjs/add/operator/delay";
-import "rxjs/add/operator/map";
 import { environment } from "../../environments/environment";
 import { Counter, ICounter, ICounterRaw } from "../models/counter";
 
@@ -96,7 +91,7 @@ export class CounterService {
    * @returns {Observable<any>}
    */
   private errorHandler(error: Error | any): Observable<any> {
-    return observableThrowError(error);
+    return throwError(error);
   }
 
   /**

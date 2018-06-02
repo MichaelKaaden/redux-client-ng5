@@ -1,6 +1,6 @@
 import { MockNgRedux, NgReduxTestingModule } from "@angular-redux/store/lib/testing";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { Subject } from "rxjs/Subject";
+import { Subject } from "rxjs";
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 
 import { CounterContainerComponent } from "./counter-container.component";
