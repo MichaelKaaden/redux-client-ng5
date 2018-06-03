@@ -4,10 +4,9 @@ import { MockNgRedux, NgReduxTestingModule } from "@angular-redux/store/lib/test
 
 import { averageCounterValue, counterValueSumFunc, DashboardComponent } from "./dashboard.component";
 import { CounterActionCreatorService } from "../../actions/counter.action-creator.service";
-import { Subject } from "rxjs/Subject";
+import { Observable, of, Subject } from "rxjs";
 import { Counter, ICounter } from "../../models/counter";
 import { IAppState, INITIAL_COUNTERS_STATE, INITIAL_ERRORS_STATE } from "../../models/app-state";
-import { Observable } from "rxjs/Observable";
 
 describe("DashboardComponent", () => {
   let component: DashboardComponent;
@@ -128,8 +127,8 @@ describe("DashboardComponent", () => {
 
   describe("pure functions", () => {
     it("should calculate the average counter value for regular values", (done) => {
-      const sum$: Observable<number> = Observable.of(1, 2, 3);
-      const numOfCounters$: Observable<number> = Observable.of(2, 2, 2);
+      const sum$: Observable<number> = of(1, 2, 3);
+      const numOfCounters$: Observable<number> = of(2, 2, 2);
 
       averageCounterValue(sum$, numOfCounters$).subscribe(
         (value: number) => {
@@ -141,8 +140,8 @@ describe("DashboardComponent", () => {
     });
 
     it("should deal with length == 0", (done) => {
-      const sum$: Observable<number> = Observable.of(3);
-      const numOfCounters$: Observable<number> = Observable.of(0);
+      const sum$: Observable<number> = of(3);
+      const numOfCounters$: Observable<number> = of(0);
 
       averageCounterValue(sum$, numOfCounters$).subscribe(
         (value: number) => {

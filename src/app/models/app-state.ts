@@ -3,6 +3,7 @@ import { ICounter } from "./counter";
 export interface IAppState {
   counters: ICounter[];
   errors: string[];
+  router?: any;
 }
 
 export const INITIAL_COUNTERS_STATE: ICounter[] = [];

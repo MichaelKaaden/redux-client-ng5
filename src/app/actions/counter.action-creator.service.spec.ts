@@ -1,8 +1,7 @@
 import { MockNgRedux, NgReduxTestingModule } from "@angular-redux/store/lib/testing";
 import { HttpClient } from "@angular/common/http";
 import { getTestBed, TestBed } from "@angular/core/testing";
-import { Observable } from "rxjs/Observable";
-import "rxjs/add/observable/of";
+import { of, throwError } from "rxjs";
 
 import { Counter } from "../models/counter";
 import { CounterService } from "../services/counter.service";
@@ -93,9 +92,7 @@ describe("CounterActionCreatorService", () => {
 
     it("should dispatch a save pending and decrement completed action", () => {
       // prepare
-      const decrementCounterSpy = spyOn(counterService, "decrementCounter").and.returnValue(
-        Observable.of(new Counter(index, by))
-      );
+      const decrementCounterSpy = spyOn(counterService, "decrementCounter").and.returnValue(of(new Counter(index, by)));
 
       // call the service under test
       service.decrement(index, by);
@@ -119,7 +116,7 @@ describe("CounterActionCreatorService", () => {
       // prepare
       const errorMessage = "some error";
       const decrementCounterSpy = spyOn(counterService, "decrementCounter").and.returnValue(
-        Observable.throw(new Error(errorMessage))
+        throwError(new Error(errorMessage))
       );
 
       // call the service under test
@@ -157,9 +154,7 @@ describe("CounterActionCreatorService", () => {
 
     it("should dispatch a save pending and increment completed action", () => {
       // prepare
-      const incrementCounterSpy = spyOn(counterService, "incrementCounter").and.returnValue(
-        Observable.of(new Counter(index, by))
-      );
+      const incrementCounterSpy = spyOn(counterService, "incrementCounter").and.returnValue(of(new Counter(index, by)));
 
       // call the service under test
       service.increment(index, by);
@@ -183,7 +178,7 @@ describe("CounterActionCreatorService", () => {
       // prepare
       const errorMessage = "some error";
       const incrementCounterSpy = spyOn(counterService, "incrementCounter").and.returnValue(
-        Observable.throw(new Error(errorMessage))
+        throwError(new Error(errorMessage))
       );
 
       // call the service under test
@@ -221,7 +216,7 @@ describe("CounterActionCreatorService", () => {
 
     it("should dispatch a load pending and load completed action", () => {
       // prepare
-      const counterSpy = spyOn(counterService, "counter").and.returnValue(Observable.of(new Counter(index, by)));
+      const counterSpy = spyOn(counterService, "counter").and.returnValue(of(new Counter(index, by)));
       spyOn(MockNgRedux.getInstance(), "getState").and.returnValue({
         counters: [],
       });
@@ -246,7 +241,7 @@ describe("CounterActionCreatorService", () => {
 
     it("should return immediately if the counter is found in the cache", () => {
       // prepare
-      const counterSpy = spyOn(counterService, "counter").and.returnValue(Observable.of(new Counter(index, by)));
+      const counterSpy = spyOn(counterService, "counter").and.returnValue(of(new Counter(index, by)));
       spyOn(MockNgRedux.getInstance(), "getState").and.returnValue({
         counters: [new Counter(index, by)],
       });
@@ -261,7 +256,7 @@ describe("CounterActionCreatorService", () => {
 
     it("should ignore irrelevant counters in the cache", () => {
       // prepare
-      const counterSpy = spyOn(counterService, "counter").and.returnValue(Observable.of(new Counter(index, by)));
+      const counterSpy = spyOn(counterService, "counter").and.returnValue(of(new Counter(index, by)));
       spyOn(MockNgRedux.getInstance(), "getState").and.returnValue({
         counters: [new Counter(index + 1, by)],
       });
@@ -287,7 +282,7 @@ describe("CounterActionCreatorService", () => {
     it("should dispatch errors that occurred retrieving data from the REST service", () => {
       // prepare
       const errorMessage = "some error";
-      const counterSpy = spyOn(counterService, "counter").and.returnValue(Observable.throw(new Error(errorMessage)));
+      const counterSpy = spyOn(counterService, "counter").and.returnValue(throwError(new Error(errorMessage)));
       spyOn(MockNgRedux.getInstance(), "getState").and.returnValue({
         counters: [],
       });
@@ -314,7 +309,7 @@ describe("CounterActionCreatorService", () => {
     it("should dispatch a loadAll pending and loadAll completed action", () => {
       const counters = [new Counter(index, by), new Counter(index + 1, by)];
       // prepare
-      const countersSpy = spyOn(counterService, "counters").and.returnValue(Observable.of(counters));
+      const countersSpy = spyOn(counterService, "counters").and.returnValue(of(counters));
 
       // call the service under test
       service.loadAll();
@@ -335,7 +330,7 @@ describe("CounterActionCreatorService", () => {
     it("should dispatch errors that occurred retrieving data from the REST service", () => {
       // prepare
       const errorMessage = "some error";
-      const countersSpy = spyOn(counterService, "counters").and.returnValue(Observable.throw(new Error(errorMessage)));
+      const countersSpy = spyOn(counterService, "counters").and.returnValue(throwError(new Error(errorMessage)));
 
       // call the service under test
       service.loadAll();

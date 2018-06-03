@@ -1,6 +1,5 @@
 import { MockNgRedux, NgReduxTestingModule } from "@angular-redux/store/lib/testing";
 import { getTestBed, TestBed } from "@angular/core/testing";
-import "rxjs/add/observable/of";
 
 import { ErrorsActionCreatorService } from "./errors.action-creator.service";
 import { ErrorActionTypeKeys, IErrorOccurredAction, IResetErrorsAction } from "./error.actions";

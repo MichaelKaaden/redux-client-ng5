@@ -5,8 +5,6 @@ import { Observable } from "rxjs";
 import { CounterActionCreatorService } from "../../actions/counter.action-creator.service";
 import { IAppState } from "../../models/app-state";
 import { ICounter } from "../../models/counter";
-import "rxjs/add/operator/filter";
-import "rxjs/add/operator/mergeMap";
 
 @Component({
   selector: "mk-counter-container",
