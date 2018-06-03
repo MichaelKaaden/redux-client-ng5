@@ -16,7 +16,7 @@
     "serve-en": "ng serve --configuration en",
     "postcommit": "git update-index --again",
     "precommit": "lint-staged",
-    "prepush": "ng test"
+    "prepush": "ng test --watch=false"
   },
   "private": true,
   "dependencies": {
