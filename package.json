@@ -1,6 +1,6 @@
 {
   "name": "redux-client-ng5",
-  "version": "1.1.5",
+  "version": "1.1.5.1",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
