@@ -30,6 +30,10 @@ asynchronous action like loading and saving counters from and to the REST
 service, it uses the
 [Action Creator Service Pattern](https://github.com/angular-redux/store/blob/master/articles/action-creator-service.md).
 
+To see the same app using [NgRx](https://github.com/ngrx/platform) instead, have
+a look at [this](https://github.com/MichaelKaaden/redux-client-ngrx.git)
+repository.
+
 By the way, the app is translated in English and German. To start the app using
 English, use `yarn run serve-aot-en`. For German, use `yarn run serve-aot-de`.
 To add more translated strings, use `yarn run extract-i18n`.
