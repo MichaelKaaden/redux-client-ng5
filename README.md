@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/MichaelKaaden/redux-client-ng5.svg)](https://github.com/MichaelKaaden/redux-client-ng5/issues)
 [![license](https://img.shields.io/github/license/MichaelKaaden/redux-client-ng5.svg)](https://github.com/MichaelKaaden/redux-client-ng5)
 
-This is a single-page applicaton written in TypeScript using Angular 6. It
+This is a single-page application written in TypeScript using Angular 6. It
 retrieves counters from a REST service and displays them. You can increase and
 decrease each counter's value. A second page displays a little dashboard that
 does some analytics on your counters and their values.
@@ -29,6 +29,10 @@ The app utilizes [angular-redux](https://github.com/angular-redux/store). For
 asynchronous action like loading and saving counters from and to the REST
 service, it uses the
 [Action Creator Service Pattern](https://github.com/angular-redux/store/blob/master/articles/action-creator-service.md).
+
+To see the same app using [NgRx](https://github.com/ngrx/platform) instead, have
+a look at [this](https://github.com/MichaelKaaden/redux-client-ngrx.git)
+repository.
 
 By the way, the app is translated in English and German. To start the app using
 English, use `yarn run serve-aot-en`. For German, use `yarn run serve-aot-de`.
